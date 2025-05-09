@@ -1,2 +1,3 @@
 Aplikasi perhitungan Harga Perhitungan Sendiri
 - Output berupa surat kepada Pejabat pengadaan
+- jenis file berupa PDF dan Word
