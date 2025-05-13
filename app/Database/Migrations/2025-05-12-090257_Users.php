@@ -28,9 +28,17 @@ class Users extends Migration
                 'constraint' => '250',
             ],
             'level' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '20',
-            ]
+                'type'       => 'ENUM',
+                'constraint' => ['admin', 'pegawai'],
+            ],
+            'created_at' => [
+                'type'       => 'DATETIME',
+                'null'    => true,
+            ],
+            'updated_at' => [
+                'type'       => 'DATETIME',
+                'null'    => true,
+            ],
         ]);
         $this->forge->addKey('id', true);
         $this->forge->createTable('users');

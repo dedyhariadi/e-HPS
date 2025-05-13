@@ -4,20 +4,32 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Satuan extends Migration
+class DasarSurat extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'idSatuan' => [
+            'idSurat' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'namaSatuan' => [
+            'noSurat' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '255',
+            ],
+            'tglSurat' => [
+                'type'       => 'DATETIME',
+                'null' => true,
+            ],
+            'tentang' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'pejabat' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
             ],
             'created_at' => [
                 'type'       => 'DATETIME',
@@ -28,12 +40,12 @@ class Satuan extends Migration
                 'null'    => true,
             ],
         ]);
-        $this->forge->addKey('idSatuan', true);
-        $this->forge->createTable('satuan');
+        $this->forge->addKey('idSurat', true);
+        $this->forge->createTable('dasarSurat');
     }
 
     public function down()
     {
-        $this->forge->dropTable('satuan');
+        $this->forge->dropTable('dasarSurat');
     }
 }
