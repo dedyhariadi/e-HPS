@@ -19,6 +19,10 @@ class Kegiatan extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
+            'slugKegiatan' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
             'noSurat' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
