@@ -34,4 +34,13 @@ class Barang extends BaseController
         // Load the view for the index page
         return view('barang/index', $data);
     }
+
+    public function create()
+    {
+        $data = [
+            'title' => 'Tambah Data Barang',
+        ];
+
+        return view('barang/create', $data);
+    }
 }
