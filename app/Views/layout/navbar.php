@@ -6,13 +6,13 @@
          </a>
          <ul class="nav nav-pills">
              <li class="nav-item">
-                 <a class="nav-link active" href="">Home</a>
+                 <a class="nav-link active" href="/">Home</a>
              </li>
              <li class="nav-item">
-                 <a class="nav-link" href="">Barang</a>
+                 <a class="nav-link" href="/barang">Barang</a>
              </li>
              <li class="nav-item">
-                 <a class="nav-link" href="">Kegiatan</a>
+                 <a class="nav-link" href="/kegiatan">Kegiatan</a>
              </li>
          </ul>
      </div>

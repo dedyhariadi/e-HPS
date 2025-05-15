@@ -5,10 +5,10 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class Barang extends BaseController
+class Kegiatan extends BaseController
 {
     public function index()
     {
-        return view('barang/index');
+        return view('kegiatan/index');
     }
 }

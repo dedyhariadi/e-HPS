@@ -1,0 +1,17 @@
+<?= $this->extend('layout/template'); ?>
+
+<?= $this->section('content'); ?>
+
+<!-- content -->
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1> ini halaman KEGIATAN dengan method index</h1>
+        </div>
+    </div>
+</div>
+
+<!-- akhir content -->
+
+<?= $this->endSection(); ?>
