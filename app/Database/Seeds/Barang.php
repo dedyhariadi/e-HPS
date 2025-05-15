@@ -37,6 +37,48 @@ class Barang extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
+            [
+                'namaBarang' => 'Pupuk NPK',
+                'satuanId' => rand(1, 10),
+                'gambar' => 'cangkul.jpg',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaBarang' => 'Pupuk Organik',
+                'satuanId' => rand(1, 10),
+                'gambar' => 'cangkul.jpg',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaBarang' => 'Pupuk Hayati',
+                'satuanId' => rand(1, 10),
+                'gambar' => 'cangkul.jpg',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaBarang' => 'Pupuk Kandang',
+                'satuanId' => rand(1, 10),
+                'gambar' => 'cangkul.jpg',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaBarang' => 'Pupuk Urea',
+                'satuanId' => rand(1, 10),
+                'gambar' => 'cangkul.jpg',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaBarang' => 'Pupuk TSP',
+                'satuanId' => rand(1, 10),
+                'gambar' => 'cangkul.jpg',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
 
         ];
 

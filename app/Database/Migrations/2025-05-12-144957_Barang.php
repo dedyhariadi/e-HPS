@@ -32,7 +32,8 @@ class Barang extends Migration
             'created_at' => [
                 'type'       => 'DATETIME',
                 'null'    => true,
-            ],'updated_at' => [
+            ],
+            'updated_at' => [
                 'type'       => 'DATETIME',
                 'null'    => true,
             ],
@@ -44,6 +45,7 @@ class Barang extends Migration
 
     public function down()
     {
+        $this->forge->dropForeignKey('satuanId', 'barang_satuanId_foreign');
         $this->forge->dropTable('barang');
     }
 }

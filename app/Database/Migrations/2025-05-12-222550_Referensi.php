@@ -26,6 +26,7 @@ class Referensi extends Migration
             'harga' => [
                 'type'       => 'INT',
                 'constraint' => 11,
+                'unsigned'       => true,
             ],
             'barangId' => [
                 'type'       => 'INT',
