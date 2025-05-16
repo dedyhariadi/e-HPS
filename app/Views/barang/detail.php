@@ -13,7 +13,7 @@
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="/assets/images<?= $barang['gambar']; ?>" class="img-fluid rounded-start" width="300">
+                        <img src="/assets/images/<?= $barang['gambar']; ?>" class="img-fluid rounded-start" width="500">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">

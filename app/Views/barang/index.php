@@ -26,6 +26,15 @@
     </div>
 
     <div class="row">
+
+        <!-- alert pesan setelah berhasil disimpan -->
+        <?php if (session()->getFlashdata('pesan')) : ?>
+            <div class="alert alert-success" role="alert">
+                <?= session()->getFlashdata('pesan'); ?>
+            </div>
+        <?php endif; ?>
+        <!-- akhir alert -->
+
         <table class="table table-hover">
             <thead class="text-center fs-5">
                 <tr>

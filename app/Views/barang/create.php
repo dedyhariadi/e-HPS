@@ -6,7 +6,13 @@
 <div class="container">
     <div class="col">
         <div class="row">
-            <h2 class="my-4">Form Tambah Data Barang</h2>
+            <h2 class="my-4">Form Tambah Data Barang 2</h2>
+            <?php
+            d($validation);
+            ?>
+
+            <?= $validation->listErrors() ?>
+
         </div>
         <div class="row">
             <form action="/barang/save" method="post">
@@ -22,8 +28,7 @@
                 <div class="row mb-3">
                     <label for="satuan" class="col-sm-2 col-form-label">Satuan</label>
                     <div class="col-sm-4">
-                        <select class="form-select">
-                            <option selected>Open this select menu</option>
+                        <select class="form-select" name="idSatuan">
                             <?php foreach ($satuan as $b) : ?>
                                 <option value="<?= $b['idSatuan']; ?>"><?= $b['namaSatuan']; ?></option>
                             <?php endforeach; ?>

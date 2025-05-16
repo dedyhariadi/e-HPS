@@ -55,6 +55,7 @@ abstract class BaseController extends Controller
 
         // E.g.: $this->session = service('session');
 
+    
         session();
     }
 }

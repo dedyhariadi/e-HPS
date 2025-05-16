@@ -44,16 +44,51 @@ class Barang extends BaseController
             'barangRef' => $this->barangModel->join('referensi', 'referensi.barangId=barang.idBarang')->where(['idBarang' => $id])->findAll()
         ];
 
+        // jika data barang tidak ada di tabel
+        if (empty($data['barang'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Nama Barang tidak ditemukan');
+        }
+
         return view('barang/detail', $data);
     }
 
     public function create()
     {
+        session();
         $data = [
             'title' => 'Tambah Data Barang',
             'satuan' => $this->satuanModel->findAll(),
+            'validation' => \Config\Services::validation()
         ];
-
+        dd($data);
         return view('barang/create', $data);
+    }
+
+    public function simpan()
+    {
+
+        // validasi input
+        if (!$this->validate([
+            'namaBarang' => 'required|is_unique[barang.namaBarang]'
+        ])) {
+            $validation = \Config\Services::validation();
+
+            return redirect()
+                ->to('/barang/create')
+                ->withInput()
+                ->with('validation_errors');
+            // return redirect()->back()->withInput();
+
+        }
+
+        $this->barangModel->save([
+            'namaBarang' => $this->request->getVar('namaBarang'),
+            'gambar' => $this->request->getVar('gambar'),
+            'satuanId' => $this->request->getVar('idSatuan')
+        ]);
+
+        session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
+
+        return redirect()->to('/barang');
     }
 }
