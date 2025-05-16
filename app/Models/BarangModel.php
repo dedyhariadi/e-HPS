@@ -18,4 +18,13 @@ class BarangModel extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function getBarang($id = false)
+    {
+        if ($id == false) {
+            return $this->join('satuan', 'satuan.idSatuan = barang.satuanId')->findAll();
+        }
+
+        return $this->join('satuan', 'satuan.idSatuan = barang.satuanId')->where(['idBarang' => $id])->first();
+    }
 }

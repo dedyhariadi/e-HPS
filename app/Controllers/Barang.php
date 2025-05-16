@@ -28,17 +28,30 @@ class Barang extends BaseController
 
         $data = [
             'title' => 'Data Barang',
-            'barang' => $barang,
+            'barang' => $this->barangModel->getBarang()
         ];
 
         // Load the view for the index page
         return view('barang/index', $data);
     }
 
+    public function detail($id)
+    {
+
+        $data = [
+            'title' => 'Detail Barang',
+            'barang' => $this->barangModel->getBarang($id),
+            'barangRef' => $this->barangModel->join('referensi', 'referensi.barangId=barang.idBarang')->where(['idBarang' => $id])->findAll()
+        ];
+
+        return view('barang/detail', $data);
+    }
+
     public function create()
     {
         $data = [
             'title' => 'Tambah Data Barang',
+            'satuan' => $this->satuanModel->findAll(),
         ];
 
         return view('barang/create', $data);

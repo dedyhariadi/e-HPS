@@ -10,6 +10,7 @@ $routes->get('/', 'Home::index');
 // kontroller barang
 $routes->get('/barang', 'Barang::index');
 $routes->get('/barang/create', 'Barang::create');
+$routes->get('/barang/(:segment)', 'Barang::detail/$1');
 
 
 // kontroller kegiatan

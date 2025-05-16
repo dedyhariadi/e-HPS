@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class SatuanModel extends Model
 {
-    protected $table            = 'satuans';
+    protected $table            = 'satuan';
     protected $primaryKey       = 'idSatuan';
     protected $useTimestamps    = true;
     protected $allowedFields    = [

@@ -45,7 +45,7 @@
                         <td><?= $b['namaBarang']; ?></td>
                         <td><?= $b['namaSatuan']; ?></td>
                         <td class="text-center"><?= date('d M Y', strtotime($b['updated_at'])); ?></td>
-                        <td class="text-center"><button type="button" class="btn btn-warning">Detail</button></td>
+                        <td class="text-center"><a type="button" class="btn btn-warning" href="/barang/<?= $b['idBarang']; ?>">Detail</a></td>
                     </tr>
                 <?php endforeach; ?>
 
