@@ -54,41 +54,36 @@ class Barang extends BaseController
 
     public function create()
     {
-        session();
+        // ambil data satuan
+        $satuan = $this->satuanModel->findAll();
+        d($satuan);
         $data = [
             'title' => 'Tambah Data Barang',
-            'satuan' => $this->satuanModel->findAll(),
-            'validation' => \Config\Services::validation()
+            'satuan' => $satuan,
         ];
-        dd($data);
+        d($data);
         return view('barang/create', $data);
     }
 
     public function simpan()
-    {
-
-        // validasi input
-        if (!$this->validate([
-            'namaBarang' => 'required|is_unique[barang.namaBarang]'
-        ])) {
-            $validation = \Config\Services::validation();
-
-            return redirect()
-                ->to('/barang/create')
-                ->withInput()
-                ->with('validation_errors');
-            // return redirect()->back()->withInput();
-
+    { {
+            $satuan = $this->satuanModel->findAll();
+            if ($this->barangModel->save([
+                'namaBarang' => $this->request->getVar('namaBarang'),
+                'gambar' => $this->request->getVar('gambar'),
+                'satuanId' => $this->request->getVar('idSatuan')
+            ]) === false) {
+                $errors = $this->barangModel->errors();
+                $data = [
+                    'title' => 'Tambah Data Barang',
+                    'satuan' => $satuan,
+                    'errors' => $errors,
+                ];
+                return view('/barang/create', $data);
+            } else {
+                session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
+                return redirect()->to('/barang');
+            }
         }
-
-        $this->barangModel->save([
-            'namaBarang' => $this->request->getVar('namaBarang'),
-            'gambar' => $this->request->getVar('gambar'),
-            'satuanId' => $this->request->getVar('idSatuan')
-        ]);
-
-        session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
-
-        return redirect()->to('/barang');
     }
 }

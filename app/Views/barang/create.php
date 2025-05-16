@@ -6,16 +6,13 @@
 <div class="container">
     <div class="col">
         <div class="row">
-            <h2 class="my-4">Form Tambah Data Barang 2</h2>
-            <?php
-            d($validation);
-            ?>
+            <h2 class="my-4">Form Tambah Data Barang </h2>
 
-            <?= $validation->listErrors() ?>
-
+            <?php d($errors); ?>
         </div>
         <div class="row">
             <form action="/barang/save" method="post">
+
                 <?= csrf_field(); ?>
 
                 <div class="row mb-3">

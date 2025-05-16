@@ -19,6 +19,12 @@ class BarangModel extends Model
         'updated_at',
     ];
 
+    protected $validationRules = [
+        'namaBarang' => 'required|min_length[3]|max_length[50]|is_unique[barang.namaBarang]',
+        'satuanId'   => 'required',
+        'gambar'     => 'max_size[gambar,1024]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
+    ];
+
     public function getBarang($id = false)
     {
         if ($id == false) {
