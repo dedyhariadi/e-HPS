@@ -26,7 +26,6 @@ class Barang extends BaseController
         $data = [
             'title' => 'Data Barang',
             'barang' => $this->barangModel->getBarang()
-            // 'barang' => $barang,
         ];
 
         // Load the view for the index page
@@ -71,6 +70,7 @@ class Barang extends BaseController
                 'satuanId' => $this->request->getVar('idSatuan'),
                 'gambar' => $this->request->getFile('gambar')->getName()
             ]) == false) {
+
                 // jika gagal simpan data
                 $satuan = $this->satuanModel->findAll();
                 $errors = $this->barangModel->errors();
@@ -94,5 +94,26 @@ class Barang extends BaseController
                 return redirect()->to('/barang');
             }
         }
+    }
+
+    public function hapus($id)
+    {
+        $this->barangModel->delete($id);
+        session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        return redirect()->to('/barang');
+    }
+
+    public function ubah($id, $errors = false)
+    {
+        // ambil data satuan
+        $satuan = $this->satuanModel->findAll();
+        $data = [
+            'title' => 'Form Ubah Data Barang',
+            'satuan' => $satuan,
+            'barang' => $this->barangModel->getBarang($id),
+            'errors' => $errors,
+
+        ];
+        return view('barang/edit', $data);
     }
 }

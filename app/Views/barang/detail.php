@@ -21,8 +21,15 @@
                             <p class="card-text"><b>Satuan : </b><?= $barang['namaSatuan']; ?></p>
                             <p class="card-text"><small class="text-muted"> <b>Last updated :</b> <?= date('d M Y', strtotime($barang['updated_at'])); ?></small></p>
 
-                            <a href="" class="btn btn-warning">Edit</a>
-                            <a href="" class="btn btn-danger">Delete</a>
+                            <a href="/barang/edit/<?= $barang['idBarang']; ?>" class="btn btn-warning">Edit</a>
+
+
+                            <form action="/barang/<?= $barang['idBarang']; ?>" method="post" class="d-inline">
+                                <?= csrf_field(); ?>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
+                            </form>
+
                             <br><br>
                             <a href="/barang">Kembali ke daftar barang</a>
                         </div>
