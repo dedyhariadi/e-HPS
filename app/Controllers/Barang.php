@@ -21,14 +21,12 @@ class Barang extends BaseController
 
     public function index()
     {
-        //ambil semua data pada tabel barang yg join dengan tabel satuan
-        $barang = $this->barangModel->join('satuan', 'satuan.idSatuan = barang.satuanId')
-            ->findAll();
 
 
         $data = [
             'title' => 'Data Barang',
             'barang' => $this->barangModel->getBarang()
+            // 'barang' => $barang,
         ];
 
         // Load the view for the index page
@@ -52,35 +50,52 @@ class Barang extends BaseController
         return view('barang/detail', $data);
     }
 
-    public function create()
+    public function create($errors = false)
     {
         // ambil data satuan
         $satuan = $this->satuanModel->findAll();
-        d($satuan);
         $data = [
             'title' => 'Tambah Data Barang',
             'satuan' => $satuan,
+            'errors' => $errors,
         ];
-        d($data);
         return view('barang/create', $data);
     }
 
-    public function simpan()
+    public function simpan($errors = false)
     { {
-            $satuan = $this->satuanModel->findAll();
+            // proses upload gambar
+            // ambil gambar
+            $gambar = $this->request->getFile('gambar');
+
+            // pindahkan gambar ke folder images
+            $gambar->move('assets/images');
+
+            // ambil nama gambar
+            $namaGambar = $gambar->getName();
+            // akhir proses upload gambar
+            d($gambar);
+
+
+            // proses simpan data
             if ($this->barangModel->save([
                 'namaBarang' => $this->request->getVar('namaBarang'),
-                'gambar' => $this->request->getVar('gambar'),
-                'satuanId' => $this->request->getVar('idSatuan')
-            ]) === false) {
+                'satuanId' => $this->request->getVar('idSatuan'),
+                'gambar' => $namaGambar,
+            ]) == false) {
+                // jika gagal simpan data
+                $satuan = $this->satuanModel->findAll();
                 $errors = $this->barangModel->errors();
                 $data = [
                     'title' => 'Tambah Data Barang',
                     'satuan' => $satuan,
                     'errors' => $errors,
                 ];
+
                 return view('/barang/create', $data);
             } else {
+
+                // jika berhasil simpan data
                 session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
                 return redirect()->to('/barang');
             }

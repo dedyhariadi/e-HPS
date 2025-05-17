@@ -48,12 +48,13 @@
             <tbody>
                 <?php
                 $i = 1;
+                // d($barang);
                 foreach ($barang as $b) : ?>
                     <tr>
                         <th scope="row" class="text-center"><?= $i++; ?></th>
                         <td><?= $b['namaBarang']; ?></td>
                         <td><?= $b['namaSatuan']; ?></td>
-                        <td class="text-center"><?= date('d M Y', strtotime($b['updated_at'])); ?></td>
+                        <td class="text-center"><?= date('d M Y', strtotime($b['updated_atBarang'])); ?></td>
                         <td class="text-center"><a type="button" class="btn btn-warning" href="/barang/<?= $b['idBarang']; ?>">Detail</a></td>
                     </tr>
                 <?php endforeach; ?>

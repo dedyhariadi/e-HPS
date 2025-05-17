@@ -22,13 +22,36 @@ class BarangModel extends Model
     protected $validationRules = [
         'namaBarang' => 'required|min_length[3]|max_length[50]|is_unique[barang.namaBarang]',
         'satuanId'   => 'required',
-        'gambar'     => 'max_size[gambar,1024]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
+        'gambar'     => 'uploaded[gambar]|max_size[gambar,2048]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
     ];
+
+    protected $validationMessages = [
+        'namaBarang' => [
+            'required' => 'Nama barang Harus Diisi',
+            'min_length' => 'Minimal 3 Karakter',
+            'max_length' => 'Maksimal 50 Karakter',
+            'is_unique' => 'Barang yang anda masukkan sudah ada sebelumnya'
+        ],
+        'satuanId' => [
+            'required' => 'Satuan Harus Dipilih'
+        ],
+        'gambar' => [
+            'uploaded' => 'Harus ada gambar yang di upload',
+            'max_size' => 'Ukuran Gambar Terlalu Besar',
+            'is_image' => 'Yang Anda Pilih Bukan Gambar',
+            'mime_in'  => 'Yang Anda Pilih Bukan Gambar'
+        ]
+    ];
+
+
 
     public function getBarang($id = false)
     {
         if ($id == false) {
-            return $this->join('satuan', 'satuan.idSatuan = barang.satuanId')->findAll();
+            return $this->select('*,barang.created_at AS created_atBarang, barang.updated_at AS updated_atBarang, satuan.created_at AS created_atSatuan, satuan.updated_at AS updated_atSatuan ')
+                ->join('satuan', 'satuan.idSatuan = barang.satuanId')
+                ->orderBy('barang.updated_at', 'DESC')
+                ->findAll();
         }
 
         return $this->join('satuan', 'satuan.idSatuan = barang.satuanId')->where(['idBarang' => $id])->first();
