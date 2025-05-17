@@ -64,24 +64,12 @@ class Barang extends BaseController
 
     public function simpan($errors = false)
     { {
-            // proses upload gambar
-            // ambil gambar
-            $gambar = $this->request->getFile('gambar');
-
-            // pindahkan gambar ke folder images
-            $gambar->move('assets/images');
-
-            // ambil nama gambar
-            $namaGambar = $gambar->getName();
-            // akhir proses upload gambar
-            d($gambar);
-
 
             // proses simpan data
             if ($this->barangModel->save([
                 'namaBarang' => $this->request->getVar('namaBarang'),
                 'satuanId' => $this->request->getVar('idSatuan'),
-                'gambar' => $namaGambar,
+                'gambar' => $this->request->getFile('gambar')->getName()
             ]) == false) {
                 // jika gagal simpan data
                 $satuan = $this->satuanModel->findAll();
@@ -96,6 +84,12 @@ class Barang extends BaseController
             } else {
 
                 // jika berhasil simpan data
+
+                $gambar = $this->request->getFile('gambar');  // ambil gambar
+                if ($gambar->isValid()) {
+                    $gambar->move('assets/images');  // pindahkan gambar ke folder images
+                }
+
                 session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
                 return redirect()->to('/barang');
             }

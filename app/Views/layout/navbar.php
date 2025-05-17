@@ -14,6 +14,17 @@
              <li class="nav-item">
                  <a class="nav-link" href="/kegiatan">Kegiatan</a>
              </li>
+             <li class="nav-item dropdown">
+                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Lainnya</a>
+                 <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="/pejabat">Pejabat</a></li>
+                     <li><a class="dropdown-item" href="/satuan">Satuan</a></li>
+                     <li>
+                         <hr class="dropdown-divider">
+                     </li>
+                     <li><a class="dropdown-item" href="/dasarsurat">Dasar Surat</a></li>
+                 </ul>
+             </li>
          </ul>
      </div>
  </nav>

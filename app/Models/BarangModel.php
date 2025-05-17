@@ -54,6 +54,9 @@ class BarangModel extends Model
                 ->findAll();
         }
 
-        return $this->join('satuan', 'satuan.idSatuan = barang.satuanId')->where(['idBarang' => $id])->first();
+        return $this->select('*,barang.created_at AS created_atBarang, barang.updated_at AS updated_atBarang, satuan.created_at AS created_atSatuan, satuan.updated_at AS updated_atSatuan ')
+            ->join('satuan', 'satuan.idSatuan = barang.satuanId')
+            ->orderBy('barang.updated_at', 'DESC')
+            ->where(['idBarang' => $id])->first();
     }
 }
