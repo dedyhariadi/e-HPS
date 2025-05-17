@@ -53,8 +53,8 @@
             </thead>
             <tbody>
                 <?php
+
                 $i = 1;
-                // d($barang);
                 foreach ($barang as $b) : ?>
                     <tr>
                         <th scope="row" class="text-center"><?= $i++; ?></th>
