@@ -8,9 +8,11 @@
         <div class="row">
             <h2 class="my-4">Form Ubah Data Barang </h2>
         </div>
-
+        <?php
+        d($barang);
+        ?>
         <div class="row">
-            <form action="/barang/save/<?= $barang['idBarang']; ?>" method="post" enctype="multipart/form-data">
+            <form action="/barang/proses_update/<?= $barang['idBarang']; ?>" method="post" enctype="multipart/form-data">
 
                 <?= csrf_field(); ?>
 
@@ -31,9 +33,16 @@
                     <label for="satuan" class="col-sm-2 col-form-label">Satuan</label>
                     <div class="col-sm-4">
                         <select class="form-select" name="idSatuan">
-                            <?php foreach ($satuan as $b) : ?>
-                                <option value="<?= ($b['idSatuan']); ?>" <?= set_select('idSatuan', $b['idSatuan']); ?>><?= $b['namaSatuan']; ?></option>
-                            <?php endforeach; ?>
+                            <?php foreach ($satuan as $b) :
+                                if ($b['idSatuan'] == $barang['idSatuan']) {
+                            ?>
+                                    <option value="<?= ($b['idSatuan']); ?>" selected><?= $b['namaSatuan']; ?></option>
+                                <?php } else { ?>
+                                    <option value="<?= ($b['idSatuan']); ?>" <?= set_select('idSatuan', $b['idSatuan']); ?>><?= $b['namaSatuan']; ?></option>
+                            <?php
+                                }
+                            endforeach;
+                            ?>
                         </select>
                     </div>
                 </div>
@@ -41,12 +50,13 @@
                 <div class="row mb-3">
                     <label for="gambar" class="form-label col-sm-2">Gambar</label>
                     <div class="col-sm-4">
-                        <input class="form-control <?= (isset($errors['gambar'])) ? 'is-invalid' : ''; ?>" type="file" name="gambar" id="gambar" value="<?= set_value('gambar'); ?>">
+                        <input class="form-control <?= (isset($errors['gambar'])) ? 'is-invalid' : ''; ?>" type="file" name="gambar" id="gambar" value="<?= $barang['gambar']; ?>">
                         <div class="invalid-feedback">
                             <?= (isset($errors['gambar'])) ? $errors['gambar'] : ''; ?>
                         </div>
                     </div>
                 </div>
+
 
 
 

@@ -103,9 +103,9 @@ class Barang extends BaseController
         return redirect()->to('/barang');
     }
 
-    public function ubah($id, $errors = false)
+    public function form_update($id, $errors = false)
     {
-        // ambil data satuan
+
         $satuan = $this->satuanModel->findAll();
         $data = [
             'title' => 'Form Ubah Data Barang',
@@ -115,5 +115,34 @@ class Barang extends BaseController
 
         ];
         return view('barang/edit', $data);
+    }
+
+    public function proses_update($id)
+    {
+
+        d($this->request->getVar());
+        dd($this->request->getFile('gambar'));
+        // proses simpan data
+        // if ($this->barangModel->save([
+        //     'idBarang' => $id,
+        //     'namaBarang' => $this->request->getVar('namaBarang'),
+        //     'satuanId' => $this->request->getVar('idSatuan'),
+        //     'gambar' => $this->request->getFile('gambar')->getName()
+        // ]) == false) {
+
+        //     // jika gagal simpan data
+        //     $errors = $this->barangModel->errors();
+        //     return redirect()->to('/barang/edit/' . $id)->withInput()->with('errors', $errors);
+        // } else {
+
+        //     // jika berhasil simpan data
+        //     $gambar = $this->request->getFile('gambar');  // ambil gambar
+        //     if ($gambar->isValid()) {
+        //         $gambar->move('assets/images');  // pindahkan gambar ke folder images
+        //     }
+
+        //     session()->setFlashdata('pesan', 'Data Berhasil diubah.');
+        //     return redirect()->to('/barang');
+        // }
     }
 }
