@@ -47,6 +47,7 @@
                     </div>
                 </div>
 
+
                 <div class="row mb-3">
                     <label for="gambar" class="form-label col-sm-2">Gambar</label>
                     <div class="col-sm-4">
@@ -54,11 +55,9 @@
                         <div class="invalid-feedback">
                             <?= (isset($errors['gambar'])) ? $errors['gambar'] : ''; ?>
                         </div>
+                        <img src="<?= base_url('assets/images/' . $barang['gambar']); ?>" alt="" class="img-thumbnail mt-2" width="200px">
                     </div>
                 </div>
-
-
-
 
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>

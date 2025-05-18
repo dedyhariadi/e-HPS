@@ -31,7 +31,7 @@
                             </form>
 
                             <br><br>
-                            <a href="/barang">Kembali ke daftar barang</a>
+                            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/barang">Kembali ke daftar barang</a>
                         </div>
                     </div>
                 </div>

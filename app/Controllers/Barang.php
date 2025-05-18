@@ -22,10 +22,19 @@ class Barang extends BaseController
     public function index()
     {
 
-
+        // d($this->request->getVar('keyword'));
+        $keyword = $this->request->getVar('keyword');
+        if ($keyword) {
+            $barang = $this->barangModel->search($keyword);
+        } else {
+            $barang = $this->barangModel->getBarang();
+        }
         $data = [
             'title' => 'Data Barang',
-            'barang' => $this->barangModel->getBarang()
+            'barang' => $barang,
+            'pager' => $this->barangModel->pager
+            // 'barang' => $this->barangModel->paginate(10),
+
         ];
 
         // Load the view for the index page
@@ -98,6 +107,8 @@ class Barang extends BaseController
 
     public function hapus($id)
     {
+
+        // dd($id);
         $this->barangModel->delete($id);
         session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
         return redirect()->to('/barang');
@@ -120,8 +131,27 @@ class Barang extends BaseController
     public function proses_update($id)
     {
 
-        d($this->request->getVar());
-        dd($this->request->getFile('gambar'));
+
+        $this->barangModel->save([
+            'idBarang' => $id,
+            'namaBarang' => $this->request->getVar('namaBarang'),
+            'satuanId' => $this->request->getVar('idSatuan'),
+            'gambar' => $this->request->getFile('gambar')->getName()
+        ]);
+
+        $data = [
+            'title' => 'Data Barang',
+            'barang' => $this->barangModel->getBarang()
+        ];
+
+        // Load the view for the index page
+        return view('barang/index', $data);
+
+
+
+
+        // d($this->request->getVar());
+        // dd($this->request->getFile('gambar'));
         // proses simpan data
         // if ($this->barangModel->save([
         //     'idBarang' => $id,

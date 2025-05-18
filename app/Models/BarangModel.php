@@ -51,12 +51,22 @@ class BarangModel extends Model
             return $this->select('*,barang.created_at AS created_atBarang, barang.updated_at AS updated_atBarang, satuan.created_at AS created_atSatuan, satuan.updated_at AS updated_atSatuan ')
                 ->join('satuan', 'satuan.idSatuan = barang.satuanId')
                 ->orderBy('barang.updated_at', 'DESC')
-                ->findAll();
+                ->paginate(10);
         }
 
         return $this->select('*,barang.created_at AS created_atBarang, barang.updated_at AS updated_atBarang, satuan.created_at AS created_atSatuan, satuan.updated_at AS updated_atSatuan ')
             ->join('satuan', 'satuan.idSatuan = barang.satuanId')
             ->orderBy('barang.updated_at', 'DESC')
             ->where(['idBarang' => $id])->first();
+    }
+
+    public function search($keyword)
+    {
+        return $this->select('*,barang.created_at AS created_atBarang, barang.updated_at AS updated_atBarang, satuan.created_at AS created_atSatuan, satuan.updated_at AS updated_atSatuan ')
+            ->join('satuan', 'satuan.idSatuan = barang.satuanId')
+            ->like('namaBarang', $keyword)
+            ->orLike('namaSatuan', $keyword)
+            ->orderBy('barang.updated_at', 'DESC')
+            ->paginate(10);
     }
 }

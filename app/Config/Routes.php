@@ -8,7 +8,8 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 
 // kontroller barang
-$routes->get('/barang', 'Barang::index');
+$routes->match(['GET', 'POST'], '/barang', 'Barang::index');
+
 $routes->get('/barang/create', 'Barang::create');  // route ke create
 
 $routes->get('/barang/edit/(:segment)', 'Barang::form_update/$1');  // route dari detail ke form_update

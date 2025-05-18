@@ -17,10 +17,12 @@
         </div>
         <div class="col">
 
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Silahkan ketikkan pencarian.." aria-label="Recipient’s username" aria-describedby="button-addon2">
-                <button class="btn btn-primary" type="button" id="button-addon2">Cari</button>
-            </div>
+            <form action="" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Silahkan ketikkan pencarian.." name="keyword">
+                    <button class="btn btn-primary" type="submit" name="submit">Cari</button>
+                </div>
+            </form>
 
         </div>
     </div>
@@ -41,7 +43,7 @@
         <?php endif; ?>
         <!-- akhir alert -->
 
-        <table class="table table-hover">
+        <table class="table table-hover" name="barang">
             <thead class="text-center fs-5">
                 <tr>
                     <th scope="col">No</th>
@@ -67,7 +69,7 @@
 
             </tbody>
         </table>
-
+        <?= $pager->links('barang', 'barang_pagination') ?>
     </div>
 </div>
 
