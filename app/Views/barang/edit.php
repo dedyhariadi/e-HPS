@@ -21,7 +21,9 @@
                     <label for="namaBarang" class="col-sm-2 col-form-label">Nama Barang</label>
 
                     <div class="col-sm-4">
-                        <input type="text" class="form-control <?= (isset($errors['namaBarang'])) ? 'is-invalid' : ''; ?>" name="namaBarang" autofocus value="<?= $barang['namaBarang'] ?>">
+
+                        <input type="text" class="form-control <?= (isset($errors['namaBarang'])) ? 'is-invalid' : ''; ?>" name="namaBarang" autofocus value="<?= set_value('namaBarang', $barang['namaBarang']) ?>">
+
                         <div class="invalid-feedback">
                             <?= (isset($errors['namaBarang'])) ? $errors['namaBarang'] : ''; ?>
                         </div>
@@ -36,7 +38,7 @@
                             <?php foreach ($satuan as $b) :
                                 if ($b['idSatuan'] == $barang['idSatuan']) {
                             ?>
-                                    <option value="<?= ($b['idSatuan']); ?>" selected><?= $b['namaSatuan']; ?></option>
+                                    <option value="<?= ($b['idSatuan']); ?>" <?= set_select('idSatuan', $b['idSatuan']); ?> selected><?= $b['namaSatuan']; ?></option>
                                 <?php } else { ?>
                                     <option value="<?= ($b['idSatuan']); ?>" <?= set_select('idSatuan', $b['idSatuan']); ?>><?= $b['namaSatuan']; ?></option>
                             <?php

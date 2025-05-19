@@ -55,8 +55,13 @@
             </thead>
             <tbody>
                 <?php
+                if ($tandaKeyword == false) {
 
-                $i = 1;
+                    $i = 1 + (8 * ($currentPage - 1)); //angka 8, disesuikan dengan jumlah baris per halaman di pagination (barangModel)
+                } else {
+                    $i = 1;
+                }
+
                 foreach ($barang as $b) : ?>
                     <tr>
                         <th scope="row" class="text-center"><?= $i++; ?></th>
@@ -66,10 +71,15 @@
                         <td class="text-center"><a type="button" class="btn btn-warning" href="/barang/<?= $b['idBarang']; ?>">Detail</a></td>
                     </tr>
                 <?php endforeach; ?>
-
             </tbody>
         </table>
-        <?= $pager->links('barang', 'barang_pagination') ?>
+
+        <?php
+        if ($tandaKeyword == false) {
+            echo $pager->links('barang', 'barang_pagination');
+        }
+        ?>
+
     </div>
 </div>
 

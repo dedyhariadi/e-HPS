@@ -45,7 +45,7 @@
                     <th scope="col">No</th>
                     <th scope="col">Sumber</th>
                     <th scope="col">Link</th>
-                    <th scope="col">Harga</th>
+                    <th scope="col" colspan="2">Harga</th>
                     <th scope="col">Last Updated</th>
                     <th scope="col">Aksi</th>
                 </tr>
@@ -58,7 +58,16 @@
                         <th scope="row" class="text-center"><?= $i++; ?></th>
                         <td><?= $b['sumber']; ?></td>
                         <td><?= $b['link']; ?></td>
-                        <td><?= $b['harga']; ?></td>
+                        <td class="text-end">
+                            <?php
+                            echo "Rp ";
+                            ?>
+                        </td>
+                        <td class="text-end">
+                            <?php
+                            echo number_format($b['harga'], 0, ",", ".");
+                            ?>
+                        </td>
                         <td class="text-center"><?= date('d M Y', strtotime($b['updated_at'])); ?></td>
                         <td class="text-center"><a type="button" class="btn btn-warning" href="/barang/<?= $b['idBarang']; ?>">Edit</a> <a type="button" class="btn btn-danger" href="/barang/<?= $b['idBarang']; ?>">Hapus</a> </td>
                     </tr>

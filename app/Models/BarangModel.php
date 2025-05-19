@@ -10,6 +10,7 @@ class BarangModel extends Model
     protected $primaryKey       = 'idBarang';
     protected $useAutoIncrement = true;
     protected $useTimestamps = true;
+
     protected $allowedFields    = [
         'idBarang',
         'namaBarang',
@@ -20,7 +21,7 @@ class BarangModel extends Model
     ];
 
     protected $validationRules = [
-        'namaBarang' => 'required|min_length[3]|max_length[50]|is_unique[barang.namaBarang]',
+        'namaBarang' => 'required|min_length[3]|max_length[50]|is_unique[barang.namaBarang,idBarang,{idBarang}]',
         'satuanId'   => 'required',
         'gambar'     => 'uploaded[gambar]|max_size[gambar,2048]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
     ];
@@ -51,7 +52,7 @@ class BarangModel extends Model
             return $this->select('*,barang.created_at AS created_atBarang, barang.updated_at AS updated_atBarang, satuan.created_at AS created_atSatuan, satuan.updated_at AS updated_atSatuan ')
                 ->join('satuan', 'satuan.idSatuan = barang.satuanId')
                 ->orderBy('barang.updated_at', 'DESC')
-                ->paginate(10);
+                ->paginate(8, 'barang');
         }
 
         return $this->select('*,barang.created_at AS created_atBarang, barang.updated_at AS updated_atBarang, satuan.created_at AS created_atSatuan, satuan.updated_at AS updated_atSatuan ')
@@ -67,6 +68,6 @@ class BarangModel extends Model
             ->like('namaBarang', $keyword)
             ->orLike('namaSatuan', $keyword)
             ->orderBy('barang.updated_at', 'DESC')
-            ->paginate(10);
+            ->findAll();
     }
 }

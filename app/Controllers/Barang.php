@@ -19,21 +19,29 @@ class Barang extends BaseController
         $this->satuanModel = new SatuanModel();
     }
 
-    public function index()
+    public function index($tandaKeyword = false)
     {
 
-        // d($this->request->getVar('keyword'));
+        // proses pencarian
         $keyword = $this->request->getVar('keyword');
+
         if ($keyword) {
+            $tandaKeyword = true;
             $barang = $this->barangModel->search($keyword);
         } else {
+
             $barang = $this->barangModel->getBarang();
         }
+
+        // pagination
+        $currentPage = $this->request->getVar('page_barang') ? $this->request->getVar('page_barang') : 1; //cek variabel page_barang, kalo tidak ada variabel page_barang maka nilainya 1, kalo ada maka nilainya variabel page_barang itu sendiri
+        // dd($barang);
         $data = [
             'title' => 'Data Barang',
             'barang' => $barang,
-            'pager' => $this->barangModel->pager
-            // 'barang' => $this->barangModel->paginate(10),
+            'pager' => $this->barangModel->pager,
+            'currentPage' => $currentPage,
+            'tandaKeyword' => $tandaKeyword
 
         ];
 
@@ -71,37 +79,36 @@ class Barang extends BaseController
     }
 
     public function simpan($errors = false)
-    { {
+    {
 
-            // proses simpan data
-            if ($this->barangModel->save([
-                'namaBarang' => $this->request->getVar('namaBarang'),
-                'satuanId' => $this->request->getVar('idSatuan'),
-                'gambar' => $this->request->getFile('gambar')->getName()
-            ]) == false) {
+        // proses simpan data
+        if ($this->barangModel->save([
+            'namaBarang' => $this->request->getVar('namaBarang'),
+            'satuanId' => $this->request->getVar('idSatuan'),
+            'gambar' => $this->request->getFile('gambar')->getName()
+        ]) == false) {
 
-                // jika gagal simpan data
-                $satuan = $this->satuanModel->findAll();
-                $errors = $this->barangModel->errors();
-                $data = [
-                    'title' => 'Tambah Data Barang',
-                    'satuan' => $satuan,
-                    'errors' => $errors,
-                ];
+            // jika gagal simpan data
+            $satuan = $this->satuanModel->findAll();
+            $errors = $this->barangModel->errors();
+            $data = [
+                'title' => 'Tambah Data Barang',
+                'satuan' => $satuan,
+                'errors' => $errors,
+            ];
+            d($errors);
+            return view('/barang/create', $data);
+        } else {
 
-                return view('/barang/create', $data);
-            } else {
+            // jika berhasil simpan data
 
-                // jika berhasil simpan data
-
-                $gambar = $this->request->getFile('gambar');  // ambil gambar
-                if ($gambar->isValid()) {
-                    $gambar->move('assets/images');  // pindahkan gambar ke folder images
-                }
-
-                session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
-                return redirect()->to('/barang');
+            $gambar = $this->request->getFile('gambar');  // ambil gambar
+            if ($gambar->isValid()) {
+                $gambar->move('assets/images');  // pindahkan gambar ke folder images
             }
+
+            session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
+            return redirect()->to('/barang');
         }
     }
 
@@ -130,49 +137,41 @@ class Barang extends BaseController
 
     public function proses_update($id)
     {
+        // menambahkan aturan validasi pada ID barang untuk ignore namaBarang yang sama dengan sebelumnya
+        $idBarang = 'idBarang';
+        $aturan = 'max_length[19]|is_natural_no_zero';
+        $this->barangModel->setValidationRule($idBarang, $aturan);
 
-
-        $this->barangModel->save([
+        if ($this->barangModel->save([
             'idBarang' => $id,
             'namaBarang' => $this->request->getVar('namaBarang'),
             'satuanId' => $this->request->getVar('idSatuan'),
             'gambar' => $this->request->getFile('gambar')->getName()
-        ]);
+        ]) == false) {
 
-        $data = [
-            'title' => 'Data Barang',
-            'barang' => $this->barangModel->getBarang()
-        ];
+            // jika gagal simpan data
+            $satuan = $this->satuanModel->findAll();
+            $errors = $this->barangModel->errors();
 
-        // Load the view for the index page
-        return view('barang/index', $data);
+            $data = [
+                'title' => 'Update Data Barang',
+                'satuan' => $satuan,
+                'barang' => $this->barangModel->getBarang($id),
+                'errors' => $errors,
+            ];
 
+            return view('/barang/edit', $data);
+        } else {
 
+            // jika berhasil simpan data
 
+            $gambar = $this->request->getFile('gambar');  // ambil gambar
+            if ($gambar->isValid()) {
+                $gambar->move('assets/images');  // pindahkan gambar ke folder images
+            }
 
-        // d($this->request->getVar());
-        // dd($this->request->getFile('gambar'));
-        // proses simpan data
-        // if ($this->barangModel->save([
-        //     'idBarang' => $id,
-        //     'namaBarang' => $this->request->getVar('namaBarang'),
-        //     'satuanId' => $this->request->getVar('idSatuan'),
-        //     'gambar' => $this->request->getFile('gambar')->getName()
-        // ]) == false) {
-
-        //     // jika gagal simpan data
-        //     $errors = $this->barangModel->errors();
-        //     return redirect()->to('/barang/edit/' . $id)->withInput()->with('errors', $errors);
-        // } else {
-
-        //     // jika berhasil simpan data
-        //     $gambar = $this->request->getFile('gambar');  // ambil gambar
-        //     if ($gambar->isValid()) {
-        //         $gambar->move('assets/images');  // pindahkan gambar ke folder images
-        //     }
-
-        //     session()->setFlashdata('pesan', 'Data Berhasil diubah.');
-        //     return redirect()->to('/barang');
-        // }
+            session()->setFlashdata('pesan', 'Data Berhasil di UPDATE.');
+            return redirect()->to('/barang');
+        }
     }
 }
