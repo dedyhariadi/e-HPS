@@ -26,3 +26,7 @@
 #img-upload{
     width: 100%;
 }
+
+#errorGambar {
+    display: none;
+}

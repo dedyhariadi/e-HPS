@@ -53,11 +53,15 @@
                 <div class="row mb-3">
                     <label for="gambar" class="form-label col-sm-2">Gambar</label>
                     <div class="col-sm-4">
-                        <input class="form-control <?= (isset($errors['gambar'])) ? 'is-invalid' : ''; ?>" type="file" name="gambar" id="gambar" value="<?= $barang['gambar']; ?>">
-                        <div class="invalid-feedback">
-                            <?= (isset($errors['gambar'])) ? $errors['gambar'] : ''; ?>
-                        </div>
-                        <img src="<?= base_url('assets/images/' . $barang['gambar']); ?>" alt="" class="img-thumbnail mt-2" width="200px">
+
+                        <span class="input-group-btn">
+                            <input class="btn-file form-control <?= (isset($errors['gambar'])) ? 'is-invalid' : ''; ?>" type="file" name="gambar" id="gambar" value="<?= $barang['gambar']; ?>">
+                            <div class="invalid-feedback">
+                                <?= (isset($errors['gambar'])) ? $errors['gambar'] : ''; ?>
+                            </div>
+
+                        </span>
+                        <img src="<?= base_url('assets/images/' . $barang['gambar']); ?>" alt="" class="img-thumbnail mt-2" id='img-upload' width="200px">
                     </div>
                 </div>
 

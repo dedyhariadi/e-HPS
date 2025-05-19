@@ -19,7 +19,7 @@
                         <div class="card-body">
                             <h5 class="card-title"><?= $barang['namaBarang']; ?></h5>
                             <p class="card-text"><b>Satuan : </b><?= $barang['namaSatuan']; ?></p>
-                            <p class="card-text"><small class="text-muted"> <b>Last updated :</b> <?= date('d M Y', strtotime($barang['updated_at'])); ?></small></p>
+                            <p class="card-text"><small class="text-muted"> <b>Last updated :</b> <?= date('d M Y H:m:s', strtotime($barang['updated_atBarang'])); ?></small></p>
 
                             <a href="/barang/edit/<?= $barang['idBarang']; ?>" class="btn btn-warning">Edit</a>
 

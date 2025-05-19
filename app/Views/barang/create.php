@@ -41,14 +41,21 @@
                 <div class="row mb-3">
                     <label for="gambar" class="form-label col-sm-2">Gambar</label>
                     <div class="col-sm-4">
-                        <input class="form-control <?= (isset($errors['gambar'])) ? 'is-invalid' : ''; ?>" type="file" name="gambar" id="gambar" value="<?= set_value('gambar'); ?>">
-                        <div class="invalid-feedback">
-                            <?= (isset($errors['gambar'])) ? $errors['gambar'] : ''; ?>
-                        </div>
+                        <span class="input-group-btn">
+
+                            <input class="btn-file  form-control <?= (isset($errors['gambar'])) ? 'is-invalid' : ''; ?>" type="file" name="gambar" id="gambar" value="<?= set_value('gambar'); ?>">
+                            <div class="invalid-feedback">
+                                <?= (isset($errors['gambar'])) ? $errors['gambar'] : ''; ?>
+                            </div>
+
+                        </span>
+                        <img id='img-upload' />
                     </div>
                 </div>
+
                 <br><br>
-                <div class="row mb-3">
+
+                <!-- <div class="row mb-3">
                     <div class="form-group">
                         <label>Upload Image</label>
                         <div class="input-group">
@@ -61,7 +68,7 @@
                         </div>
                         <img id='img-upload' />
                     </div>
-                </div>
+                </div> -->
 
 
 

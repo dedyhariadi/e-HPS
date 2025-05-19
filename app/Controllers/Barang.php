@@ -80,14 +80,23 @@ class Barang extends BaseController
 
     public function simpan($errors = false)
     {
+        $gambar = $this->request->getFile('gambar');  // ambil gambar
+
+        if ($gambar->isValid()) {
+            $gambar->move('assets/images');  // pindahkan gambar ke folder images
+            $namaGambar = $gambar->getName();
+        } else {
+            $namaGambar = 'default.jpg';
+        }
 
         // proses simpan data
         if ($this->barangModel->save([
             'namaBarang' => $this->request->getVar('namaBarang'),
             'satuanId' => $this->request->getVar('idSatuan'),
-            'gambar' => $this->request->getFile('gambar')->getName()
+            'gambar' => $namaGambar
         ]) == false) {
 
+            // dd($namaGambar);
             // jika gagal simpan data
             $satuan = $this->satuanModel->findAll();
             $errors = $this->barangModel->errors();
@@ -98,24 +107,24 @@ class Barang extends BaseController
             ];
             d($errors);
             return view('/barang/create', $data);
-        } else {
-
-            // jika berhasil simpan data
-
-            $gambar = $this->request->getFile('gambar');  // ambil gambar
-            if ($gambar->isValid()) {
-                $gambar->move('assets/images');  // pindahkan gambar ke folder images
-            }
-
-            session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
-            return redirect()->to('/barang');
         }
+
+        // jika berhasil simpan data
+
+        session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
+        return redirect()->to('/barang');
     }
 
     public function hapus($id)
     {
 
         // dd($id);
+        $data = $this->barangModel->find($id);
+        $namaFile = $data['gambar'];
+        if (file_exists('assets/images/' . $namaFile)) {
+            unlink('assets/images/' . $namaFile);
+        }
+
         $this->barangModel->delete($id);
         session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
         return redirect()->to('/barang');
@@ -142,11 +151,20 @@ class Barang extends BaseController
         $aturan = 'max_length[19]|is_natural_no_zero';
         $this->barangModel->setValidationRule($idBarang, $aturan);
 
+
+        //periksa apakah ada gambar diupload
+        if ($this->request->getFile('gambar')->isValid()) {
+            $namaGambar = $this->request->getFile('gambar')->getName();
+        } else {
+            $gambar = $this->barangModel->find($id);
+            $namaGambar = $gambar['gambar'];
+        }
+
         if ($this->barangModel->save([
             'idBarang' => $id,
             'namaBarang' => $this->request->getVar('namaBarang'),
             'satuanId' => $this->request->getVar('idSatuan'),
-            'gambar' => $this->request->getFile('gambar')->getName()
+            'gambar' => $namaGambar
         ]) == false) {
 
             // jika gagal simpan data

@@ -23,7 +23,8 @@ class BarangModel extends Model
     protected $validationRules = [
         'namaBarang' => 'required|min_length[3]|max_length[50]|is_unique[barang.namaBarang,idBarang,{idBarang}]',
         'satuanId'   => 'required',
-        'gambar'     => 'uploaded[gambar]|max_size[gambar,2048]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+        // 'gambar'     => 'uploaded[gambar]|max_size[gambar,2048]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+        // 'gambar'     => 'max_size[gambar,2048]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
     ];
 
     protected $validationMessages = [
@@ -37,7 +38,7 @@ class BarangModel extends Model
             'required' => 'Satuan Harus Dipilih'
         ],
         'gambar' => [
-            'uploaded' => 'Harus ada gambar yang di upload',
+            // 'uploaded' => 'Harus ada gambar yang di upload',
             'max_size' => 'Ukuran Gambar Terlalu Besar',
             'is_image' => 'Yang Anda Pilih Bukan Gambar',
             'mime_in'  => 'Yang Anda Pilih Bukan Gambar'
