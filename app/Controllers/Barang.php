@@ -80,23 +80,25 @@ class Barang extends BaseController
 
     public function simpan($errors = false)
     {
+
         $gambar = $this->request->getFile('gambar');  // ambil gambar
 
-        if ($gambar->isValid()) {
-            $gambar->move('assets/images');  // pindahkan gambar ke folder images
-            $namaGambar = $gambar->getName();
-        } else {
-            $namaGambar = 'default.jpg';
+        if ($gambar->getError() == 4) {
+            $this->barangModel->save([
+                'namaBarang' => $this->request->getVar('namaBarang'),
+                'satuanId' => $this->request->getVar('idSatuan'),
+                'gambar' => 'default.jpg'
+            ]);
+
+            // $namaGambar = 'default.jpg'; // jika tidak ada gambar yang diupload, maka gunakan gambar default        
         }
 
         // proses simpan data
         if ($this->barangModel->save([
             'namaBarang' => $this->request->getVar('namaBarang'),
             'satuanId' => $this->request->getVar('idSatuan'),
-            'gambar' => $namaGambar
-        ]) == false) {
-
-            // dd($namaGambar);
+            'gambar' => $gambar->getRandomName()
+        ])  == false && $gambar->getError() <> 4) {
             // jika gagal simpan data
             $satuan = $this->satuanModel->findAll();
             $errors = $this->barangModel->errors();
@@ -105,12 +107,20 @@ class Barang extends BaseController
                 'satuan' => $satuan,
                 'errors' => $errors,
             ];
+
             d($errors);
             return view('/barang/create', $data);
         }
 
-        // jika berhasil simpan data
 
+        if ($gambar->getError() <> 4) {
+            // // jika berhasil simpan data
+            $id = $this->barangModel->insertID(); // ambil id barang yang baru saja disimpan
+            $barang = $this->barangModel->find($id); // ambil data barang yang baru saja disimpan
+
+            $gambar->move('assets/images', $barang['gambar']);  // pindahkan gambar ke folder images
+
+        }
         session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
         return redirect()->to('/barang');
     }
