@@ -53,25 +53,6 @@
                     </div>
                 </div>
 
-                <br><br>
-
-                <!-- <div class="row mb-3">
-                    <div class="form-group">
-                        <label>Upload Image</label>
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <span class="btn btn-default btn-file">
-                                    Browse… <input type="file" id="imgInp">
-                                </span>
-                            </span>
-                            <input type="text" class="form-control" readonly>
-                        </div>
-                        <img id='img-upload' />
-                    </div>
-                </div> -->
-
-
-
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>
         </div>

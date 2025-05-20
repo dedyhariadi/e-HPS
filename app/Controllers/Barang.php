@@ -55,7 +55,7 @@ class Barang extends BaseController
         $data = [
             'title' => 'Detail Barang',
             'barang' => $this->barangModel->getBarang($id),
-            'barangRef' => $this->barangModel->join('referensi', 'referensi.barangId=barang.idBarang')->where(['idBarang' => $id])->findAll()
+            'barangRef' => $this->barangModel->join('referensi', 'referensi.barangId=barang.idBarang')->where(['idBarang' => $id])->orderBy('referensi.updated_at', 'DESC')->findAll()
         ];
 
         // jika data barang tidak ada di tabel
@@ -83,15 +83,31 @@ class Barang extends BaseController
 
         $gambar = $this->request->getFile('gambar');  // ambil gambar
 
+
+        //menyimpan data dengan tanpa upload gambar
+
         if ($gambar->getError() == 4) {
-            $this->barangModel->save([
+            if ($this->barangModel->save([
                 'namaBarang' => $this->request->getVar('namaBarang'),
                 'satuanId' => $this->request->getVar('idSatuan'),
                 'gambar' => 'default.jpg'
-            ]);
+            ]) == false) {
+                // jika gagal simpan data
+                $satuan = $this->satuanModel->findAll();
+                $errors = $this->barangModel->errors();
+                $data = [
+                    'title' => 'Tambah Data Barang',
+                    'satuan' => $satuan,
+                    'errors' => $errors,
+                ];
 
-            // $namaGambar = 'default.jpg'; // jika tidak ada gambar yang diupload, maka gunakan gambar default        
+                d($errors);
+                return view('/barang/create', $data);
+            }
         }
+
+
+        // $namaGambar = 'default.jpg'; // jika tidak ada gambar yang diupload, maka gunakan gambar default        
 
         // proses simpan data
         if ($this->barangModel->save([
