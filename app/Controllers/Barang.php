@@ -162,14 +162,6 @@ class Barang extends BaseController
         $this->barangModel->setValidationRule($idBarang, $aturan);
 
 
-        //periksa apakah ada gambar diupload
-        // if ($this->request->getFile('gambar')->isValid()) {
-        //     $namaGambar = $this->request->getFile('gambar')->getName();
-        // } else {
-        //     $gambar = $this->barangModel->find($id);
-        //     $namaGambar = $gambar['gambar'];
-        // }
-
         if ($this->barangModel->save([
             'idBarang' => $id,
             'namaBarang' => $this->request->getVar('namaBarang'),
@@ -189,39 +181,41 @@ class Barang extends BaseController
             ];
 
             return view('/barang/edit', $data);
-        } else {
+        }
 
-            // jika berhasil simpan data
-            // $gambar = $this->request->getFile('gambar');  // ambil gambar
+        // jika berhasil simpan data
+        $gambar = $this->request->getFile('gambar');  // ambil gambar
 
+        // dd($gambar);
+        if ($gambar->getError() <> 4) { // cek apakah ada gambar 
+            // d($id);
+            if ($this->barangModel->save([
+                'idBarang' => $id,
+                'gambar' => $gambar->getRandomName()
+            ]) == false) {
+                // jika gagal simpan data
+                $satuan = $this->satuanModel->findAll();
+                $errors = $this->barangModel->errors();
 
-            $gambar = $this->request->getFile('gambar');  // ambil gambar
-            // $namaGambar = $this->barangModel->find($id);
+                $data = [
+                    'title' => 'Update Data Barang',
+                    'satuan' => $satuan,
+                    'barang' => $this->barangModel->getBarang($id),
+                    'errors' => $errors,
+                ];
 
-
-            if ($gambar->getError() <> 4 && $gambar->isValid()) { // cek apakah ada gambar dan gambarnya valid
-                // $id = $this->barangModel->insertID(); // ambil id barang yang baru saja disimpan
-                d($id);
-                $this->barangModel->save([
-                    'idBarang' => $id,
-                    'gambar' => $gambar->getRandomName()
-                ]);
-
-                // $id = $this->barangModel->insertID();
-                $gambarUpdate = $this->barangModel->find($id); // ambil data barang yang baru saja disimpan
-
-                // dd($gambarUpdate);
-
-                $gambar->move('assets/images', $gambarUpdate['gambar']);  // pindahkan gambar ke folder images
+                return view('/barang/edit', $data);
             }
 
-
-
-
-            // // jika berhasil simpan data
-
-            session()->setFlashdata('pesan', 'Data Berhasil di UPDATE.');
-            return redirect()->to('/barang');
+            $gambarUpdate = $this->barangModel->find($id); // ambil data barang yang baru saja disimpan
+            $gambar->move('assets/images', $gambarUpdate['gambar']);  // pindahkan gambar ke folder images
         }
+
+
+
+        // // jika berhasil simpan data
+
+        session()->setFlashdata('pesan', 'Data Berhasil di UPDATE.');
+        return redirect()->to('/barang');
     }
 }
