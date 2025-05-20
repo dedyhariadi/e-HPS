@@ -59,8 +59,8 @@ class Kegiatan extends Migration
 
     public function down()
     {
-        $this->forge->dropForeignKey('pejabatId', 'kegiatan_pejabatId_foreign');
-        $this->forge->dropForeignKey('dasarId', 'kegiatan_dasarId_foreign');
+        // $this->forge->dropForeignKey('pejabatId', 'kegiatan_pejabatId_foreign');
+        // $this->forge->dropForeignKey('dasarId', 'kegiatan_dasarId_foreign');
         $this->forge->dropTable('kegiatan');
     }
 }

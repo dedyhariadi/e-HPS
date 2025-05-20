@@ -77,7 +77,14 @@
                 foreach ($barangRef as $b) : ?>
                     <tr>
                         <th scope="row" class="text-center"><?= $i++; ?></th>
-                        <td><?= $b['sumber']; ?></td>
+                        <td>
+                            <?php
+                            foreach ($sumber as $s) :
+                                echo ($b['sumberId'] == $s['idSumber']) ? $s['namaSumber'] : '';
+                            endforeach;
+                            ?>
+
+                        </td>
                         <td><?= $b['link']; ?></td>
                         <td class="text-end">
                             <?php

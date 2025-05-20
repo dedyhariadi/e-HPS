@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\BarangModel;
 use App\Models\ReferensiModel;
+use App\Models\SatuanModel;
+use App\Models\SumberModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Referensi extends BaseController
@@ -12,12 +14,16 @@ class Referensi extends BaseController
 
     protected $barangModel;
     protected $referensiModel;
+    protected $satuanModel;
+    protected $sumberModel;
 
     public function __construct()
     {
         // Load the model
         $this->barangModel = new BarangModel();
         $this->referensiModel = new ReferensiModel();
+        $this->satuanModel = new SatuanModel();
+        $this->sumberModel = new SumberModel();
     }
 
     public function create($idBarang)
@@ -26,7 +32,8 @@ class Referensi extends BaseController
             'title' => 'Detail Barang',
             'barang' => $this->barangModel->getBarang($idBarang),
             'barangRef' => $this->barangModel->join('referensi', 'referensi.barangId=barang.idBarang')->where(['idBarang' => $idBarang])->findAll(),
-            'referensi' => $this->referensiModel->getReferensi($idBarang)
+            'referensi' => $this->referensiModel->getReferensi($idBarang),
+            'sumber' => $this->sumberModel->findAll()
         ];
 
         // jika data barang tidak ada di tabel
@@ -42,7 +49,7 @@ class Referensi extends BaseController
         $idBarang = $this->request->getVar('barangId');
 
         $data = [
-            'sumber' => $this->request->getVar('sumber'),
+            'sumberId' => $this->request->getVar('sumber'),
             'link' => $this->request->getVar('link'),
             'harga' => $this->request->getVar('harga'),
             'barangId' => $idBarang
@@ -56,6 +63,7 @@ class Referensi extends BaseController
                 'barang' => $this->barangModel->getBarang($idBarang),
                 'barangRef' => $this->barangModel->join('referensi', 'referensi.barangId=barang.idBarang')->where(['idBarang' => $idBarang])->findAll(),
                 'referensi' => $this->referensiModel->getReferensi($idBarang),
+                'sumber' => $this->sumberModel->findAll(),
                 'errors' => $errors,
             ];
 
@@ -83,9 +91,11 @@ class Referensi extends BaseController
             'title' => 'Update Data Referensi',
             'barang' => $this->barangModel->getBarang($idBarang),
             'barangRef' => $this->barangModel->join('referensi', 'referensi.barangId=barang.idBarang')->where(['idBarang' => $idBarang])->findAll(),
-            'referensi' => $this->referensiModel->getReferensi($idBarang)
+            'referensi' => $this->referensiModel->getReferensi($idBarang),
+            'referensiSingle' => $this->referensiModel->find($idReferensi),
+            'sumber' => $this->sumberModel->findAll()
         ];
-        // dd($data);
+
         // jika data barang tidak ada di tabel
         if (empty($data['barang'])) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Nama Barang tidak ditemukan');
@@ -94,5 +104,39 @@ class Referensi extends BaseController
 
 
         return view('referensi/edit', $data);
+    }
+
+    public function proses_edit()
+    {
+        $idBarang = $this->request->getVar('barangId');
+
+        $data = [
+            'idReferensi' => $this->request->getVar('referensiId'),
+            'sumberId' => $this->request->getVar('sumberId'),
+            'link' => $this->request->getVar('link'),
+            'harga' => $this->request->getVar('harga'),
+            'barangId' => $idBarang
+        ];
+
+        if (!$this->referensiModel->save($data)) {
+            $errors = $this->referensiModel->errors();
+
+
+            $data = [
+                'title' => 'Detail Barang',
+                'barang' => $this->barangModel->getBarang($idBarang),
+                'barangRef' => $this->barangModel->join('referensi', 'referensi.barangId=barang.idBarang')->where(['idBarang' => $idBarang])->findAll(),
+                'referensi' => $this->referensiModel->getReferensi($idBarang),
+                'referensiSingle' => $this->referensiModel->find($this->request->getVar('referensiId')),
+                'sumber' => $this->sumberModel->findAll(),
+                'errors' => $errors,
+            ];
+
+            d($errors);
+            return view('/referensi/edit', $data);
+        }
+
+        session()->setFlashdata('pesan', 'Data referensi berhasil ditambahkan');
+        return redirect()->to('/barang/' . $this->request->getVar('barangId'));
     }
 }

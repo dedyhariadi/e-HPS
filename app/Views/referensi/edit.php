@@ -49,28 +49,25 @@
             </div>
 
             <div class="row">
-                <form action="/referensi/save" method="post">
+                <form action="/referensi/proses_edit" method="post">
 
                     <?= csrf_field(); ?>
                     <input type="hidden" name="barangId" value="<?= $barang['idBarang']; ?>">
+                    <input type="hidden" name="referensiId" value="<?= $referensiSingle['idReferensi']; ?>">
 
                     <div class="row mb-3">
                         <label for="sumber" class="col-sm-2 col-form-label">Sumber</label>
                         <div class="col-sm-4">
-                            <select class="form-select" name="sumber" id="sumber">
+                           
+                            <select class="form-select" name="sumberId" id="sumber">
 
-                                <option value="<?= $referensi[0]['sumber']; ?>" selected><?= $referensi[0]['sumber']; ?></option>
-
-                                <option value="<?= set_select('sumber', 'Tokopedia'); ?>">Tokopedia</option>
-                                <option value="<?= set_select('sumber', 'Shopee'); ?>">Shopee</option>
-                                <option value="<?= set_select('sumber', 'Lazada'); ?>">Lazada</option>
-                                <option value="<?= set_select('sumber', 'Giat Sebelumnya'); ?>">Giat Sebelumnya</option>
+                                <?php foreach ($sumber as $s) : ?>
+                                    <option value="<?= $s['idSumber']; ?>" <?= ($s['idSumber'] == $referensiSingle['sumberId']) ? 'selected' : ''; ?> <?= set_select('sumberId', $s['idSumber']); ?>>
+                                        <?= $s['namaSumber']; ?>
+                                    </option>
+                                <?php endforeach; ?>
 
                             </select>
-
-
-
-
 
                         </div>
                     </div>
@@ -78,7 +75,7 @@
                     <div class="row mb-3">
                         <label for="Link" class="col-sm-2 col-form-label">Link</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control <?= (isset($errors['link'])) ? 'is-invalid' : ''; ?>" value="<?= set_value('link', $referensi[0]['link']); ?>" name="link" id="link">
+                            <input type="text" class="form-control <?= (isset($errors['link'])) ? 'is-invalid' : ''; ?>" value="<?= set_value('link', $referensiSingle['link']); ?>" name="link" id="link">
                             <div class="invalid-feedback">
                                 <?= (isset($errors['link'])) ? $errors['link'] : ''; ?>
                             </div>
@@ -88,18 +85,17 @@
                     <div class="row mb-3">
                         <label for="Harga" class="col-sm-2 col-form-label">Harga</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control <?= (isset($errors['harga'])) ? 'is-invalid' : ''; ?>" value="<?= set_value('harga', $referensi[0]['harga']); ?>" name="harga" id="Harga">
+                            <input type="text" class="form-control <?= (isset($errors['harga'])) ? 'is-invalid' : ''; ?>" value="<?= set_value('harga', $referensiSingle['harga']); ?>" name="harga" id="Harga">
                             <div class="invalid-feedback">
                                 <?= (isset($errors['harga'])) ? $errors['harga'] : ''; ?>
                             </div>
                         </div>
 
                     </div>
-
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
             </div>
 
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            </form>
         </div>
     </div>
 </div>

@@ -59,10 +59,9 @@
                         <div class="col-sm-4">
                             <select class="form-select" name="sumber" id="sumber">
 
-                                <option value="Tokopedia">Tokopedia</option>
-                                <option value="Shopee">Shopee</option>
-                                <option value="Lazada">Lazada</option>
-                                <option value="Giat Sebelumnya">Giat Sebelumnya</option>
+                                <?php foreach ($sumber as $s) : ?>
+                                    <option value="<?= $s['idSumber']; ?>"><?= $s['namaSumber']; ?></option>
+                                <?php endforeach; ?>
 
                             </select>
                         </div>

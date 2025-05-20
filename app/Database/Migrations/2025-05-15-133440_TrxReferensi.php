@@ -34,8 +34,8 @@ class TrxReferensi extends Migration
 
     public function down()
     {
-        $this->forge->dropForeignKey('trxGiatBarangId', 'trxReferensi_trxGiatBarangId_foreign');
-        $this->forge->dropForeignKey('referensiId', 'trxReferensi_referensiId_foreign');
+        // $this->forge->dropForeignKey('trxGiatBarangId', 'trxReferensi_trxGiatBarangId_foreign');
+        // $this->forge->dropForeignKey('referensiId', 'trxReferensi_referensiId_foreign');
         $this->forge->dropTable('trxReferensi');
     }
 }

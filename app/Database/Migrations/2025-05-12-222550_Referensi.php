@@ -15,9 +15,10 @@ class Referensi extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'sumber' => [
-                'type'       => 'ENUM',
-                'constraint' => ['Tokopedia', 'Shopee', 'Lazada', 'Giat Sebelumnya'],
+            'sumberId' => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
             ],
             'link' => [
                 'type'       => 'VARCHAR',

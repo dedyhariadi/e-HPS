@@ -45,7 +45,7 @@ class Barang extends Migration
 
     public function down()
     {
-        $this->forge->dropForeignKey('satuanId', 'barang_satuanId_foreign');
+        // $this->forge->dropForeignKey('satuanId', 'barang_satuanId_foreign');
         $this->forge->dropTable('barang');
     }
 }

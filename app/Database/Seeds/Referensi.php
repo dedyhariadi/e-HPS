@@ -8,10 +8,10 @@ class Referensi extends Seeder
 {
     public function run()
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $data = [
                 [
-                    'sumber' => 'Tokopedia',
+                    'sumberId' => rand(1, 4),
                     'link' => 'www.tokopedia.com',
                     'harga' => rand(2000, 100000),
                     'barangId' => rand(1, 20),
@@ -19,7 +19,7 @@ class Referensi extends Seeder
                     'updated_at' => date('Y-m-d H:i:s'),
                 ],
                 [
-                    'sumber' => 'Shopee',
+                    'sumberId' => rand(1, 4),
                     'link' => 'www.shopee.com',
                     'harga' => rand(2000, 100000),
                     'barangId' => rand(1, 20),
@@ -27,7 +27,7 @@ class Referensi extends Seeder
                     'updated_at' => date('Y-m-d H:i:s'),
                 ],
                 [
-                    'sumber' => 'Lazada',
+                    'sumberId' => rand(1, 4),
                     'link' => 'www.lazada.com',
                     'harga' => rand(2000, 100000),
                     'barangId' => rand(1, 20),
@@ -35,7 +35,7 @@ class Referensi extends Seeder
                     'updated_at' => date('Y-m-d H:i:s'),
                 ],
                 [
-                    'sumber' => 'Giat sebelumnya',
+                    'sumberId' => rand(1, 4),
                     'link' => 'R/10/IV/2005',
                     'harga' => rand(2000, 100000),
                     'barangId' => rand(1, 20),

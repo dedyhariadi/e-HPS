@@ -11,7 +11,7 @@ class ReferensiModel extends Model
     protected $useAutoIncrement = true;
     protected $useTimestamps = true;
     protected $allowedFields    = [
-        'sumber',
+        'sumberId',
         'link',
         'harga',
         'barangId'
@@ -20,13 +20,13 @@ class ReferensiModel extends Model
 
     // Validation
     protected $validationRules      = [
-        'sumber' => 'required',
+        'sumberId' => 'required',
         'link'   => 'required',
         'harga'  => 'required|is_natural',
     ];
 
     protected $validationMessages   = [
-        'sumber' => [
+        'sumberId' => [
             'required' => 'Sumber Harus Diisi'
         ],
         'link' => [
@@ -37,8 +37,7 @@ class ReferensiModel extends Model
             'is_natural' => 'Harga Harus Angka'
         ],
     ];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
+
 
     public function getReferensi($idBarang = false)
     {
