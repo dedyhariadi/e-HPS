@@ -9,7 +9,6 @@
             <h2 class="my-4">Form Ubah Data Barang </h2>
         </div>
         <?php
-        d($barang);
         ?>
         <div class="row">
             <form action="/barang/proses_update/<?= $barang['idBarang']; ?>" method="post" enctype="multipart/form-data">

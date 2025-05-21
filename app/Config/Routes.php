@@ -29,5 +29,11 @@ $routes->post('/referensi/proses_edit', 'Referensi::proses_edit'); // route ke p
 $routes->delete('/referensi/(:num)', 'Referensi::hapus/$1');  // route ke hapus
 
 
+//pejabat
+$routes->get('/pejabat', 'Pejabat::index');
+
+// satuan
+$routes->get('/satuan','Satuan::index');
+
 // kontroller kegiatan
 $routes->get('/kegiatan', 'Kegiatan::index');

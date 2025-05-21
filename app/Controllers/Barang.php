@@ -209,9 +209,7 @@ class Barang extends BaseController
         // jika berhasil simpan data
         $gambar = $this->request->getFile('gambar');  // ambil gambar
 
-        // dd($gambar);
         if ($gambar->getError() <> 4) { // cek apakah ada gambar 
-            // d($id);
             if ($this->barangModel->save([
                 'idBarang' => $id,
                 'gambar' => $gambar->getRandomName()
