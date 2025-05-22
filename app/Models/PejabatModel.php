@@ -11,4 +11,14 @@ class PejabatModel extends Model
     protected $useAutoIncrement = true;
     protected $useTimestamps = true;
     protected $allowedFields    = [];
+
+    public function search($keyword)
+    {
+        return $this->like('namaPejabat', $keyword)
+            ->orLike('pangkat', $keyword)
+            ->orLike('NRP', $keyword)
+            ->orLike('jabatan', $keyword)
+            ->orderBy('updated_at', 'DESC')
+            ->findAll();
+    }
 }

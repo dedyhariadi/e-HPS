@@ -43,7 +43,7 @@
         <?php endif; ?>
         <!-- akhir alert -->
 
-        <table class="table table-hover" name="barang">
+        <table class="table table-hover" name="pejabat">
             <thead class="text-center fs-5">
                 <tr>
                     <th scope="col">No</th>

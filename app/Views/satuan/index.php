@@ -13,7 +13,7 @@
 
     <div class="row text-start">
         <div class="col">
-            <a href="/barang/create" class="btn btn-primary">Tambah Satuan</a>
+            <a href="/satuan/tambah" class="btn btn-primary">Tambah Satuan</a>
         </div>
         <div class="col">
 
@@ -61,7 +61,7 @@
                         <td><?= $p['namaSatuan']; ?></td>
                         <td class="text-center"><?= date('d M Y H:m:s', strtotime($p['updated_at'])); ?></td>
                         <td class="text-center">
-                            <a type="button" class="btn btn-warning" href="/barang/<?= $p['idSatuan']; ?>">Edit</a>
+                            <a type="button" class="btn btn-warning" href="/satuan/edit/<?= $p['idSatuan']; ?>">Edit</a>
                             <a type="button" class="btn btn-danger" href="/barang/<?= $p['idSatuan']; ?>">Hapus</a>
                         </td>
                     </tr>

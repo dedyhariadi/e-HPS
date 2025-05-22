@@ -189,7 +189,7 @@ class Barang extends BaseController
             'idBarang' => $id,
             'namaBarang' => $this->request->getVar('namaBarang'),
             'satuanId' => $this->request->getVar('idSatuan'),
-            // 'gambar' => $namaGambar
+        
         ]) == false) {
 
             // jika gagal simpan data

@@ -15,4 +15,23 @@ class SatuanModel extends Model
         'created_at',
         'updated_at',
     ];
+
+    protected $validationRules = [
+        'namaSatuan' => 'required|is_unique[satuan.namaSatuan,idSatuan,{idSatuan}]',
+    ];
+
+    protected $validationMessages = [
+        'namaSatuan' => [
+            'required' => 'Nama Satuan Harus Diisi',
+            'is_unique' => 'Satuan yang anda masukkan sudah ada'
+        ],
+
+    ];
+
+    public function search($keyword)
+    {
+        return $this->like('namaSatuan', $keyword)
+            ->orderBy('updated_at', 'DESC')
+            ->findAll();
+    }
 }

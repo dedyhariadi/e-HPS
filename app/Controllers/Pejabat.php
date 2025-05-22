@@ -14,13 +14,22 @@ class Pejabat extends BaseController
     {
         $this->pejabatModel = new PejabatModel();
     }
-    public function index($tandaKeyword = false)
+    public function index($keyword = false)
     {
+        $keyword = $this->request->getVar('keyword');
+
+        if ($keyword) {
+            $pejabat = $this->pejabatModel->search($keyword);
+        } else {
+
+            $pejabat = $this->pejabatModel->findAll();
+        }
+
         $data = [
             'title' => 'Data Pejabat',
-            'pejabat' => $this->pejabatModel->findAll(),
-            'tandaKeyword' => $tandaKeyword,
+            'pejabat' => $pejabat,
         ];
+
         return view('/pejabat/index', $data);
         // d($this->pejabatModel->findAll());
     }
