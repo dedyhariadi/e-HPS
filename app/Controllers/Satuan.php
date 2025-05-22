@@ -22,7 +22,7 @@ class Satuan extends BaseController
         if ($keyword) {
             $satuan = $this->satuanModel->search($keyword);
         } else {
-            $satuan = $this->satuanModel->findAll();
+            $satuan = $this->satuanModel->orderBy('updated_at', 'DESC')->findAll();
         }
 
         $data = [
