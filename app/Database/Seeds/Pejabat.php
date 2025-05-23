@@ -18,7 +18,7 @@ class Pejabat extends Seeder
             $data = [
                 [
                     'namaPejabat'   => $faker->name,
-                    'pangkat'   => 'Kolonel Laut (E)',
+                    'pangkatId'   => rand(1, 4),
                     'NRP'       => '11584/P',
                     'jabatan'   => 'Sekdis',
                     'created_at' => Time::createFromTimestamp($faker->unixTime()),
@@ -26,7 +26,7 @@ class Pejabat extends Seeder
                 ],
                 [
                     'namaPejabat'   => $faker->name,
-                    'pangkat'   => 'Letkol Laut (E)',
+                    'pangkatId'   => rand(1, 4),
                     'NRP'       => '16758/P',
                     'jabatan'   => 'Sekdis',
                     'created_at' => Time::createFromTimestamp($faker->unixTime()),

@@ -19,9 +19,10 @@ class Pejabat extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
-            'pangkat' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
+            'pangkatId' => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
             ],
             'NRP' => [
                 'type'       => 'VARCHAR',

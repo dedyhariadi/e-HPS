@@ -7,13 +7,13 @@
 <div class="container mt-3">
     <div class="row mb-3">
         <div class="col text-center">
-            <h1> Daftar Pejabat</h1>
+            <h1> Daftar Surat</h1>
         </div>
     </div>
 
     <div class="row text-start">
         <div class="col">
-            <a href="/pejabat/tambah" class="btn btn-primary">Tambah Pejabat</a>
+            <a href="/dasarsurat/create" class="btn btn-primary">Tambah Surat</a>
         </div>
         <div class="col">
 
@@ -43,34 +43,35 @@
         <?php endif; ?>
         <!-- akhir alert -->
 
-        <table class="table table-hover" name="pejabat">
+        <table class="table table-hover" name="barang">
             <thead class="text-center fs-5">
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Pangkat</th>
-                    <th scope="col">NRP</th>
-                    <th scope="col">Jabatan</th>
+                    <th scope="col">Nomor Surat</th>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Perihal</th>
+                    <th scope="col">Pejabat</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $i = 1;
-                foreach ($pejabat as $p) : ?>
+                foreach ($dasarSurat as $b) : ?>
                     <tr>
                         <th scope="row" class="text-center"><?= $i++; ?></th>
-                        <td><?= $p['namaPejabat']; ?></td>
-                        <td>
-                            <?= $p['pangkat']; ?>
-                        </td>
-                        <td class="text-center"><?= $p['NRP']; ?></td>
-                        <td class="text-center"><?= $p['jabatan']; ?></td>
-                        <td class="text-center"><a type="button" class="btn btn-warning" href="/barang/<?= $p['idPejabat']; ?>">Detail</a></td>
+                        <td><?= $b['noSurat']; ?></td>
+                        <td><?= date('d M Y', strtotime($b['tglSurat'])); ?></td>
+                        <td><?= $b['tentang']; ?></td>
+                        <td><?= $b['pejabat']; ?></td>
+
+                        <td class="text-center"><a type="button" class="btn btn-warning" href="/dasarsurat/<?= $b['idSurat']; ?>">Detail</a></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+
+
     </div>
 </div>
 

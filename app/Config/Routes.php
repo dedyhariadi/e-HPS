@@ -31,6 +31,10 @@ $routes->delete('/referensi/(:num)', 'Referensi::hapus/$1');  // route ke hapus
 
 //pejabat
 $routes->match(['GET', 'POST'], '/pejabat', 'Pejabat::index');
+$routes->get('/pejabat/tambah', 'Pejabat::tambah');
+$routes->post('/pejabat/simpan', 'Pejabat::simpan');
+
+
 
 // satuan
 $routes->match(['GET', 'POST'], '/satuan', 'Satuan::index'); //route ke index utk list semua . hasil pecarian
@@ -40,6 +44,10 @@ $routes->post('satuan/simpan', 'Satuan::simpan');
 //edit
 $routes->get('/satuan/edit/(:num)', 'Satuan::edit/$1');
 $routes->post('/satuan/prosesedit', 'Satuan::prosesedit');
+
+
+// dasar surat
+$routes->get('dasarsurat', 'dasarsurat::index');
 
 // kontroller kegiatan
 $routes->get('/kegiatan', 'Kegiatan::index');
