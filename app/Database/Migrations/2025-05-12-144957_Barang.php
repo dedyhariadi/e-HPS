@@ -21,7 +21,7 @@ class Barang extends Migration
             ],
             'gambar' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '255',
                 'null' => true,
             ],
             'satuanId' => [

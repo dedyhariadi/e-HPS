@@ -36,6 +36,19 @@ $(document).ready( function() {
 		$("#gambar").change(function(){
 			readURL(this);
 		}); 	
+
 		// akhir preview gambar
+
+
+		//datepicker
+
+		$('#tanggal').datepicker({
+			showAnim: 'slideDown',
+			dateFormat: 'dd MM yy',
+			changeMonth: true,
+			changeYear: true,
+			regional: 'id',
+		});
+			
 
 	});

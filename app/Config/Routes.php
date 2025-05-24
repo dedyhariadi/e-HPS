@@ -50,4 +50,7 @@ $routes->post('/satuan/prosesedit', 'Satuan::prosesedit');
 $routes->get('dasarsurat', 'dasarsurat::index');
 
 // kontroller kegiatan
-$routes->get('/kegiatan', 'Kegiatan::index');
+$routes->match(['GET', 'POST'], '/kegiatan', 'Kegiatan::index');
+//tambah
+$routes->get('kegiatan/tambah', 'Kegiatan::tambah');
+$routes->post('kegiatan/simpan', 'Kegiatan::simpan');

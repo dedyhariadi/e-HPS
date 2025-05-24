@@ -38,6 +38,11 @@ class Kegiatan extends Migration
                 'constraint' => 11,
                 'unsigned'       => true,
             ],
+            'filePdf' => [
+                'type'       => 'varchar',
+                'constraint' => '255',
+                'null'    => true,
+            ],
             'created_at' => [
                 'type'       => 'DATETIME',
                 'null'    => true,

@@ -13,7 +13,7 @@
 
     <div class="row text-start">
         <div class="col">
-            <a href="/barang/create" class="btn btn-primary">Tambah Kegiatan</a>
+            <a href="/kegiatan/tambah" class="btn btn-primary">Tambah Kegiatan</a>
         </div>
         <div class="col">
 
@@ -65,7 +65,7 @@
                         <td><?= $b['namaKegiatan']; ?></td>
                         <td><?= $b['noSurat']; ?></td>
                         <td class="text-center"><?= date('d M Y', strtotime($b['tglSurat'])); ?></td>
-                        <td><?= $b['jabatan']; ?></td>
+                        <td><?= $b['namaPejabat']; ?></td>
                         <td class="text-center"><?= date('d M Y', strtotime($b['updated_at'])); ?></td>
                         <td class="text-center"><a type="button" class="btn btn-warning" href="/kegiatan/<?= $b['idKegiatan']; ?>">Detail</a></td>
                     </tr>

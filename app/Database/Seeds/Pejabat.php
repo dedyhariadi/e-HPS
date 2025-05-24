@@ -13,7 +13,7 @@ class Pejabat extends Seeder
     {
         $faker = \Faker\Factory::create('id_ID');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 40; $i++) {
 
             $data = [
                 [
