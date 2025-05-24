@@ -56,6 +56,7 @@
             </thead>
             <tbody>
                 <?php
+                $i = 1;
                 foreach ($dasarSurat as $b) : ?>
                     <tr>
                         <th scope="row" class="text-center"><?= $i++; ?></th>

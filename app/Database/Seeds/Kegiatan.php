@@ -6,7 +6,7 @@ use CodeIgniter\Database\Seeder;
 use Faker\Factory as Faker;
 use CodeIgniter\I18n\Time;
 
-class Dasarsurat extends Seeder
+class Kegiatan extends Seeder
 {
     public function run()
     {
@@ -16,16 +16,17 @@ class Dasarsurat extends Seeder
         for ($i = 0; $i < 30; $i++) {
             $data = [
                 [
+                    'namaKegiatan' => $faker->text(),
                     'noSurat' => 'R/' . rand(1, 100) . '/' . number_to_roman(rand(1, 12)) . '/' . '2025',
                     'tglSurat' =>  Time::createFromTimestamp($faker->dateTimeBetween('-1 year', 'now')->getTimestamp()),
-                    'tentang' => $faker->text(),
-                    'pejabat' => $faker->name(),
+                    'pejabatId' => rand(1, 40),
+                    'dasarId' => rand(1, 30),
                     'created_at' => Time::createFromTimestamp($faker->dateTimeBetween('-3 year', '-1 year')->getTimestamp()),
                     'updated_at' => Time::createFromTimestamp($faker->dateTimeBetween('-1 year', 'now')->getTimestamp()),
                 ]
             ];
             // Using Query Builder
-            $this->db->table('dasarsurat')->insertBatch($data);
+            $this->db->table('kegiatan')->insertBatch($data);
         }
     }
 }
