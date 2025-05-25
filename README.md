@@ -6,7 +6,7 @@
 4. jalankan perintah di git bash
    git clone https://github.com/dedyhariadi/e-HPS.git
 5. jalankan perintah di git bash
-   composer install ---v (utk install library yang dibutuhkan aplikasi)
+   composer install (utk install library yang dibutuhkan aplikasi)
 6.
 
 # CodeIgniter 4 Application Starter
