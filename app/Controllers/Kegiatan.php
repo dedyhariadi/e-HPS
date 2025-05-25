@@ -72,9 +72,9 @@ class Kegiatan extends BaseController
 
         $filePdf = $this->request->getFile('filePdf');  // ambil filePdf
 
-        //menyimpan data dengan tanpa upload filePdf
         d($this->request->getVar());
-
+        
+        //menyimpan data dengan tanpa upload filePdf
         if ($filePdf->getError() == 4) {
             if ($this->kegiatanModel->save([
                 'namaKegiatan' => $this->request->getVar('namaKegiatan'),
@@ -95,6 +95,7 @@ class Kegiatan extends BaseController
             }
         }
 
+        // menyimpan data dengan upload filePdf
 
         // $namafilePdf = 'default.jpg'; // jika tidak ada filePdf yang diupload, maka gunakan filePdf default        
 
@@ -126,7 +127,6 @@ class Kegiatan extends BaseController
         //     $filePdf->move('assets/pdf', $kegiatan['filePdf']);  // pindahkan gambar ke folder images
 
         // }
-        session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
-        return redirect()->to('/kegiatan');
+        
     }
 }

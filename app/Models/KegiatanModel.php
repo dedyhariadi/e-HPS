@@ -17,11 +17,11 @@ class KegiatanModel extends Model
         'tglSurat',
         'pejabatId',
         'dasarId',
+        'filepdf',
     ];
 
     // Validation
-    // protected $validationRules      = [];
-    // protected $validationMessages   = [];
+
 
     protected $validationRules = [
         'namaKegiatan' => 'required|min_length[3]|max_length[50]|is_unique[barang.namaBarang,idBarang,{idBarang}]',
