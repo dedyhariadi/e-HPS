@@ -10,7 +10,8 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-use function App\Helpers\rupiah;
+
+
 
 /**
  * Class BaseController

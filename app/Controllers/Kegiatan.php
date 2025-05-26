@@ -11,6 +11,7 @@ use App\Models\SumberModel;
 use App\Models\PejabatModel;
 use App\Models\DasarSuratModel;
 use App\Models\PangkatModel;
+use App\Models\TrxGiatBarangModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Kegiatan extends BaseController
@@ -23,6 +24,7 @@ class Kegiatan extends BaseController
     protected $pejabatModel;
     protected $dasarModel;
     protected $pangkatModel;
+    protected $trxGiatBarangModel;
 
     public function __construct()
     {
@@ -35,6 +37,7 @@ class Kegiatan extends BaseController
         $this->pejabatModel = new PejabatModel();
         $this->dasarModel = new DasarSuratModel();
         $this->pangkatModel = new PangkatModel();
+        $this->trxGiatBarangModel = new TrxGiatBarangModel();
     }
 
     public function index($keyword = false)
@@ -111,17 +114,16 @@ class Kegiatan extends BaseController
         // $idKegiatan = $this->request->getVar('idKegiatan');
 
         $kegiatan = $this->kegiatanModel->getKegiatan($idKegiatan);
+        $trxGiatBarang = $this->trxGiatBarangModel->findAll();
 
         $data = [
             'idKegiatan' => $idKegiatan,
             'kegiatan' => $kegiatan,
             'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
-            'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId'])
+            'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
+            'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $idKegiatan])->findAll()
         ];
-        // d($idKegiatan);
-        // d($data);
-        // dd($kegiatan, $data);
-
+        d($data);
         return view('kegiatan/detail', $data);
     }
 }

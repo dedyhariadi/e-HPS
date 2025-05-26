@@ -103,11 +103,62 @@ use CodeIgniter\I18n\Time;
 
     <?php endif; ?>
     <!-- akhir alert -->
+
+    <!-- daftar barang -->
+    <div class="row">
+        <table class="table table-hover">
+            <thead class="text-center fs-5">
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Barang</th>
+                    <th scope="col">Kebutuhan</th>
+                    <th scope="col" colspan="2">Harga Rata2</th>
+                    <th scope="col">Jml Referensi</th>
+                    <th scope="col">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $i = 1;
+                foreach ($trxGiatBarang as $b) : ?>
+                    <tr>
+                        <th scope="row" class="text-center"><?= $i++; ?></th>
+                        <td>
+                            <?= $b['barangId']; ?>
+                        </td>
+                        <td><?= $b['kebutuhan']; ?></td>
+                        <td class="text-end">
+                            <?php
+                            echo "Rp ";
+                            ?>
+                        </td>
+                        <td class="text-end">
+                            <?php
+                            // echo number_format($b['harga'], 0, ",", ".");
+                            ?>
+                        </td>
+                        <td class="text-center">Jml Referensi</td>
+                        <td class="text-center">
+                            <a type="button" class="btn btn-warning" href="/referensi/edit/<?= $b['idTrxGiatBarang']; ?>">Edit</a>
+
+                            <form action="/referensi/<?= $b['idTrxGiatBarang']; ?>" method="post" class="d-inline">
+                                <?= csrf_field(); ?>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="idTrxGiatBarang" value="<?= $b['idTrxGiatBarang']; ?>">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+
+            </tbody>
+        </table>
+    </div>
 </div>
 
 
 
-</div>
+
 
 <!-- akhir content -->
 
