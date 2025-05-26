@@ -17,31 +17,27 @@ class KegiatanModel extends Model
         'tglSurat',
         'pejabatId',
         'dasarId',
-        'filepdf',
+        'filePdf',
     ];
 
     // Validation
 
 
     protected $validationRules = [
-        'namaKegiatan' => 'required|min_length[3]|max_length[50]|is_unique[barang.namaBarang,idBarang,{idBarang}]',
+        'namaKegiatan' => 'required|min_length[3]|max_length[100]|is_unique[barang.namaBarang,idBarang,{idBarang}]',
     ];
 
     protected $validationMessages = [
         'namaKegiatan' => [
-            'required' => 'Nama barang Harus Diisi',
+            'required' => 'Nama kegiatan Harus Diisi',
             'min_length' => 'Minimal 3 Karakter',
-            'max_length' => 'Maksimal 50 Karakter',
+            'max_length' => 'Maksimal 100 Karakter',
             'is_unique' => 'Barang yang anda masukkan sudah ada sebelumnya'
         ]
     ];
 
-
-
-
     public function getKegiatan($id = false)
     {
-        // $this->kegiatanModel->->findAll()
         if ($id == false) {
             return $this->join('pejabat', 'pejabat.idPejabat=kegiatan.pejabatId')->orderBy('kegiatan.updated_at', 'DESC')->findAll();
         }

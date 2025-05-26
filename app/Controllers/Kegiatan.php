@@ -10,6 +10,7 @@ use App\Models\ReferensiModel;
 use App\Models\SumberModel;
 use App\Models\PejabatModel;
 use App\Models\DasarSuratModel;
+use App\Models\PangkatModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Kegiatan extends BaseController
@@ -21,6 +22,7 @@ class Kegiatan extends BaseController
     protected $kegiatanModel;
     protected $pejabatModel;
     protected $dasarModel;
+    protected $pangkatModel;
 
     public function __construct()
     {
@@ -32,6 +34,7 @@ class Kegiatan extends BaseController
         $this->kegiatanModel = new KegiatanModel();
         $this->pejabatModel = new PejabatModel();
         $this->dasarModel = new DasarSuratModel();
+        $this->pangkatModel = new PangkatModel();
     }
 
     public function index($keyword = false)
@@ -69,64 +72,56 @@ class Kegiatan extends BaseController
 
     public function simpan($filePdf = false)
     {
-
         $filePdf = $this->request->getFile('filePdf');  // ambil filePdf
 
-        d($this->request->getVar());
-        
-        //menyimpan data dengan tanpa upload filePdf
+        // cek apakah ada gambar yang diupload
         if ($filePdf->getError() == 4) {
-            if ($this->kegiatanModel->save([
-                'namaKegiatan' => $this->request->getVar('namaKegiatan'),
-                'noSurat' => $this->request->getVar('noSurat'),
-                'tglSurat' => $this->request->getVar('tglSurat'),
-                'pejabatId' => $this->request->getVar('pejabatId'),
-                'dasarId' => $this->request->getVar('suratId'),
-                'filePdf' => 'default.pdf'
-            ]) == false) {
-                // jika gagal simpan data
-                $errors = $this->kegiatanModel->errors();
-                $data = [
-                    'title' => 'Tambah Data Kegiatan',
-                    'errors' => $errors,
-                ];
-                d($errors);
-                return view('/kegiatan/tambah', $data);
-            }
+            $namaFile = 'noFile.pdf';
+        } else {
+            $namaFile = $filePdf->getRandomName();
+            $filePdf->move('assets/pdf', $namaFile); //pindahkan file ke folder upload pdf
         }
 
-        // menyimpan data dengan upload filePdf
+        // proses simpan ke database
+        if ($this->kegiatanModel->save([
+            'namaKegiatan' => $this->request->getVar('namaKegiatan'),
+            'noSurat' => $this->request->getVar('noSurat'),
+            'tglSurat' => date('Y-m-d H:i:s', strtotime($this->request->getVar('tglSurat'))),
+            'pejabatId' => $this->request->getVar('pejabatId'),
+            'dasarId' => $this->request->getVar('suratId'),
+            'filePdf' => $namaFile
+        ]) == false) {
+            // jika gagal simpan data
+            $errors = $this->kegiatanModel->errors();
+            $data = [
+                'title' => 'Tambah Data Kegiatan',
+                'pejabat' => $this->pejabatModel->findAll(),
+                'dasar' => $this->dasarModel->findAll(),
+                'errors' => $errors,
+            ];
+            return view('/kegiatan/tambah', $data);
+        }
 
-        // $namafilePdf = 'default.jpg'; // jika tidak ada filePdf yang diupload, maka gunakan filePdf default        
+        // kembali ke index kegiatan
+        session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
+        return redirect()->to('/kegiatan');
+    }
+    public function detail($idKegiatan = false)
+    {
+        // $idKegiatan = $this->request->getVar('idKegiatan');
 
-        // proses simpan data
-        // if ($this->kegiatanModel->save([
-        //     'namaBarang' => $this->request->getVar('namaBarang'),
-        //     'satuanId' => $this->request->getVar('idSatuan'),
-        //     'filePdf' => $filePdf->getRandomName()
-        // ])  == false && $filePdf->getError() <> 4) {
-        //     // jika gagal simpan data
-        //     $satuan = $this->satuanModel->findAll();
-        //     $errors = $this->kegiatanModel->errors();
-        //     $data = [
-        //         'title' => 'Tambah Data Barang',
-        //         'satuan' => $satuan,
-        //         'errors' => $errors,
-        //     ];
+        $kegiatan = $this->kegiatanModel->getKegiatan($idKegiatan);
 
-        //     d($errors);
-        //     return view('/kegiatan', $data);
-        // }
+        $data = [
+            'idKegiatan' => $idKegiatan,
+            'kegiatan' => $kegiatan,
+            'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
+            'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId'])
+        ];
+        // d($idKegiatan);
+        // d($data);
+        // dd($kegiatan, $data);
 
-
-        // if ($filePdf->getError() <> 4) {
-        //     // // jika berhasil simpan data
-        //     $id = $this->kegiatanModel->insertID(); // ambil id barang yang baru saja disimpan
-        //     $barang = $this->kegiatanModel->find($id); // ambil data barang yang baru saja disimpan
-
-        //     $filePdf->move('assets/pdf', $kegiatan['filePdf']);  // pindahkan gambar ke folder images
-
-        // }
-        
+        return view('kegiatan/detail', $data);
     }
 }

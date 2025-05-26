@@ -19,7 +19,7 @@ class Dasarsurat extends Seeder
                     'noSurat' => 'R/' . rand(1, 100) . '/' . number_to_roman(rand(1, 12)) . '/' . '2025',
                     'tglSurat' =>  Time::createFromTimestamp($faker->dateTimeBetween('-1 year', 'now')->getTimestamp()),
                     'tentang' => $faker->text(),
-                    'pejabat' => $faker->name(),
+                    'pejabat' => 'Pejabat Pengadaan Barang/Jasa Dissenlekal',
                     'created_at' => Time::createFromTimestamp($faker->dateTimeBetween('-3 year', '-1 year')->getTimestamp()),
                     'updated_at' => Time::createFromTimestamp($faker->dateTimeBetween('-1 year', 'now')->getTimestamp()),
                 ]
