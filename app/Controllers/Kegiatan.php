@@ -109,6 +109,8 @@ class Kegiatan extends BaseController
         session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
         return redirect()->to('/kegiatan');
     }
+
+
     public function detail($idKegiatan = false)
     {
         // $idKegiatan = $this->request->getVar('idKegiatan');
@@ -121,9 +123,11 @@ class Kegiatan extends BaseController
             'kegiatan' => $kegiatan,
             'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
             'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
-            'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $idKegiatan])->findAll()
+            'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $idKegiatan])->findAll(),
+            'barang' => $this->barangModel->join('satuan','satuan.idSatuan=barang.satuanId')->findAll()
         ];
-        d($data);
+        // d($data);
+
         return view('kegiatan/detail', $data);
     }
 }

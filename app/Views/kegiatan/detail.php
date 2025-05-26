@@ -124,9 +124,26 @@ use CodeIgniter\I18n\Time;
                     <tr>
                         <th scope="row" class="text-center"><?= $i++; ?></th>
                         <td>
-                            <?= $b['barangId']; ?>
+                            <?php
+                            foreach ($barang as $brg) :
+                                if ($b['barangId'] == $brg['idBarang']) {
+                                    echo $brg['namaBarang'];
+                                }
+                            endforeach;
+                            ?>
+
                         </td>
-                        <td><?= $b['kebutuhan']; ?></td>
+                        <td class="ps-5">
+                            <?php
+                            echo $b['kebutuhan'] . ' ';
+                            foreach ($barang as $brg) :
+                                if ($b['barangId'] == $brg['idBarang']) {
+                                    echo $brg['namaSatuan'];
+                                }
+                            endforeach;
+                            ?>
+
+                        </td>
                         <td class="text-end">
                             <?php
                             echo "Rp ";
@@ -139,13 +156,13 @@ use CodeIgniter\I18n\Time;
                         </td>
                         <td class="text-center">Jml Referensi</td>
                         <td class="text-center">
-                            <a type="button" class="btn btn-warning" href="/referensi/edit/<?= $b['idTrxGiatBarang']; ?>">Edit</a>
+                            <a type="button" class="btn btn-warning" href="/referensi/edit/<?= $b['idTrxGiatBarang']; ?>"><i class="bi bi-pencil-fill"></i></a>
 
                             <form action="/referensi/<?= $b['idTrxGiatBarang']; ?>" method="post" class="d-inline">
                                 <?= csrf_field(); ?>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="idTrxGiatBarang" value="<?= $b['idTrxGiatBarang']; ?>">
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
                             </form>
                         </td>
                     </tr>

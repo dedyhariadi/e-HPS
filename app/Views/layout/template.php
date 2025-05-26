@@ -11,15 +11,18 @@
 
 
     <!-- jquery -->
-    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"> -->
-    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.theme.css"> -->
+    <link rel="stylesheet" href="/assets/css/jquery-ui.css">
+
+
 
     <!-- bootstrap icon  -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> -->
+    <link rel="stylesheet" href="/assets/css/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 
     <!-- My CSS -->
     <link rel="stylesheet" href="/assets/css/style.css">
 
+    <!-- <link rel="icon" href="/images/aplikasi.ico"> -->
 </head>
 
 <body>
@@ -32,14 +35,23 @@
     <?= $this->renderSection('content'); ?>
 
 
+
+
+
+
     <!-- jss bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
 
+    <!--jquery -->
+    <script src="/assets/jss/jquery-3.7.1.min.js"></script>
+    <script src="/assets/jss/jquery-ui.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> -->
+
+    <!-- script js ku -->
     <script src="/assets/jss/myscript.js"></script>
 
 </body>
