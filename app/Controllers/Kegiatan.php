@@ -116,7 +116,6 @@ class Kegiatan extends BaseController
         // $idKegiatan = $this->request->getVar('idKegiatan');
 
         $kegiatan = $this->kegiatanModel->getKegiatan($idKegiatan);
-        $trxGiatBarang = $this->trxGiatBarangModel->findAll();
 
         $data = [
             'idKegiatan' => $idKegiatan,

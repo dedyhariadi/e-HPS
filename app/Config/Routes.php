@@ -56,4 +56,4 @@ $routes->get('kegiatan/tambah', 'Kegiatan::tambah');
 $routes->post('kegiatan/simpan', 'Kegiatan::simpan');
 
 // detail
-$routes->get('/kegiatan/(:any)', 'Kegiatan::detail/$1'); //route ke detail
+$routes->match(['GET', 'POST'], '/kegiatan/(:any)', 'Kegiatan::detail/$1'); //route ke detail

@@ -55,7 +55,7 @@
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-group-divider">
                 <?php
                 $i = 1;
 
