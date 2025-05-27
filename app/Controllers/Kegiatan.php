@@ -113,9 +113,25 @@ class Kegiatan extends BaseController
 
     public function detail($idKegiatan = false)
     {
-        // $idKegiatan = $this->request->getVar('idKegiatan');
 
         $kegiatan = $this->kegiatanModel->getKegiatan($idKegiatan);
+        d($this->request->getVar());
+        // proses menambah barang ke kegiatan
+        $tambahBarang = $this->request->getVar();
+        if ($tambahBarang) {
+            if ($this->trxGiatBarangModel->save([
+                'kegiatanId' => $idKegiatan,
+                'barangId' => $this->request->getVar('idBarang'),
+                'kebutuhan' => $this->request->getVar('kebutuhan'),
+                'jenis' => $this->request->getVar('jenis'),
+            ]) == false) {
+                // jika gagal simpan data
+                $errors = $this->trxGiatBarangModel->errors();
+                echo "ada yang error";
+                die;
+            }
+        }
+
 
         $data = [
             'idKegiatan' => $idKegiatan,
@@ -123,9 +139,9 @@ class Kegiatan extends BaseController
             'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
             'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
             'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $idKegiatan])->findAll(),
-            'barang' => $this->barangModel->join('satuan','satuan.idSatuan=barang.satuanId')->findAll()
+            'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll()
         ];
-        // d($data);
+        d($data, $tambahBarang);
 
         return view('kegiatan/detail', $data);
     }

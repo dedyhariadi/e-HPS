@@ -220,8 +220,7 @@ use CodeIgniter\I18n\Time;
                     <div class="row ms-5 mt-3">
                         <label for="combobox" class="form-label col-sm-3">Material</label>
                         <div class="col-sm-6">
-                            <select class="form-select mb-3 fs-4" aria-label="Default select example" id="combobox" name="barang">
-                                <option selected disabled>Open this select menu</option>
+                            <select class="form-select mb-3 fs-4" id="combobox" name="idBarang">
                                 <?php foreach ($barang as $b) : ?>
                                     <option value=<?= $b['idBarang']; ?>><?= $b['namaBarang']; ?></option>
                                 <?php endforeach; ?>
