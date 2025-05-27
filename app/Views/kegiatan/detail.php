@@ -170,7 +170,7 @@ use CodeIgniter\I18n\Time;
                                 ?>
                             </td>
                             <td class="text-center">
-                                Link Referensi 1
+                                <a href="" class="" ata-bs-toggle="modal" data-bs-target="#exampleModal">add</a>
                             </td>
                             <td class="text-center">
                                 Harga Referensi 1
@@ -182,7 +182,7 @@ use CodeIgniter\I18n\Time;
                                 Harga Referensi 2
                             </td>
                             <td class="text-center">
-                                <a type="button" class="btn btn-warning" href="/referensi/edit/<?= $b['idTrxGiatBarang']; ?>"><i class="bi bi-pencil-fill"></i></a>
+                                <a href=""><i class="bi bi-pencil-fill"></i></a>
 
                                 <form action="/referensi/<?= $b['idTrxGiatBarang']; ?>" method="post" class="d-inline">
                                     <?= csrf_field(); ?>
@@ -199,9 +199,6 @@ use CodeIgniter\I18n\Time;
         </div>
     </div>
 </div>
-
-
-
 
 
 
@@ -247,8 +244,6 @@ use CodeIgniter\I18n\Time;
                             </div>
                         </div>
                     </div>
-
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
