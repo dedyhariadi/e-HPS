@@ -12,6 +12,8 @@ use App\Models\PejabatModel;
 use App\Models\DasarSuratModel;
 use App\Models\PangkatModel;
 use App\Models\TrxGiatBarangModel;
+use App\Models\TrxReferensiModel;
+use App\Models\TrxReferensModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Kegiatan extends BaseController
@@ -25,6 +27,7 @@ class Kegiatan extends BaseController
     protected $dasarModel;
     protected $pangkatModel;
     protected $trxGiatBarangModel;
+    protected $trxReferensiModel;
 
     public function __construct()
     {
@@ -38,6 +41,7 @@ class Kegiatan extends BaseController
         $this->dasarModel = new DasarSuratModel();
         $this->pangkatModel = new PangkatModel();
         $this->trxGiatBarangModel = new TrxGiatBarangModel();
+        $this->trxReferensiModel = new TrxReferensiModel();
     }
 
     public function index($keyword = false)
@@ -114,24 +118,43 @@ class Kegiatan extends BaseController
     public function detail($idKegiatan = false)
     {
 
-        $kegiatan = $this->kegiatanModel->getKegiatan($idKegiatan);
-        d($this->request->getVar());
+        $tandaTambah = $this->request->getVar('tandaTambah');
+
         // proses menambah barang ke kegiatan
-        $tambahBarang = $this->request->getVar();
-        if ($tambahBarang) {
-            if ($this->trxGiatBarangModel->save([
-                'kegiatanId' => $idKegiatan,
-                'barangId' => $this->request->getVar('idBarang'),
-                'kebutuhan' => $this->request->getVar('kebutuhan'),
-                'jenis' => $this->request->getVar('jenis'),
-            ]) == false) {
-                // jika gagal simpan data
-                $errors = $this->trxGiatBarangModel->errors();
-                echo "ada yang error";
-                die;
+        if ($tandaTambah == 1) {
+            $tambahBarang = $this->request->getVar();
+            if ($tambahBarang) {
+                if ($this->trxGiatBarangModel->save([
+                    'kegiatanId' => $idKegiatan,
+                    'barangId' => $this->request->getVar('idBarang'),
+                    'kebutuhan' => $this->request->getVar('kebutuhan'),
+                    'jenis' => $this->request->getVar('jenis'),
+                ]) == false) {
+                    // jika gagal simpan data
+                    $errors = $this->trxGiatBarangModel->errors();
+                    echo "Gagal menyimpan di trxGiatBarangModel";
+                    die;
+                }
+            }
+        }
+        // proses menambah referensi ke trxreferensi
+        if ($tandaTambah == 2) {
+            d($this->request->getVar());
+            $tambahReferensi = $this->request->getVar();
+            if ($tambahReferensi) {
+                if ($this->trxReferensiModel->save([
+                    'trxGiatBarangId' => $this->request->getVar('trxGiatBarangId'),
+                    'referensiId' => $this->request->getVar('referensiId'),
+                ]) == false) {
+                    // jika gagal simpan data
+                    $errors = $this->trxReferensiModel->errors();
+                    echo "Gagal menyimpan di trx referensi";
+                    die;
+                }
             }
         }
 
+        $kegiatan = $this->kegiatanModel->getKegiatan($idKegiatan);
 
         $data = [
             'idKegiatan' => $idKegiatan,
@@ -139,10 +162,19 @@ class Kegiatan extends BaseController
             'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
             'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
             'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $idKegiatan])->findAll(),
-            'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll()
+            'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
+            'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
+            'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll()
         ];
-        d($data, $tambahBarang);
 
         return view('kegiatan/detail', $data);
+    }
+
+    public function hapus($id)
+    {
+        $this->trxGiatBarangModel->delete($id);
+        $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
+        session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
     }
 }

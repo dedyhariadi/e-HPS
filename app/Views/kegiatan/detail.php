@@ -86,7 +86,7 @@ use CodeIgniter\I18n\Time;
     <div class="row mt-5 mb-3">
 
         <div class="col-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahBarangModal">
                 Tambah barang
             </button>
         </div>
@@ -94,10 +94,7 @@ use CodeIgniter\I18n\Time;
         <!-- alert pesan setelah berhasil disimpan -->
         <?php if (session()->getFlashdata('pesan')) : ?>
             <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-check" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0" />
-                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
-                </svg>
+                <i class="bi bi-bookmarks-fill"></i>
                 <?= session()->getFlashdata('pesan'); ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -114,14 +111,9 @@ use CodeIgniter\I18n\Time;
                         <th scope="col" rowspan="2">No</th>
                         <th scope="col" rowspan="2">Barang</th>
                         <th scope="col" rowspan="2">Kebutuhan</th>
-                        <th scope="col" colspan="2" rowspan="2">Harga Rata2</th>
-                        <th scope="col" colspan="2">
-                            Referensi 1 &nbsp;&nbsp;&nbsp;
-
-                            <a type="button" class="btn btn-warning" href=""><i class="bi bi-pencil-fill"></i></a>
-                            <a type="button" class="btn btn-danger" href=""><i class="bi bi-trash-fill"></i></a>
-                        </th>
+                        <th scope="col" colspan="2">Referensi 1</th>
                         <th scope="col" colspan="2">Referensi 2</th>
+                        <th scope="col" colspan="2" rowspan="2">Harga Rata2</th>
                         <th scope="col" rowspan="2">Aksi</th>
                     </tr>
                     <tr>
@@ -148,9 +140,9 @@ use CodeIgniter\I18n\Time;
                                 ?>
 
                             </td>
-                            <td class="ps-5">
+                            <td class="ps-5 text-end">
                                 <?php
-                                echo $b['kebutuhan'] . ' ';
+                                echo number_format($b['kebutuhan'], 0, ",", ".") . " ";
                                 foreach ($barang as $brg) :
                                     if ($b['barangId'] == $brg['idBarang']) {
                                         echo $brg['namaSatuan'];
@@ -159,6 +151,43 @@ use CodeIgniter\I18n\Time;
                                 ?>
 
                             </td>
+
+                            <?php
+                            foreach ($trxReferensi as $trxR) :
+                                if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
+                                    $cetakLink[] = $trxR['link'];
+                                    $cetakHarga[] = $trxR['harga'];
+                                }
+                            endforeach; ?>
+                            <td class="text-truncate" style="max-width: 150px;">
+                                <?php
+                                if (isset($cetakLink[0])) {
+                                    echo $cetakLink[0];
+                                } else {
+                                ?>
+                                    <a href="" class="" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang']; ?>">add</a>
+                                <?php
+                                }
+                                ?>
+
+                            </td>
+                            <td class="text-end">
+                                <?= (isset($cetakHarga[0])) ? number_format($cetakHarga[0], 0, ",", ".") : ""; ?>
+
+                            </td>
+                            <td class="text-truncate" style="max-width: 150px;">
+                                <?php
+                                if (isset($cetakLink[1])) {
+                                    echo $cetakLink[1];
+                                } else {
+                                ?>
+                                    <a href="" class="" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang']; ?>">add</a>
+                                <?php
+                                }
+                                ?>
+                            </td>
+                            <td class="text-center">
+                                <?= (isset($cetakHarga[1])) ? number_format($cetakHarga[1], 0, ",", ".") : ""; ?>
                             <td class="text-end">
                                 <?php
                                 echo "Rp ";
@@ -166,28 +195,22 @@ use CodeIgniter\I18n\Time;
                             </td>
                             <td class="text-end">
                                 <?php
-                                // echo number_format($b['harga'], 0, ",", ".");
+                                if (isset($cetakHarga)) {
+                                    $cetakAverage = array_sum($cetakHarga) / count($cetakHarga);
+                                    echo number_format($cetakAverage, 0, ",", ".");
+                                }
                                 ?>
                             </td>
-                            <td class="text-center">
-                                <a href="" class="" ata-bs-toggle="modal" data-bs-target="#exampleModal">add</a>
+                            <?php
+                            unset($cetakLink);
+                            unset($cetakHarga);
+                            ?>
                             </td>
                             <td class="text-center">
-                                Harga Referensi 1
-                            </td>
-                            <td class="text-center">
-                                Link Referensi 2
-                            </td>
-                            <td class="text-center">
-                                Harga Referensi 2
-                            </td>
-                            <td class="text-center">
-                                <a href=""><i class="bi bi-pencil-fill"></i></a>
-
-                                <form action="/referensi/<?= $b['idTrxGiatBarang']; ?>" method="post" class="d-inline">
+                                <form action="/kegiatan/<?= $b['idTrxGiatBarang']; ?>" method="post" class="d-inline">
                                     <?= csrf_field(); ?>
                                     <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="idTrxGiatBarang" value="<?= $b['idTrxGiatBarang']; ?>">
+                                    <input type="hidden" name="idKegiatan" value="<?= $idKegiatan; ?>">
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
                                 </form>
                             </td>
@@ -203,7 +226,8 @@ use CodeIgniter\I18n\Time;
 
 
 <!-- Modal Form Tambah Barang-->
-<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal fade " id="tambahBarangModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -247,6 +271,7 @@ use CodeIgniter\I18n\Time;
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
+                <input type="hidden" name="tandaTambah" value="1">
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
             </form>
@@ -256,6 +281,86 @@ use CodeIgniter\I18n\Time;
 
 
 
+<?php foreach ($trxGiatBarang as $b): ?>
+    <!-- Modal Form Tambah Referensi Tiap Barang-->
+
+    <div class="modal fade" id="modalTambahReferensi<?= $b['idTrxGiatBarang']; ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Referensi untuk
+                        <span class="text-uppercase fs-5 fw-bold">
+                            <?php
+                            foreach ($barang as $brg) :
+                                if ($b['barangId'] == $brg['idBarang']) {
+                                    $namabarang = $brg['namaBarang'];
+                                    echo $namabarang;
+                                }
+                            endforeach;
+                            ?>
+                        </span>
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body fs-3">
+                    <div class="row m-2 mt-3">
+                        <table class="table table-hover fs-5">
+                            <thead class="text-center">
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Sumber</th>
+                                    <th scope="col">Link</th>
+                                    <th scope="col" colspan="2">Harga</th>
+                                    <th scope="col">Last Updated</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $i = 1;
+                                foreach ($referensi as $r) :
+                                    if ($r['barangId'] == $b['barangId']) {
+                                ?>
+                                        <tr>
+                                            <th scope="row" class="text-center"><?= $i++; ?></th>
+                                            <td><?= $r['namaSumber']; ?> </td>
+                                            <td class="text-truncate"><?= $r['link']; ?></td>
+                                            <td class="text-end"><?= "Rp "; ?></td>
+                                            <td class="text-end"><?= number_format($r['harga'], 0, ",", "."); ?></td>
+                                            <td class="text-center"><?= date('d M Y', strtotime($r['updated_at'])); ?></td>
+                                            <td>
+                                                <form action="" method="post">
+                                                    <input type="hidden" name="trxGiatBarangId" value="<?= $b['idTrxGiatBarang']; ?>">
+                                                    <input type="hidden" name="referensiId" value="<?= $r['idReferensi']; ?>">
+                                                    <input type="hidden" name="idKegiatan" value="<?= $idKegiatan; ?>">
+                                                    <input type="hidden" name="tandaTambah" value="2">
+                                                    <button type="submit" class="btn-btn primary"><i class="bi bi-pencil-fill"></i></button>
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                <?php
+                                    };
+                                endforeach;
+                                ?>
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
 
 <!-- akhir content -->
 

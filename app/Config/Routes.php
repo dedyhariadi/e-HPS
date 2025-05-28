@@ -57,3 +57,6 @@ $routes->post('kegiatan/simpan', 'Kegiatan::simpan');
 
 // detail
 $routes->match(['GET', 'POST'], '/kegiatan/(:any)', 'Kegiatan::detail/$1'); //route ke detail
+
+//hapus
+$routes->delete('/kegiatan/(:num)', 'Kegiatan::hapus/$1');  // route ke hapus
