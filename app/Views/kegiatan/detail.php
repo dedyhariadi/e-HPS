@@ -269,11 +269,14 @@ use CodeIgniter\I18n\Time;
                         </div>
                     </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
-                <input type="hidden" name="tandaTambah" value="1">
-                <button type="submit" class="btn btn-primary">Simpan</button>
+            <div class="row  text-center my-4">
+                <div class="col">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
             </div>
+            <input type="hidden" name="tandaTambah" value="1">
+
             </form>
         </div>
     </div>

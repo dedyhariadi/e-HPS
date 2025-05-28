@@ -134,6 +134,8 @@ class Kegiatan extends BaseController
                     $errors = $this->trxGiatBarangModel->errors();
                     echo "Gagal menyimpan di trxGiatBarangModel";
                     die;
+                } else {
+                    session()->setFlashdata('pesan', 'Data Barang Berhasil ditambahkan.');
                 }
             }
         }
@@ -150,6 +152,8 @@ class Kegiatan extends BaseController
                     $errors = $this->trxReferensiModel->errors();
                     echo "Gagal menyimpan di trx referensi";
                     die;
+                } else {
+                    session()->setFlashdata('pesan', 'Referensi Berhasil ditambahkan.');
                 }
             }
         }
@@ -176,5 +180,10 @@ class Kegiatan extends BaseController
         $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
         session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
         return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
+    }
+
+    public function hapusKegiatan($id)
+    {
+        echo "halaman hapus kegiatan";
     }
 }
