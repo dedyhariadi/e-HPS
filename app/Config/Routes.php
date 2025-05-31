@@ -50,13 +50,16 @@ $routes->post('/satuan/prosesedit', 'Satuan::prosesedit');
 $routes->get('dasarsurat', 'dasarsurat::index');
 
 // kontroller kegiatan
+//cetak pdf
+$routes->get('/kegiatan/cetakPdf/(:num)', 'Kegiatan::cetakPdf/$1'); // route ke cetak pdf
+
 $routes->match(['GET', 'POST'], '/kegiatan', 'Kegiatan::index');
 //tambah
 $routes->get('kegiatan/tambah', 'Kegiatan::tambah');
 $routes->post('kegiatan/simpan', 'Kegiatan::simpan');
 
 // detail
-$routes->match(['GET', 'POST'], '/kegiatan/(:any)', 'Kegiatan::detail/$1'); //route ke detail
+$routes->match(['GET', 'POST'], '/kegiatan/(:num)', 'Kegiatan::detail/$1'); //route ke detail
 
 //hapus
 $routes->delete('/kegiatan/(:num)', 'Kegiatan::hapus/$1');  // route ke hapus

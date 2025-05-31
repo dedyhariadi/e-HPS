@@ -69,10 +69,14 @@ use CodeIgniter\I18n\Time;
 
                                     <a href="/kegiatan/edit/<?= $kegiatan['idKegiatan']; ?>" class="btn btn-warning">Edit</a>
 
+
                                 </form>
+
 
                                 <p class="mt-3">
                                     <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/kegiatan">Kembali ke daftar kegiatan</a>
+
+                                    <input type="button" value="Cetak Pdf" onclick="window.open('/kegiatan/cetakPdf/<?= $kegiatan['idKegiatan']; ?>', '_blank');" class="btn btn-primary">
                                 </p>
                             </div>
                         </div>

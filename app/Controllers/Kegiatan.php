@@ -14,6 +14,8 @@ use App\Models\PangkatModel;
 use App\Models\TrxGiatBarangModel;
 use App\Models\TrxReferensiModel;
 use App\Models\TrxReferensModel;
+use \Dompdf\Dompdf;
+use \Dompdf\Options;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Kegiatan extends BaseController
@@ -185,5 +187,32 @@ class Kegiatan extends BaseController
     public function hapusKegiatan($id)
     {
         echo "halaman hapus kegiatan";
+    }
+
+
+    public function cetakPdf($kegiatanId = false)
+    {
+        $tandaTambah = $this->request->getVar('tandaTambah');
+        echo "ini adalah halaman untuk mencetak PDF kegiatan";
+        $data = [
+            'judul' => 'Cetak PDF Kegiatan',
+        ];
+
+
+        ob_end_clean(); //untuk memperbaiki tulisan failed to load PDF document
+        // $options = new Options();
+        // $options->set('defaultFont', 'arial');
+        $dompdf = new Dompdf();
+        $dompdf->setPaper('A4', 'portrait');
+
+        $html = view('kegiatan/cetakPdf', $data);
+        $dompdf->loadHtml($html);
+        // $font->close();
+
+        // $html = view('kegiatan/cetakPdf', $data);
+        $dompdf->render();
+        $dompdf->stream('kegiatan.pdf', array(
+            'Attachment' => 0 // 0 untuk menampilkan di browser, 1 untuk mengunduh
+        ));
     }
 }
