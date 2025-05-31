@@ -13,28 +13,32 @@
             font-style: normal;
         }
 
+        @page {
+            margin-top: 2.03cm;
+            margin-bottom: 1.27cm;
+            margin-left: 2.54cm;
+            margin-right: 1.52cm;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
             font-size: 12pt;
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-            text-align: justify;
-            margin-left: 50px;
-            margin-right: 50px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            white-space: pre-wrap;
-
-
+            line-height: 1;
         }
     </style>
 </head>
 
 <body>
+    <p style="text-indent: 50px;">
+        MARKAS BESAR ANGKATAN LAUT <br>
+        DINAS MATERIEL SENJATA DAN ELEKTRONIKA<br>
+    </p>
 
-    &nbsp;&nbsp;&nbsp;MARKAS BESAR ANGKATAN LAUT <br>
-    DINAS MATERIEL SENJATA DAN ELEKTRONIKA<br>
+    <!-- <img src="data:image/png;base64'.base64_encode(file_get_contents('/assets/images/garis.png')).'" alt=""> -->
+
+    <!-- <img src="data:image/png;base64,' . base64_encode(file_get_contents('/assets/images/garis.png')) . '" alt="" class="gambar" /> -->
+
+    <img src="assets/images/garis.png" alt="">
 </body>
 
 </html>
