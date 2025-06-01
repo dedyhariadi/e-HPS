@@ -39,6 +39,9 @@
     <!-- <img src="data:image/png;base64,' . base64_encode(file_get_contents('/assets/images/garis.png')) . '" alt="" class="gambar" /> -->
 
     <img src="assets/images/garis.png" alt="">
+
+
+
 </body>
 
 </html>
