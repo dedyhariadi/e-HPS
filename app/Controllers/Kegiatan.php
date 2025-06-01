@@ -200,6 +200,18 @@ class Kegiatan extends BaseController
 
 
         ob_end_clean(); //untuk memperbaiki tulisan failed to load PDF document
+        // return view('kegiatan/cetakPdf', $data);
+        // $options->set('defaultFont', 'arial');
+        // die;
+        // $options = new Options();
+        // $options->set('isRemoteEnabled', TRUE);
+        // $dompdf = new Dompdf($options);
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->set('isRemoteEnabled', true);
+        $dompdf->setOptions($options);
+
 
         $options = new Options();
         $options->set('isRemoteEnabled', TRUE);
