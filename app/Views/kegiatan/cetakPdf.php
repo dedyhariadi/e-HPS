@@ -27,10 +27,10 @@
         }
 
         .solid-line {
-            /* border-top: 2px solid #000; */
-            margin: 20px 0;
-            width: 70%;
-            border-center: 50%;
+            border-top: 2px solid #000;
+            margin: 0px 0;
+            margin-top: 0px;
+            width: 57%;
         }
 
         .dashed-line {
@@ -53,29 +53,33 @@
         DINAS MATERIEL SENJATA DAN ELEKTRONIKA<br>
     </p>
     <div class="solid-line">
-        <span style="text-align: right;">Jakarta, 30 April 2025</span>
     </div>
-    <p style="text-indent: 50px;">
-        Kepada Yth. <br>
-        Bapak/Ibu Pimpinan Perusahaan<br>
-        Di Tempat
-        <!-- <img src="data:image/png;base64'.base64_encode(file_get_contents('/assets/images/garis.png')).'" alt=""> -->
+    <div style="text-align: right;">Jakarta, 30 April 2025</div>
+    <p>
+        Nomor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/IV/2024 <br>
+        Klasifikasi : Rahasia<br>
+        Lampiran&nbsp;&nbsp;: Sepuluh Lembar<br>
+        Perihal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Dukungan Harga Perkiraan Sendiri <br>
+        <span style="display: block; text-indent: 85px;">Pemeliharaan Amunisi Tidak Layak</span>
+        <span style="display: block; text-indent: 85px;">Pakai dengan Pengecoran Arsenal</span>
+    </p>
+    <!-- <img src="data:image/png;base64'.base64_encode(file_get_contents('/assets/images/garis.png')).'" alt=""> -->
 
-        <!-- <img src="data:image/png;base64,' . base64_encode(file_get_contents('/assets/images/garis.png')) . '" alt="" class="gambar" /> -->
+    <!-- <img src="data:image/png;base64,' . base64_encode(file_get_contents('/assets/images/garis.png')) . '" alt="" class="gambar" /> -->
 
 
 
 
-        <?php
-        // cara menyisipkan gambar
-        // $imagePath = FCPATH . 'assets/images/pema.jpg'; // Path to your image file
-        // $imageData = base64_encode(file_get_contents($imagePath));
-        // $imageSrc = 'data:image/jpg;charset=utf-8;base64,' . $imageData;
-        // cetak $imageSrc
-        // <?= $imageSrc; 
-        ?>
+    <?php
+    // cara menyisipkan gambar
+    // $imagePath = FCPATH . 'assets/images/pema.jpg'; // Path to your image file
+    // $imageData = base64_encode(file_get_contents($imagePath));
+    // $imageSrc = 'data:image/jpg;charset=utf-8;base64,' . $imageData;
+    // cetak $imageSrc
+    // <?= $imageSrc; 
+    ?>
 
-        <!-- <img src="" style="width: 500px;" alt="Logo"> -->
+    <!-- <img src="" style="width: 500px;" alt="Logo"> -->
 
 
 
