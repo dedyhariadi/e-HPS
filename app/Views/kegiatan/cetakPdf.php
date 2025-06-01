@@ -25,6 +25,24 @@
             font-size: 12pt;
             line-height: 1;
         }
+
+        .solid-line {
+            border-top: 2px solid #000;
+            margin: 20px 0;
+            width: 70%;
+        }
+
+        .dashed-line {
+            border-top: 1px dashed #666;
+            margin: 10px 0;
+        }
+
+        .vertical-line {
+            border-left: 1px solid #000;
+            height: 50px;
+            display: inline-block;
+            margin: 0 10px;
+        }
     </style>
 </head>
 
@@ -33,12 +51,25 @@
         MARKAS BESAR ANGKATAN LAUT <br>
         DINAS MATERIEL SENJATA DAN ELEKTRONIKA<br>
     </p>
+    <div class="solid-line"></div>
 
     <!-- <img src="data:image/png;base64'.base64_encode(file_get_contents('/assets/images/garis.png')).'" alt=""> -->
 
     <!-- <img src="data:image/png;base64,' . base64_encode(file_get_contents('/assets/images/garis.png')) . '" alt="" class="gambar" /> -->
 
-    <img src="assets/images/garis.png" alt="">
+
+
+
+    <?php
+    // cara menyisipkan gambar
+    // $imagePath = FCPATH . 'assets/images/pema.jpg'; // Path to your image file
+    // $imageData = base64_encode(file_get_contents($imagePath));
+    // $imageSrc = 'data:image/jpg;charset=utf-8;base64,' . $imageData;
+    // cetak $imageSrc
+    // <?= $imageSrc; 
+    ?>
+
+    <!-- <img src="" style="width: 500px;" alt="Logo"> -->
 
 
 

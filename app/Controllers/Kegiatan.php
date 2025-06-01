@@ -207,23 +207,20 @@ class Kegiatan extends BaseController
         // $options->set('isRemoteEnabled', TRUE);
         // $dompdf = new Dompdf($options);
 
-        $dompdf = new Dompdf();
-        $options = $dompdf->getOptions();
-        $options->set('isRemoteEnabled', true);
-        $dompdf->setOptions($options);
-
+        // $options = $dompdf->getOptions();
 
         $options = new Options();
-        $options->set('isRemoteEnabled', TRUE);
-
+        $options->set('isRemoteEnabled', true);
+        $options->set('ishtml5ParserEnabled', true);
         $dompdf = new Dompdf($options);
-        $dompdf->setPaper('A4', 'portrait');
+
+        
 
         $html = view('kegiatan/cetakPdf', $data);
         $dompdf->loadHtml($html);
-
+        $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream('kegiatan.pdf', array(
+        $dompdf->stream('kegiatanku.pdf', array(
             'Attachment' => 0 // 0 untuk menampilkan di browser, 1 untuk mengunduh
         ));
     }
