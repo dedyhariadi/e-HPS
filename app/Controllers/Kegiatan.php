@@ -203,10 +203,15 @@ class Kegiatan extends BaseController
         // return view('kegiatan/cetakPdf', $data);
         // $options->set('defaultFont', 'arial');
         // die;
-        $options = new Options();
-        $options->set('isRemoteEnabled', TRUE);
+        // $options = new Options();
+        // $options->set('isRemoteEnabled', TRUE);
+        // $dompdf = new Dompdf($options);
 
-        $dompdf = new Dompdf($options);
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->set('isRemoteEnabled', true);
+        $dompdf->setOptions($options);
+
         $dompdf->setPaper('A4', 'portrait');
 
         $html = view('kegiatan/cetakPdf', $data);
