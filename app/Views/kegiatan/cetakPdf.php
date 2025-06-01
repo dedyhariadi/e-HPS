@@ -27,9 +27,10 @@
         }
 
         .solid-line {
-            border-top: 2px solid #000;
+            /* border-top: 2px solid #000; */
             margin: 20px 0;
             width: 70%;
+            border-center: 50%;
         }
 
         .dashed-line {
@@ -51,25 +52,30 @@
         MARKAS BESAR ANGKATAN LAUT <br>
         DINAS MATERIEL SENJATA DAN ELEKTRONIKA<br>
     </p>
-    <div class="solid-line"></div>
+    <div class="solid-line">
+        <span style="text-align: right;">Jakarta, 30 April 2025</span>
+    </div>
+    <p style="text-indent: 50px;">
+        Kepada Yth. <br>
+        Bapak/Ibu Pimpinan Perusahaan<br>
+        Di Tempat
+        <!-- <img src="data:image/png;base64'.base64_encode(file_get_contents('/assets/images/garis.png')).'" alt=""> -->
 
-    <!-- <img src="data:image/png;base64'.base64_encode(file_get_contents('/assets/images/garis.png')).'" alt=""> -->
-
-    <!-- <img src="data:image/png;base64,' . base64_encode(file_get_contents('/assets/images/garis.png')) . '" alt="" class="gambar" /> -->
+        <!-- <img src="data:image/png;base64,' . base64_encode(file_get_contents('/assets/images/garis.png')) . '" alt="" class="gambar" /> -->
 
 
 
 
-    <?php
-    // cara menyisipkan gambar
-    // $imagePath = FCPATH . 'assets/images/pema.jpg'; // Path to your image file
-    // $imageData = base64_encode(file_get_contents($imagePath));
-    // $imageSrc = 'data:image/jpg;charset=utf-8;base64,' . $imageData;
-    // cetak $imageSrc
-    // <?= $imageSrc; 
-    ?>
+        <?php
+        // cara menyisipkan gambar
+        // $imagePath = FCPATH . 'assets/images/pema.jpg'; // Path to your image file
+        // $imageData = base64_encode(file_get_contents($imagePath));
+        // $imageSrc = 'data:image/jpg;charset=utf-8;base64,' . $imageData;
+        // cetak $imageSrc
+        // <?= $imageSrc; 
+        ?>
 
-    <!-- <img src="" style="width: 500px;" alt="Logo"> -->
+        <!-- <img src="" style="width: 500px;" alt="Logo"> -->
 
 
 
