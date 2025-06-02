@@ -502,29 +502,227 @@
 
 
     <div style="page-break-after: always;"></div>
+    <!-- Lampiran II  -->
 
-    <span style="display: inline-block; width: 20px; text-align: left;"></span>
-    <span style="text-align: justify;"></span>
-
-
-    <!-- <img src="data:image/png;base64'.base64_encode(file_get_contents('/assets/images/garis.png')).'" alt=""> -->
-
-    <!-- <img src="data:image/png;base64,' . base64_encode(file_get_contents('/assets/images/garis.png')) . '" alt="" class="gambar" /> -->
+    <span style="display: inline-block; width: 50%; text-align: left; text-indent:50px;">MARKAS BESAR ANGKATAN LAUT</span>
+    <span style="display: inline-block;  width: 49%;text-align:right; ">Lampiran III Surat Kadissenlekal</span>
 
 
+    <span style="display: inline-block; width: 52.4%; text-align: left;" class="custom-underline">
+        DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+    </span>
+    <span style="display: inline-block;  width: 46.5%;text-align:right; ">Nomor R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/IV/2024</span>
 
 
-    <?php
-    // cara menyisipkan gambar
-    // $imagePath = FCPATH . 'assets/images/pema.jpg'; // Path to your image file
-    // $imageData = base64_encode(file_get_contents($imagePath));
-    // $imageSrc = 'data:image/jpg;charset=utf-8;base64,' . $imageData;
-    // cetak $imageSrc
-    // <?= $imageSrc; 
-    ?>
+    <span style="display: inline-block; width: 430px; text-align: left;"></span>
+    <span class="custom-underline" style="line-height: 1.5;">Tanggal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;April 2024</span>
 
-    <!-- <img src="" style="width: 500px;" alt="Logo"> -->
+    <br><br>
+    <div style="text-align: center;">
+        GAMBAR
+    </div>
+    <br>
+    <p>A. Kebutuhan Materiel Pengecoran</p>
+    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;">
+        <tr>
+            <?php
+            // cara menyisipkan gambar
+            $imagePath = FCPATH . 'assets/images/pemandangan.jpg'; // Path to your image file
+            $imageData = base64_encode(file_get_contents($imagePath));
+            $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
+            ?>
 
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+        </tr>
+        <tr>
+            <?php
+            // cara menyisipkan gambar
+            $imagePath = FCPATH . 'assets/images/semen.jpg'; // Path to your image file
+            $imageData = base64_encode(file_get_contents($imagePath));
+            $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
+            ?>
+
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+        </tr>
+        <tr>
+            <?php
+            // cara menyisipkan gambar
+            $imagePath = FCPATH . 'assets/images/pasir.jpg'; // Path to your image file
+            $imageData = base64_encode(file_get_contents($imagePath));
+            $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
+            ?>
+
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                pasir
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                pasir
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                pasir
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                pasir
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                pasir
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                pasir
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                pasir
+            </td>
+        </tr>
+    </table>
+    <br>
+    <p>B. Kebutuhan Materiel Pendukung</p>
+    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;">
+        <tr>
+            <?php
+            // cara menyisipkan gambar
+            $imagePath = FCPATH . 'assets/images/pemandangan.jpg'; // Path to your image file
+            $imageData = base64_encode(file_get_contents($imagePath));
+            $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
+            ?>
+
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                Keranjang
+            </td>
+        </tr>
+        <tr>
+            <?php
+            // cara menyisipkan gambar
+            $imagePath = FCPATH . 'assets/images/semen.jpg'; // Path to your image file
+            $imageData = base64_encode(file_get_contents($imagePath));
+            $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
+            ?>
+
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+            <td style="width: 15%;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                semen
+            </td>
+        </tr>
+    </table>
+
+    <br><br>
+    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Dissenlekal</div>
+    <div style="text-align: center; text-indent: 50%;"> Sekdis</div>
+    <div style="text-align: center; text-indent: 50%;"> Selaku</div>
+    <div style="text-align: center; text-indent: 50%;"> PPK,</div>
+    <br><br><br><br>
+    <div style="text-align: center; text-indent: 50%;"> Eddy Saputra, S.T., M.A.P.</div>
+    <div style="text-align: center; text-indent: 50%;"> Kolonel Laut (E) NRP 13367/P</div>
 
 
 </body>
