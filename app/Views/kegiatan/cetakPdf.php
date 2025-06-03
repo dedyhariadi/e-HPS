@@ -61,15 +61,17 @@
 </head>
 
 <body>
+
+
     <span style="display:block;text-indent : 50px;">
         MARKAS BESAR ANGKATAN LAUT <br>
     </span>
     <div class="custom-underline">
         DINAS MATERIEL SENJATA DAN ELEKTRONIKA
     </div>
-    <div style="text-align: right;">Jakarta, 30 April 2025</div>
+    <div style="text-align: right;">Jakarta, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></div>
     <div class="container-float">
-        Nomor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/IV/2024 <br>
+        Nomor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($dasar['tglSurat'])); ?> <br>
         Klasifikasi : Rahasia<br>
         Lampiran&nbsp;&nbsp;: Sepuluh Lembar<br>
         Perihal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Dukungan Harga Perkiraan Sendiri <br>

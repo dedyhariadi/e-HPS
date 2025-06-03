@@ -193,10 +193,23 @@ class Kegiatan extends BaseController
     public function cetakPdf($kegiatanId = false)
     {
         $tandaTambah = $this->request->getVar('tandaTambah');
-        echo "ini adalah halaman untuk mencetak PDF kegiatan";
+
+
+        $kegiatan = $this->kegiatanModel->getKegiatan($kegiatanId);
+
         $data = [
-            'judul' => 'Cetak PDF Kegiatan',
+            'bulan' => $this->bulan,
+            'idKegiatan' => $kegiatanId,
+            'kegiatan' => $kegiatan,
+            'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
+            'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
+            'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $kegiatanId])->findAll(),
+            'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
+            'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
+            'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll()
         ];
+
+        d($data);
 
         ob_end_clean(); //untuk memperbaiki tulisan failed to load PDF document
 
