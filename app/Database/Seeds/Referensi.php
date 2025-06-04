@@ -19,9 +19,9 @@ class Referensi extends Seeder
                     'updated_at' => date('Y-m-d H:i:s'),
                 ],
                 [
-                    'sumberId' => rand(1, 4),
-                    'link' => 'www.shopee.com',
-                    'harga' => rand(2000, 100000),
+                    'sumberId' => 5,
+                    'link' => 'https://www.monotaro.id/p106035324.html',
+                    'harga' => 89000,
                     'barangId' => rand(1, 20),
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),

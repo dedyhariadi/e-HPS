@@ -65,10 +65,13 @@ use CodeIgniter\I18n\Time;
                                 <form action="/kegiatan/<?= $kegiatan['idKegiatan']; ?>" method="post" class="d-inline">
                                     <?= csrf_field(); ?>
                                     <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="idKegiatan" value="<?= $kegiatan['idKegiatan']; ?>">
+                                    <input type="hidden" name="tandaHapus" value="hapusKegiatan">
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
 
-                                    <a href="/kegiatan/edit/<?= $kegiatan['idKegiatan']; ?>" class="btn btn-warning">Edit</a>
+                                    <!-- <a href="/kegiatan/edit/ idkegiatan>" class="btn btn-warning">Edit</a> -->
 
+                                    <input type="button" value="Cetak Pdf" onclick="window.open('/kegiatan/cetakPdf/<?= $kegiatan['idKegiatan']; ?>', '_blank');" class="btn btn-primary">
 
                                 </form>
 
@@ -76,7 +79,6 @@ use CodeIgniter\I18n\Time;
                                 <p class="mt-3">
                                     <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/kegiatan">Kembali ke daftar kegiatan</a>
 
-                                    <input type="button" value="Cetak Pdf" onclick="window.open('/kegiatan/cetakPdf/<?= $kegiatan['idKegiatan']; ?>', '_blank');" class="btn btn-primary">
                                 </p>
                             </div>
                         </div>

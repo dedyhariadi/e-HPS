@@ -49,6 +49,7 @@ $routes->post('/satuan/prosesedit', 'Satuan::prosesedit');
 // dasar surat
 $routes->get('dasarsurat', 'dasarsurat::index');
 
+
 // kontroller kegiatan
 //cetak pdf
 $routes->get('/kegiatan/cetakPdf/(:num)', 'Kegiatan::cetakPdf/$1'); // route ke cetak pdf

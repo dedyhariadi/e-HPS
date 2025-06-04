@@ -57,10 +57,41 @@
             width: 10px;
             /* border: 1px solid black; */
         }
+
+        header {
+            position: fixed;
+            top: -60px;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+            text-align: center;
+        }
+
+        footer {
+            position: fixed;
+            bottom: -60px;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+            text-align: center;
+        }
+
+        .page-number:before {
+            content: counter(page);
+        }
     </style>
+
 </head>
 
 <body>
+
+    <!-- <header>
+        Ini adalah Header - Akan muncul di setiap halaman
+    </header> -->
+
+    <!-- <footer>
+        Ini adalah Footer - Halaman <span class="page-number"></span> dari <span class="page-count"></span>
+    </footer> -->
 
 
     <span style="display:block;text-indent : 50px;">
@@ -71,17 +102,28 @@
     </div>
     <div style="text-align: right;">Jakarta, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></div>
     <div class="container-float">
-        Nomor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($dasar['tglSurat'])); ?> <br>
+        Nomor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?> <br>
         Klasifikasi : Rahasia<br>
-        Lampiran&nbsp;&nbsp;: Sepuluh Lembar<br>
-        Perihal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Dukungan Harga Perkiraan Sendiri <br>
-        <span style="display: block; text-indent: 78px;">Pemeliharaan Amunisi Tidak Layak</span>
-        <span style="display: inline-block; width: 74px; text-align: left;"></span>
-        <span class="custom-underline" style="line-height: 1.5;">Pakai dengan Pengecoran Arsenal</span>
+        Lampiran&nbsp;&nbsp;: <br>
+        <table border=0 style="margin: left -3px;">
+            <tr>
+                <td style="width: 65.5px; vertical-align: top;">
+                    Perihal
+                </td>
+                <td style="vertical-align: top;">
+                    :
+                </td>
+                <td style="width: 300px;border-bottom: 1px solid; text-align:justify;">
+                    Dukungan Harga Perkiraan Sendiri <?= $kegiatan['namaKegiatan']; ?>
+                </td>
+            </tr>
+        </table>
+
     </div>
 
 
-    <div style="text-indent: 78%;">Kepada </div><br>
+    <div style=" text-indent: 78%;">Kepada
+    </div><br>
     <div style="text-indent: 70%;">Yth. &nbsp;&nbsp;&nbsp; Pejabat Pengadaan</div><br>
     <div style="text-indent: 78%;">di</div><br>
     <div style="text-indent: 78%;">Jakarta</div>
@@ -89,11 +131,13 @@
     <br><br>
 
     <div style="text-align: justify;">
-        1. &nbsp;&nbsp;&nbsp;Berdasarkan Surat Pejabat Pengadaan Barang/Jasa Dissenlekal Nomor B/782/IV/2024/Dissenlekal tanggal 29 April 2024 tentang Permohonan Dukungan Harga Perkiraan Sendiri (HPS) dan Spesifikasi Teknis Pemeliharaan Amunisi Tidak Layak Pakai dengan Pengecoran Arsenal.
+        1. &nbsp;&nbsp;&nbsp;Berdasarkan Surat <?= $dasar['pejabat']; ?> Nomor <?= $dasar['noSurat']; ?> tanggal <?= date('d', strtotime($dasar['tglSurat'])) . " " . $bulan[intval(date('m', strtotime($dasar['tglSurat']))) - 1] . " " . date('Y', strtotime($dasar['tglSurat'])); ?> tentang <?= $dasar['tentang']; ?>.
     </div>
     <br>
+
+    <!-- perhitungan total HPS -->
     <div style="display:inline-block;text-align: justify;">
-        2. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sehubungan dasar tersebut, dikirimkan data Harga Perkiraan Sendiri (HPS) dan Spesifikasi Teknis Pemeliharaan Amunisi Tidak Layak Pakai dengan Pengecoran Arsenal, senilai Rp 199.981.000,00 (seratus sembilan puluh sembilan juta sembilan ratus delapan puluh satu ribu rupiah) sesuai lampiran.
+        2. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sehubungan dasar tersebut, dikirimkan data Harga Perkiraan Sendiri (HPS) dan Spesifikasi Teknis <?= $kegiatan['namaKegiatan']; ?>, senilai Rp 199.981.000,00 (<?= trim(terbilang(199981000)); ?>) sesuai lampiran.
     </div>
     <br><br>
     <p style="text-align: justify;">
@@ -107,33 +151,69 @@
     <br><br><br><br>
 
     <span style="display: inline-block; width: 49%; text-align: left;">Tembusan :</span>
-    <span style="display: inline-block;  width: 49%;text-align:center ; text-indent:1%; ">Eddy Saputra, S.T., M.A.P.</span>
+    <span style="display: inline-block;  width: 49%;text-align:center ; text-indent:1%; "><?= $kegiatan['namaPejabat']; ?></span>
 
     <div>
-        <span style="display:block; text-align: center; text-indent: 50%;">Kolonel Laut (E) NRP 13367/P </span><br>
+        <span style="display:block; text-align: center; text-indent: 50%;"><?= $pangkat['pangkat']; ?> <?= str_contains($pangkat['pangkat'], 'Laksamana') ? "" : " NRP " . $kegiatan['NRP']; ?></span><br>
         <span class="custom-underline" style="text-align: left;">Kadissenlekal selaku KPA</span>
 
     </div>
 
     <div style="page-break-after: always;"></div>
 
+    <!-- 
     <span style="display: inline-block; width: 50%; text-align: left; text-indent:50px;">MARKAS BESAR ANGKATAN LAUT</span>
     <span style="display: inline-block;  width: 49%;text-align:right; ">Lampiran I Surat Kadissenlekal</span>
-
 
     <span style="display: inline-block; width: 52.4%; text-align: left;" class="custom-underline">
         DINAS MATERIEL SENJATA DAN ELEKTRONIKA
     </span>
-    <span style="display: inline-block;  width: 46.5%;text-align:right; ">Nomor R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/IV/2024</span>
+    <span style="display: inline-block;  width: 46.5%;text-align:right; ">Nomor R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?> </span>
 
 
     <span style="display: inline-block; width: 430px; text-align: left;"></span>
-    <span class="custom-underline" style="line-height: 1.5;">Tanggal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;April 2024</span>
+    <span class="custom-underline" style="line-height: 1.5;">Tanggal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;April 2024</span> -->
+    <table border="0" cellpading=0 style="line-height: 1;">
+        <tr>
+            <td style="width:337px;text-align: center;">
+                MARKAS BESAR ANGKATAN LAUT
+            </td>
+            <td style="width:70px;"></td>
+            <td colspan="2">
+                Lampiran I Surat Kadissenlekal
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center;" class="custom-underline">
+                DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+            </td>
+            <td></td>
+            <td style="width: 100px;">
+                Nomor R/
+            </td>
+            <td style="text-align: right;">
+                /<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Tanggal</td>
+            <td style="text-align: right;"><?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></td>
+        </tr>
+        <!-- untuk memperjauh garis bawah -->
+        <tr style="line-height: 0.1;padding:0px; margin:0px;">
+            <td></td>
+            <td></td>
+            <td style="border-bottom: 1px solid;"></td>
+            <td style="text-align: right;border-bottom: 1px solid;"></td>
+        </tr>
+    </table>
 
     <br><br>
     <div style="text-align: center;">
         HARGA PERKIRAAN SENDIRI (HPS) <br>
-        PEMELIHARAAN AMUNISI TIDAK LAYAK PAKAI DENGAN PENGECORAN ARSENAL
+        <?= strtoupper($kegiatan['namaKegiatan']); ?>
     </div>
     <br><br>
     <table style="text-align:justify;margin: left -5px;">
@@ -178,8 +258,22 @@
                         $char++;
                     };
 
+                    // foreach ($trxGiatBarang as $listBarang) :
 
-                    ?>.&nbsp;&nbsp;&nbsp;Data harga dari situs jual beli online di Indonesia (Tokopedia, Bukalapak, Monotaro, Shopee, Blibli, dan beberapa situs lainnya);</td>
+                    //     foreach ($barang as $b):
+                    //         if ($b['idBarang'] == $listBarang['barangId']) {
+                    //             $namaBarang = $b['namaBarang'];
+                    //         }
+                    //     endforeach;
+
+                    //     echo "nama barang : " . $namaBarang;
+                    // endforeach;
+
+                    ?>.&nbsp;&nbsp;&nbsp;
+
+                    Dari referensi website Data harga dari situs jual beli online di Indonesia (Tokopedia, Bukalapak, Monotaro, Shopee, Blibli, dan beberapa situs lainnya);
+
+                </td>
             </tr>
         <?php
         }
@@ -411,8 +505,11 @@
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>
     <br><br><br><br>
-    <div style="text-align: center; text-indent: 50%;"> Eddy Saputra, S.T., M.A.P.</div>
-    <div style="text-align: center; text-indent: 50%;"> Kolonel Laut (E) NRP 13367/P</div>
+    <div style="text-align: center; text-indent: 50%;"><?= $kegiatan['namaPejabat']; ?></div>
+    <div style="text-align: center; text-indent: 50%;"><?= $pangkat['pangkat']; ?> <?= str_contains($pangkat['pangkat'], 'Laksamana') ? "" : " NRP " . $kegiatan['NRP']; ?></div>
+
+
+
 
 
     <div style="page-break-after: always;"></div>
@@ -726,7 +823,11 @@
     <div style="text-align: center; text-indent: 50%;"> Eddy Saputra, S.T., M.A.P.</div>
     <div style="text-align: center; text-indent: 50%;"> Kolonel Laut (E) NRP 13367/P</div>
 
-
+    <script>
+        const pageCount = document.querySelectorAll('.page').length; // Contoh: menghitung jumlah elemen dengan class 'page'
+        const pageTotalElement = document.querySelector('.page-total');
+        pageTotalElement.textContent = pageCount;
+    </script>
 </body>
 
 </html>

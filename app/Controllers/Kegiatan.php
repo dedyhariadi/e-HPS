@@ -60,6 +60,7 @@ class Kegiatan extends BaseController
 
         $data = [
             'title' => 'Daftar Kegiatan',
+            'bulan' => $this->bulan,
             'kegiatan' => $kegiatan
         ];
 
@@ -178,15 +179,37 @@ class Kegiatan extends BaseController
 
     public function hapus($id)
     {
-        $this->trxGiatBarangModel->delete($id);
-        $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
+        if (!$this->request->getVar('tandaHapus')) {
+            $this->trxGiatBarangModel->delete($id);
+            $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
+            session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+            return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
+        }
+
+        echo "halaman hapus kegiatan";
+        d($this->request->getVar());
+
+        $listBarang = $this->trxGiatBarangModel->where(['kegiatanId' => $id])->findAll();
+        // $this->trxReferensiModel->where(['trxGiatBarangId']=> ini id nya)->delete();
+
+        // proses hapus di tabel trxReferensi
+        foreach ($listBarang as $list) :
+            $this->trxReferensiModel->where(['trxGiatBarangId' => $list['idTrxGiatBarang']])->delete();
+        endforeach;
+
+        $this->trxGiatBarangModel->where(['kegiatanId' => $id])->delete(); //hapus di tabel trxGiatBarang
+        $this->kegiatanModel->delete($id); //hapus di tabel Kegiatan
+
         session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
-        return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
+        return redirect()->to('/kegiatan');
     }
 
     public function hapusKegiatan($id)
     {
-        echo "halaman hapus kegiatan";
+        // $this->trxGiatBarangModel->delete($id);
+        // $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
+        // session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        // return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
     }
 
 
@@ -206,7 +229,7 @@ class Kegiatan extends BaseController
             'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $kegiatanId])->findAll(),
             'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
             'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
-            'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll()
+            'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
         ];
 
         d($data);
@@ -218,6 +241,7 @@ class Kegiatan extends BaseController
         $options->set('defaultFont', 'Helvetica');
         $options->set('isRemoteEnabled', true);
         $options->set('ishtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
         $dompdf = new Dompdf($options);
 
 
@@ -225,6 +249,22 @@ class Kegiatan extends BaseController
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
+
+        // menulis jumlah lampiran pada halaman pertama PDF
+        $canvas = $dompdf->getCanvas();
+        $totalPages = $canvas->get_page_count() - 1;
+        $terbilang = trim(ucwords(terbilang($totalPages)));
+        $canvas->page_script('
+         if ($PAGE_NUM === 1) {
+                $text = "' . $terbilang . ' lembar";
+                $font = $fontMetrics->getFont("Arial", "normal");
+                $size = 11;
+                $x = 130;
+                $y = 123.5;
+                $this->text($x, $y, $text, $font, $size);
+                 }
+                ');
+
         $dompdf->stream('kegiatanku.pdf', array(
             'Attachment' => 0 // 0 untuk menampilkan di browser, 1 untuk mengunduh
         ));

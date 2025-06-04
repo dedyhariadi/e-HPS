@@ -59,11 +59,17 @@
                 foreach ($kegiatan as $b) : ?>
                     <tr>
                         <th scope="row" class="text-center"><?= $i++; ?></th>
-                        <td><?= $b['namaKegiatan']; ?></td>
+                        <td style="width: 600px;"><?= $b['namaKegiatan']; ?></td>
                         <td><?= $b['noSurat']; ?></td>
-                        <td class="text-center"><?= date('d M Y', strtotime($b['tglSurat'])); ?></td>
+                        <td class="text-left">
+                            <?= date('d', strtotime($b['tglSurat'])); ?>
+                            <?= $bulan[intval(date('m', strtotime($b['tglSurat']))) - 1] . " " . date('Y', strtotime($b['tglSurat'])); ?>
+                        </td>
                         <td><?= $b['namaPejabat']; ?></td>
-                        <td class="text-center"><?= date('d M Y', strtotime($b['updated_at'])); ?></td>
+                        <td class="text-left">
+                            <?= date('d', strtotime($b['updated_at'])); ?>
+                            <?= $bulan[intval(date('m', strtotime($b['updated_at']))) - 1] . " " . date('Y', strtotime($b['updated_at'])); ?>
+                        </td>
                         <td class="text-center"><a type="button" class="btn btn-warning" href="/kegiatan/<?= $b['idKegiatan']; ?>">Detail</a></td>
                     </tr>
                 <?php endforeach; ?>
