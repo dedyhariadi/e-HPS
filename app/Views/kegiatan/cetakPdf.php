@@ -241,11 +241,10 @@
         $char = "d";
         $banyakHuruf = 1;
         $cetakHuruf = "";
-        foreach ($trxReferensi as $listBarang) :
+        foreach ($trxReferensi as $listReferensi) :
         ?>
             <tr>
                 <td style="width: 10px;"></td>
-
                 <td style="overflow-wrap:anywhere; max-width: 60%;">
                     <?php
                     for ($huruf = 1; $huruf <= $banyakHuruf; $huruf++) {
@@ -259,17 +258,24 @@
                         $char++;
                     };
 
+                    // foreach ($barang as $b):
+                    //     if ($b['idBarang'] == $listBarang['barangId']) {
+                    //         $namaBarang = $b['namaBarang'];
+                    //         $namaSatuan = $b['namaSatuan'];
+                    //     }
+                    // endforeach;
 
-
-                    foreach ($barang as $b):
-                        if ($b['idBarang'] == $listBarang['barangId']) {
-                            $namaBarang = $b['namaBarang'];
-                            $namaSatuan = $b['namaSatuan'];
+                    foreach ($trxGiatBarang as $listBarang):
+                        if ($listReferensi['trxGiatBarangId'] == $listBarang['idTrxGiatBarang']) {
+                            $namaBarang = $listBarang['barangId'];
+                            echo $namaBarang
+                            // $namaSatuan = $b['namaSatuan'];
                         }
                     endforeach;
-
                     ?>.
-                    Dari referensi website <?= $listBarang['link']; ?> diketahui 1 <?= $namaSatuan . " " . $namaBarang; ?> tanpa PPN 11% seharga Rp <?= $listBarang['harga']; ?>
+
+
+                    Dari referensi website <?= $listBarang['kegiatanId']; ?> diketahui 1 tanpa PPN 11% seharga Rp <?= $listBarang['kebutuhan']; ?>
                 </td>
             </tr>
         <?php
