@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kegiatan</title>
     <style>
-        /* @font-face {
+        @font-face {
             font-family: 'Arial';
             src: url('Arial.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
-        } */
+        }
 
         @page {
             margin-top: 2.03cm;
@@ -21,7 +21,7 @@
         }
 
         body {
-            /* font-family: 'Arial', sans-serif; */
+            font-family: 'Arial', sans-serif;
             font-size: 11pt;
             line-height: 1.1;
         }
@@ -216,7 +216,7 @@
         <?= strtoupper($kegiatan['namaKegiatan']); ?>
     </div>
     <br><br>
-    <table style="text-align:justify;margin: left -5px;">
+    <table style="text-align:justify;margin: left -5px; width: 100%;">
         <tr>
             <td style="width: 30px;">1. </td>
             <td>Total HPS = Rp 199.981.000,00</td>
@@ -241,11 +241,12 @@
         $char = "d";
         $banyakHuruf = 1;
         $cetakHuruf = "";
-        for ($a = 1; $a < 60; $a++) {
+        foreach ($trxReferensi as $listBarang) :
         ?>
             <tr>
-                <td style="width: 30px;"></td>
-                <td>
+                <td style="width: 10px;"></td>
+
+                <td style="overflow-wrap:anywhere; max-width: 60%;">
                     <?php
                     for ($huruf = 1; $huruf <= $banyakHuruf; $huruf++) {
                         echo $char;
@@ -258,29 +259,25 @@
                         $char++;
                     };
 
-                    // foreach ($trxGiatBarang as $listBarang) :
 
-                    //     foreach ($barang as $b):
-                    //         if ($b['idBarang'] == $listBarang['barangId']) {
-                    //             $namaBarang = $b['namaBarang'];
-                    //         }
-                    //     endforeach;
 
-                    //     echo "nama barang : " . $namaBarang;
-                    // endforeach;
+                    foreach ($barang as $b):
+                        if ($b['idBarang'] == $listBarang['barangId']) {
+                            $namaBarang = $b['namaBarang'];
+                            $namaSatuan = $b['namaSatuan'];
+                        }
+                    endforeach;
 
-                    ?>.&nbsp;&nbsp;&nbsp;
-
-                    Dari referensi website Data harga dari situs jual beli online di Indonesia (Tokopedia, Bukalapak, Monotaro, Shopee, Blibli, dan beberapa situs lainnya);
-
+                    ?>.
+                    Dari referensi website <?= $listBarang['link']; ?> diketahui 1 <?= $namaSatuan . " " . $namaBarang; ?> tanpa PPN 11% seharga Rp <?= $listBarang['harga']; ?>
                 </td>
             </tr>
         <?php
-        }
+        endforeach;
         ?>
         <br>
         <tr>
-            <td colspan="2">3. &nbsp;&nbsp;&nbsp;&nbsp;Analisa Harga.&nbsp;&nbsp;&nbsp;Dari referensi tersebut diatas dapat diperhitungkan bahwa jumlah anggaran Pemeliharaan Amunisi Tidak Layak Pakai dengan Pengecoran Arsenal tahun 2024 adalah sebagai berikut : <br><br></td>
+            <td colspan=" 2">3. &nbsp;&nbsp;&nbsp;&nbsp;Analisa Harga.&nbsp;&nbsp;&nbsp;Dari referensi tersebut diatas dapat diperhitungkan bahwa jumlah anggaran <?= $kegiatan['namaKegiatan']; ?> adalah sebagai berikut : <br><br></td>
         </tr>
         <tr>
             <td style="width: 30px;"></td>

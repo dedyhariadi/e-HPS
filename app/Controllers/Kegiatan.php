@@ -241,7 +241,7 @@ class Kegiatan extends BaseController
         $options->set('defaultFont', 'Helvetica');
         $options->set('isRemoteEnabled', true);
         $options->set('ishtml5ParserEnabled', true);
-        $options->set('isPhpEnabled', true);
+        // $options->set('isPhpEnabled', true);
         $dompdf = new Dompdf($options);
 
 
