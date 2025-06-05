@@ -241,46 +241,54 @@
         $char = "d";
         $banyakHuruf = 1;
         $cetakHuruf = "";
-        foreach ($trxReferensi as $listReferensi) :
+        $a = 0;
+        foreach ($trxGiatBarang as $b) :
+            foreach ($trxReferensi as $trxR) :
+                if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
+                    $cetak[$a] = [
+                        [
+                            'link' => $trxR['link'],
+                            'harga' => $trxR['harga']
+                        ]
+                    ];
+                    $a++;
+                }
+            endforeach;
+
+            foreach ($cetak as $c):
         ?>
-            <tr>
-                <td style="width: 10px;"></td>
-                <td style="overflow-wrap:anywhere; max-width: 60%;">
-                    <?php
-                    for ($huruf = 1; $huruf <= $banyakHuruf; $huruf++) {
-                        echo $char;
-                    }
-
-                    if ($char == "z") {
-                        $banyakHuruf++;
-                        $char = "a";
-                    } else {
-                        $char++;
-                    };
-
-                    // foreach ($barang as $b):
-                    //     if ($b['idBarang'] == $listBarang['barangId']) {
-                    //         $namaBarang = $b['namaBarang'];
-                    //         $namaSatuan = $b['namaSatuan'];
-                    //     }
-                    // endforeach;
-
-                    foreach ($trxGiatBarang as $listBarang):
-                        if ($listReferensi['trxGiatBarangId'] == $listBarang['idTrxGiatBarang']) {
-                            $namaBarang = $listBarang['barangId'];
-                            echo $namaBarang
-                            // $namaSatuan = $b['namaSatuan'];
+                <tr>
+                    <td style="width: 10px;"></td>
+                    <td style="overflow-wrap:anywhere; max-width: 60%;">
+                        <?php
+                        for ($huruf = 1; $huruf <= $banyakHuruf; $huruf++) {
+                            echo $char;
                         }
-                    endforeach;
-                    ?>.
+                        if ($char == "z") {
+                            $banyakHuruf++;
+                            $char = "a";
+                        } else {
+                            $char++;
+                        };
+                        ?>.&nbsp;&nbsp;&nbsp;
+                        Dari referensi website <?= $c[0]['link']; ?> diketahui
+                        <?php
 
-
-                    Dari referensi website <?= $listBarang['kegiatanId']; ?> diketahui 1 tanpa PPN 11% seharga Rp <?= $listBarang['kebutuhan']; ?>
-                </td>
-            </tr>
+                        foreach ($barang as $brg) :
+                            if ($b['barangId'] == $brg['idBarang']) {
+                                echo "1 " . $brg['namaSatuan'] . " " . $brg['namaBarang'];
+                            }
+                        endforeach;
+                        ?>
+                        tanpa PPN 11% seharga Rp <?= number_format($c[0]['harga'], 0, ",", "."); ?>
+                    </td>
+                </tr>
         <?php
+            endforeach;
+            unset($cetak);
         endforeach;
         ?>
+
         <br>
         <tr>
             <td colspan=" 2">3. &nbsp;&nbsp;&nbsp;&nbsp;Analisa Harga.&nbsp;&nbsp;&nbsp;Dari referensi tersebut diatas dapat diperhitungkan bahwa jumlah anggaran <?= $kegiatan['namaKegiatan']; ?> adalah sebagai berikut : <br><br></td>

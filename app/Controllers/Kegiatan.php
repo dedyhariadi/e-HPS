@@ -171,7 +171,8 @@ class Kegiatan extends BaseController
             'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $idKegiatan])->findAll(),
             'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
             'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
-            'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll()
+            'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
+            'sumber' => $this->sumberModel->findAll()
         ];
 
         return view('kegiatan/detail', $data);
@@ -229,7 +230,9 @@ class Kegiatan extends BaseController
             'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $kegiatanId])->findAll(),
             'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
             'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
+
             'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
+            'sumber' => $this->sumberModel->findAll()
         ];
 
         d($data);
@@ -244,6 +247,9 @@ class Kegiatan extends BaseController
         // $options->set('isPhpEnabled', true);
         $dompdf = new Dompdf($options);
 
+
+
+        // return view('kegiatan/cetakPdf', $data);
 
         $html = view('kegiatan/cetakPdf', $data);
         $dompdf->loadHtml($html);

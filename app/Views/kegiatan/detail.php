@@ -163,12 +163,20 @@ use CodeIgniter\I18n\Time;
                                 if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
                                     $cetakLink[] = $trxR['link'];
                                     $cetakHarga[] = $trxR['harga'];
+
+                                    foreach ($sumber as $s):
+                                        if ($s['idSumber'] == $trxR['sumberId'])
+                                            $namaSumber[] = $s['namaSumber'];
+                                    endforeach;
                                 }
-                            endforeach; ?>
+                            endforeach;
+
+                            ?>
+
                             <td class="text-truncate" style="max-width: 150px;">
                                 <?php
                                 if (isset($cetakLink[0])) {
-                                    echo $cetakLink[0];
+                                    echo anchor_popup($cetakLink[0], $namaSumber[0]);
                                 } else {
                                 ?>
                                     <a href="" class="" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang']; ?>">add</a>
@@ -184,7 +192,7 @@ use CodeIgniter\I18n\Time;
                             <td class="text-truncate" style="max-width: 150px;">
                                 <?php
                                 if (isset($cetakLink[1])) {
-                                    echo $cetakLink[1];
+                                    echo anchor_popup($cetakLink[1], $namaSumber[1]);
                                 } else {
                                 ?>
                                     <a href="" class="" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang']; ?>">add</a>
@@ -192,7 +200,7 @@ use CodeIgniter\I18n\Time;
                                 }
                                 ?>
                             </td>
-                            <td class="text-center">
+                            <td class="text-end">
                                 <?= (isset($cetakHarga[1])) ? number_format($cetakHarga[1], 0, ",", ".") : ""; ?>
                             <td class="text-end">
                                 <?php
@@ -210,6 +218,7 @@ use CodeIgniter\I18n\Time;
                             <?php
                             unset($cetakLink);
                             unset($cetakHarga);
+                            unset($namaSumber);
                             ?>
                             </td>
                             <td class="text-center">
@@ -317,11 +326,11 @@ use CodeIgniter\I18n\Time;
                             <thead class="text-center">
                                 <tr>
                                     <th scope="col">No</th>
+                                    <th scope="col"></th>
                                     <th scope="col">Sumber</th>
                                     <th scope="col">Link</th>
                                     <th scope="col" colspan="2">Harga</th>
                                     <th scope="col">Last Updated</th>
-                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -332,11 +341,6 @@ use CodeIgniter\I18n\Time;
                                 ?>
                                         <tr>
                                             <th scope="row" class="text-center"><?= $i++; ?></th>
-                                            <td><?= $r['namaSumber']; ?> </td>
-                                            <td class="text-truncate"><?= $r['link']; ?></td>
-                                            <td class="text-end"><?= "Rp "; ?></td>
-                                            <td class="text-end"><?= number_format($r['harga'], 0, ",", "."); ?></td>
-                                            <td class="text-center"><?= date('d M Y', strtotime($r['updated_at'])); ?></td>
                                             <td>
                                                 <form action="" method="post">
                                                     <input type="hidden" name="trxGiatBarangId" value="<?= $b['idTrxGiatBarang']; ?>">
@@ -345,8 +349,14 @@ use CodeIgniter\I18n\Time;
                                                     <input type="hidden" name="tandaTambah" value="2">
                                                     <button type="submit" class="btn-btn primary"><i class="bi bi-pencil-fill"></i></button>
                                                 </form>
-
                                             </td>
+                                            <td><?= $r['namaSumber']; ?> </td>
+                                            <td class="text-truncate"><?= $r['link']; ?></td>
+                                            <td class="text-end"><?= "Rp "; ?></td>
+                                            <td class="text-end"><?= number_format($r['harga'], 0, ",", "."); ?></td>
+                                            <td class="text-center"><?= date('d M Y', strtotime($r['updated_at'])); ?></td>
+
+
                                         </tr>
                                 <?php
                                     };
