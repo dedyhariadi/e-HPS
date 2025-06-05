@@ -302,6 +302,7 @@
 
     <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;">
         <thead>
+
             <tr>
                 <th style="width: 10px;">No</th>
                 <th style="width: 150px;">Materiel</th>
@@ -313,43 +314,117 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Projectile 105 mm</td>
-                <td>1.000.000</td>
-                <td>1.200.000</td>
-                <td>1.100.000</td>
-                <td>10</td>
-                <td>11.000.000</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Projectile 155 mm</td>
-                <td>1.500.000</td>
-                <td>1.800.000</td>
-                <td>1.650.000</td>
-                <td>5</td>
-                <td>8.250.000</td>
+            <?php
+            $n = 1;
+            foreach ($trxGiatBarang as $b) :
+            ?>
+                <tr>
+                    <td><?= $n++; ?></td>
+                    <td style="text-align: left;">
+                        <?php
+                        foreach ($barang as $brg) :
+                            if ($b['barangId'] == $brg['idBarang']) {
+                                echo $brg['namaBarang'];
+                            }
+                        endforeach;
+                        ?>
+                    </td>
+                    <?php
+                    foreach ($trxReferensi as $trxR) :
+                        if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
+                            $cetakHarga[] = $trxR['harga'];
+                        }
+                    endforeach;
+                    ?>
+                    <td style="text-align: right;">
+                        <!-- harga 1 -->
+                        <?= (isset($cetakHarga[0])) ? number_format($cetakHarga[0], 0, ",", ".") : ""; ?>
+                    </td>
+                    <td style="text-align: right;">
+                        <!-- harga 2-->
+                        <?php
+                        echo (isset($cetakHarga[1])) ? number_format($cetakHarga[1], 0, ",", ".") : "";
+                        ?>
+                    </td>
+                    <td style="text-align: right;">
+                        <?php
+                        if (isset($cetakHarga)) {
+                            $cetakAverage = array_sum($cetakHarga) / count($cetakHarga);
+                            echo number_format($cetakAverage, 0, ",", ".");
+                        }
+                        unset($cetakHarga);
+                        ?>
+
+                    </td>
+                    <td style="text-align: right;">
+                        <?php
+                        echo $b['kebutuhan'] . " ";
+                        $kebutuhan = $b['kebutuhan'];
+                        foreach ($barang as $brg) :
+                            if ($b['barangId'] == $brg['idBarang']) {
+                                echo $brg['namaSatuan'];
+                            }
+                        endforeach;
+                        ?>
+                    </td>
+                    <td style="text-align: right;">
+                        <?php
+                        $jumlah[$n] = $kebutuhan * $cetakAverage;
+                        echo number_format($jumlah[$n], 0, ",", ".");
+                        ?>
+                    </td>
+                </tr>
+
+            <?php
+            endforeach;
+            ?>
 
             <tr style="text-align: right;">
                 <td colspan="6"> Total Jumlah Harga</td>
-                <td>21.500.000</td>
+                <td>
+                    <?php
+                    $total = array_sum($jumlah);
+                    echo number_format($total, 2, ",", ".");
+                    ?>
+                </td>
             </tr>
             <tr style="text-align: right;">
                 <td colspan="6"> Over head cost dan keuntungan 15%</td>
-                <td>1.500.000</td>
+                <td>
+                    <?php
+                    $keuntungan = $total * 15 / 100;
+                    echo number_format($keuntungan, 2, ",", ".");
+                    ?>
+                </td>
             </tr>
             <tr style="text-align: right;">
                 <td colspan="6"> Total Jumlah Harga</td>
-                <td>21.500.000</td>
+                <td style="text-align: right;">
+                    <?php
+                    $total = $total + $keuntungan;
+                    echo number_format($total, 2, ",", ".");
+                    ?>
+                </td>
             </tr>
             <tr style="text-align: right;">
                 <td colspan="6"> PPN</td>
-                <td>21.500.000</td>
+                <td>
+                    <?php
+                    $ppn = $total * 11 / 100;
+                    echo number_format($ppn, 2, ",", ".");
+                    ?>
+
+                </td>
             </tr>
             <tr style="text-align: right;">
                 <td colspan="6"> Total Jumlah Harga</td>
-                <td>21.500.000</td>
+                <td style="text-align: right;">
+                    <?php
+                    $total = $total + $ppn;
+                    echo number_format($total, 2, ",", ".");
+                    ?>
+
+                </td>
             </tr>
     </table>
     <br>

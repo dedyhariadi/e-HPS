@@ -235,7 +235,6 @@ class Kegiatan extends BaseController
             'sumber' => $this->sumberModel->findAll()
         ];
 
-        d($data);
 
         ob_end_clean(); //untuk memperbaiki tulisan failed to load PDF document
 
