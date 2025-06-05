@@ -422,8 +422,11 @@
                     <?php
                     $total = $total + $ppn;
                     echo number_format($total, 2, ",", ".");
+                    // $roundedNearest = round_nearest(12.32, 0.05);
+                  
+                    // Hasil: 12.30
                     ?>
-
+                    <br>
                 </td>
             </tr>
     </table>

@@ -247,7 +247,9 @@ class Kegiatan extends BaseController
         $dompdf = new Dompdf($options);
 
 
-
+        helper('App\Helpers\RoundingHelper');
+        $result = round_nearest(12.32, 0.05);
+        die;
         // return view('kegiatan/cetakPdf', $data);
 
         $html = view('kegiatan/cetakPdf', $data);
