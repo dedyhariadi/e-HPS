@@ -161,18 +161,6 @@
 
     <div style="page-break-after: always;"></div>
 
-    <!-- 
-    <span style="display: inline-block; width: 50%; text-align: left; text-indent:50px;">MARKAS BESAR ANGKATAN LAUT</span>
-    <span style="display: inline-block;  width: 49%;text-align:right; ">Lampiran I Surat Kadissenlekal</span>
-
-    <span style="display: inline-block; width: 52.4%; text-align: left;" class="custom-underline">
-        DINAS MATERIEL SENJATA DAN ELEKTRONIKA
-    </span>
-    <span style="display: inline-block;  width: 46.5%;text-align:right; ">Nomor R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?> </span>
-
-
-    <span style="display: inline-block; width: 430px; text-align: left;"></span>
-    <span class="custom-underline" style="line-height: 1.5;">Tanggal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;April 2024</span> -->
     <table border="0" cellpading=0 style="line-height: 1;">
         <tr>
             <td style="width:337px;text-align: center;">
@@ -209,7 +197,6 @@
             <td style="text-align: right;border-bottom: 1px solid;"></td>
         </tr>
     </table>
-
     <br><br>
     <div style="text-align: center;">
         HARGA PERKIRAAN SENDIRI (HPS) <br>
@@ -422,11 +409,9 @@
                     <?php
                     $total = $total + $ppn;
                     echo number_format($total, 2, ",", ".");
-                    // $roundedNearest = round_nearest(12.32, 0.05);
-                  
-                    // Hasil: 12.30
                     ?>
                     <br>
+
                 </td>
             </tr>
     </table>
@@ -438,119 +423,7 @@
         </tr>
     </table>
     <br>
-    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;">
-        <thead>
-            <tr>
-                <th style="width: 10px;">No</th>
-                <th style="width: 150px;">Materiel</th>
-                <th style="width: 20px;">Harga Satuan 1</th>
-                <th>Harga Satuan 2</th>
-                <th>Rata-rata Harga Satuan</th>
-                <th>Kebutuhan</th>
-                <th>Jumlah Harga</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Projectile 105 mm</td>
-                <td>1.000.000</td>
-                <td>1.200.000</td>
-                <td>1.100.000</td>
-                <td>10</td>
-                <td>11.000.000</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Projectile 155 mm</td>
-                <td>1.500.000</td>
-                <td>1.800.000</td>
-                <td>1.650.000</td>
-                <td>5</td>
-                <td>8.250.000</td>
 
-            <tr style="text-align: right;">
-                <td colspan="6"> Total Jumlah Harga</td>
-                <td>21.500.000</td>
-            </tr>
-            <tr style="text-align: right;">
-                <td colspan="6"> Over head cost dan keuntungan 15%</td>
-                <td>1.500.000</td>
-            </tr>
-            <tr style="text-align: right;">
-                <td colspan="6"> Total Jumlah Harga</td>
-                <td>21.500.000</td>
-            </tr>
-            <tr style="text-align: right;">
-                <td colspan="6"> PPN</td>
-                <td>21.500.000</td>
-            </tr>
-            <tr style="text-align: right;">
-                <td colspan="6"> Total Jumlah Harga</td>
-                <td>21.500.000</td>
-            </tr>
-    </table>
-    <br><br>
-    <table>
-        <tr>
-            <td style="width: 30px;"></td>
-            <td>c. &nbsp;&nbsp;&nbsp; Jasa pengecoran:</td>
-        </tr>
-    </table>
-    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;">
-        <thead>
-            <tr>
-                <th style="width: 10px;">No</th>
-                <th style="width: 150px;">Uraian Kegiatan</th>
-                <th style="width: 20px;">Harga</th>
-                <th>Inflasi dari tahun 2021 s.d. 2024</th>
-                <th>Jumlah</th>
-                <th>Jumlah orang</th>
-                <th>Jam</th>
-                <th>Hari</th>
-                <th>Jumlah Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td style="text-align: left;">Pengecoran</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td style="text-align: left;">- Tenaga Ahli</td>
-                <td>166.236</td>
-                <td>3.55%</td>
-                <td>172.138</td>
-                <td>1</td>
-                <td>5</td>
-                <td>5</td>
-                <td>4.303.445</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td style="text-align: left;">- Tenaga Pelaksana</td>
-                <td>80.809</td>
-                <td>3.55%</td>
-                <td>83.678</td>
-                <td>4</td>
-                <td>5</td>
-                <td>15</td>
-                <td>25.103.316</td>
-            </tr>
-            <tr style="text-align: right;">
-                <td colspan="8">Jumlah</td>
-                <td>29.406.761</td>
-            </tr>
-    </table>
-    <br><br>
     <table style="width: 100%;">
         <tr>
             <td style="width: 30px;"></td>
@@ -564,28 +437,22 @@
         <tr>
             <td style="width: 30px;"></td>
             <td style="width: 30px;"></td>
-            <td>= Rp 161.949.813,49 + Rp 8.625.099,88 + Rp 29.406.761</td>
+            <td>= Rp <?= number_format($total, 2, ",", "."); ?></td>
         </tr>
         <tr>
             <td style="width: 30px;"></td>
             <td style="width: 30px;"></td>
-            <td>= Rp 199.981.675</td>
-        </tr>
-        <tr>
-            <td style="width: 30px;"></td>
-            <td style="width: 30px;"></td>
-            <td>= Rp 199.981.000 (pembulatan)</td>
+            <td>= Rp
+                <?php
+                $total_bulat = bulatkan_rupiah($total);
+                echo number_format($total_bulat, 0, ",", "."); ?> (pembulatan)</td>
         </tr>
     </table>
     <br><br>
 
     <table style="text-align:justify;margin: left -5px;">
-        <!-- <tr>
-            <td style="width: 30px;">. </td>
-            <td>Total HPS = Rp 199.981.000,00</td>
-        </tr> -->
         <tr>
-            <td colspan="2">4. &nbsp;&nbsp;&nbsp;&nbsp;Kesimpulan.&nbsp;&nbsp;&nbsp;Dari analisa harga di atas, diperoleh HPS yang dapat dijadikan sebagai acuan dalam penentuan biaya Pemeliharaan Amunisi Tidak Layak Pakai dengan pengecoran Arsenal adalah Rp 199.981.000,00 (seratus sembilan puluh sembilan juta sembilan ratus delapan puluh satu ribu rupiah). <br><br></td>
+            <td colspan="2">4. &nbsp;&nbsp;&nbsp;&nbsp;Kesimpulan.&nbsp;&nbsp;&nbsp;Dari analisa harga di atas, diperoleh HPS yang dapat dijadikan sebagai acuan dalam penentuan biaya Pemeliharaan Amunisi Tidak Layak Pakai dengan pengecoran Arsenal adalah Rp <?= number_format(bulatkan_rupiah($total), 0, ",", ".") . " (" . terbilang($total_bulat) . " rupiah)"; ?>. <br><br></td>
         </tr>
     </table>
 
