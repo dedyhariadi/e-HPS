@@ -21,6 +21,9 @@ class Sumber extends Seeder
             [
                 'namaSumber' => 'Giat Sebelumnya',
             ],
+            [
+                'namaSumber' => 'Monotaro'
+            ]
         ];
 
         $this->db->table('sumber')->insertBatch($data);

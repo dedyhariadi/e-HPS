@@ -15,46 +15,20 @@
                 <?= csrf_field(); ?>
 
                 <div class="row mb-3">
-                    <!-- input nama kegiatan -->
-                    <label for="namaKegiatan" class="col-sm-2 col-form-label">Nama Kegiatan</label>
-                    <!-- <textarea class="form-control" aria-label="With textarea" name=""> -->
-                    <div class="col-sm-4">
-                        <textarea type="text" class="form-control <?= (isset($errors['namaKegiatan'])) ? 'is-invalid' : ''; ?>" name="namaKegiatan" autofocus value="<?= set_value('namaKegiatan'); ?>"></textarea>
-                        <div class="invalid-feedback">
-                            <?= (isset($errors['namaKegiatan'])) ? $errors['namaKegiatan'] : ''; ?>
-                        </div>
-                    </div>
-
-                    <!-- utk jarak antar input -->
-                    <div class="col-sm-1"></div>
-
-                    <!-- input pejabat -->
-                    <label for="pejabat" class="col-sm-1 col-form-label">Pejabat</label>
-                    <div class="col-sm-3 ms-0">
-                        <select class="form-select" name="pejabatId">
-                            <?php foreach ($pejabat as $p) : ?>
-                                <option value="<?= ($p['idPejabat']); ?>" <?= set_select('idPejabat', $p['idPejabat']); ?>><?= $p['namaPejabat']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-
-
-                <div class="row mb-3">
                     <!-- input no Surat -->
-                    <label for="noSurat" class="col-sm-2 col-form-label">No Surat</label>
-                    <div class="col-sm-2">
+                    <label for="noSurat" class="col-sm-1 col-form-label">No Surat</label>
+                    <div class="col-sm-4">
                         <input type="text" class="form-control <?= (isset($errors['noSurat'])) ? 'is-invalid' : ''; ?>" name="noSurat" value="<?= set_value('noSurat'); ?>">
                         <div class="invalid-feedback">
                             <?= (isset($errors['noSurat'])) ? $errors['noSurat'] : ''; ?>
                         </div>
                     </div>
+                    <div class="col-sm-2"></div>
 
-                    <div class="col-sm-3"></div>
 
                     <!-- input tanggal surat -->
                     <label for="tanggal" class="col-sm-1 pe-0 col-form-label">Tanggal Surat</label>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <input type="text" autocomplete="off" class="form-control <?= (isset($errors['tglSurat'])) ? 'is-invalid' : ''; ?>" name="tglSurat" value="<?= set_value('tglSurat'); ?>" id="tanggal">
                         <div class="invalid-feedback">
                             <?= (isset($errors['tglSurat'])) ? $errors['tglSurat'] : ''; ?>
@@ -62,18 +36,35 @@
                     </div>
                 </div>
 
-                <!-- input dasar surat -->
+                <!-- input tentang -->
                 <div class="row mb-3">
-                    <label for="suratId" class="col-sm-2 col-form-label">Dasar Surat</label>
-                    <div class="col-sm-2">
-                        <select class="form-select" name="suratId">
-                            <?php foreach ($dasar as $d) : ?>
-                                <option value="<?= ($d['idSurat']); ?>" <?= set_select('idSurat', $d['idSurat']); ?>><?= $d['noSurat']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                    <label for="tentang" class="col-sm-1 col-form-label">Tentang</label>
+                    <div class="form-floating col-sm-4">
+                        <textarea class="form-control <?= (isset($errors['tentang'])) ? 'is-invalid' : ''; ?>" placeholder="Masukkan perihal tentang surat" id="tentang" style="height: 100px" name="tentang" value="<?= set_value('tentang'); ?>"></textarea>
+                        <label for="tentang">Tentang</label>
                     </div>
-                    <div class="col-sm-3"></div>
 
+                    <div class="invalid-feedback">
+                        <?= (isset($errors['tentang'])) ? $errors['tentang'] : ''; ?>
+                    </div>
+
+                    <div class="col-sm-2"></div>
+
+                    <!-- pejabat -->
+                    <label for="pejabat" class="col-sm-1 col-form-label">Pejabat</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control <?= (isset($errors['pejabat'])) ? 'is-invalid' : ''; ?>" name="pejabat" value="<?= set_value('pejabat'); ?>">
+                        <div class="invalid-feedback">
+                            <?= (isset($errors['pejabat'])) ? $errors['pejabat'] : ''; ?>
+                        </div>
+                    </div>
+                    <hr>
+                    <br><br>
+
+
+
+
+                    <!-- upload pdf -->
                     <label for="filePdf" class="col-sm-1 col-form-label">File PDF</label>
                     <div class="col-sm-3">
                         <span class="input-group-btn">

@@ -14,7 +14,8 @@ class DasarSuratModel extends Model
         'noSurat',
         'tglSurat',
         'tentang',
-        'pejabat'
+        'pejabat',
+        'filePdf'
     ];
 
 

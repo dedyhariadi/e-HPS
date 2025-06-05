@@ -47,7 +47,12 @@ $routes->post('/satuan/prosesedit', 'Satuan::prosesedit');
 
 
 // dasar surat
-$routes->get('dasarsurat', 'dasarsurat::index');
+$routes->get('dasarsurat', 'dasarsurat::index');  //index
+// tambah dasar surat
+$routes->get('dasarsurat/create', 'dasarsurat::tambah');
+$routes->post('dasarsurat/simpan', 'dasarsurat::simpan');
+
+
 
 
 // kontroller kegiatan
