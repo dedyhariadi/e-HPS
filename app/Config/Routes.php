@@ -54,6 +54,9 @@ $routes->post('dasarsurat/simpan', 'dasarsurat::simpan');
 
 // hapus
 $routes->delete('dasarsurat/(:num)', 'dasarsurat::hapus/$1');
+// edit
+$routes->get('/dasarsurat/edit/(:num)', 'Dasarsurat::edit/$1');
+$routes->post('/dasarsurat/prosesedit/(:num)', 'Dasarsurat::prosesedit/$1');
 
 
 // kontroller kegiatan

@@ -7,7 +7,7 @@
     <div class="col">
         <div class="row">
             <h2 class="my-4">Form Ubah Data Barang </h2>
-        </div>
+        </div>  
         <?php
         ?>
         <div class="row">

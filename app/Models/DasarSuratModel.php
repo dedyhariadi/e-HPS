@@ -32,4 +32,6 @@ class DasarSuratModel extends Model
             'is_unique' => 'Nomor surat yang anda masukkan sudah ada sebelumnya'
         ]
     ];
+
+     
 }

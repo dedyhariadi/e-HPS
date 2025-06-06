@@ -416,24 +416,14 @@
             </tr>
     </table>
     <br>
-    <table>
-        <tr>
-            <td style="width: 30px;"></td>
-            <td>b. &nbsp;&nbsp;&nbsp; Biaya kebutuhan materiel pendukung:</td>
-        </tr>
-    </table>
-    <br>
+
 
     <table style="width: 100%;">
         <tr>
             <td style="width: 30px;"></td>
-            <td colspan="2">d. &nbsp;&nbsp;&nbsp; Total biaya keseluruhan adalah:</td>
+            <td colspan="2">b. &nbsp;&nbsp;&nbsp; Total biaya keseluruhan adalah:</td>
         </tr>
-        <tr>
-            <td style="width: 30px;"></td>
-            <td style="width: 30px;"></td>
-            <td>= Point a + Point b + Point c</td>
-        </tr>
+
         <tr>
             <td style="width: 30px;"></td>
             <td style="width: 30px;"></td>

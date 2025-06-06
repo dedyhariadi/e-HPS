@@ -187,11 +187,8 @@ class Kegiatan extends BaseController
             return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
         }
 
-        echo "halaman hapus kegiatan";
-        d($this->request->getVar());
 
         $listBarang = $this->trxGiatBarangModel->where(['kegiatanId' => $id])->findAll();
-        // $this->trxReferensiModel->where(['trxGiatBarangId']=> ini id nya)->delete();
 
         // proses hapus di tabel trxReferensi
         foreach ($listBarang as $list) :
@@ -203,14 +200,6 @@ class Kegiatan extends BaseController
 
         session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
         return redirect()->to('/kegiatan');
-    }
-
-    public function hapusKegiatan($id)
-    {
-        // $this->trxGiatBarangModel->delete($id);
-        // $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
-        // session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
-        // return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
     }
 
 

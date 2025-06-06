@@ -69,7 +69,7 @@
                                 <input type="hidden" name="idSurat" value="<?= $b['idSurat']; ?>">
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
 
-                                <a href="/dasarsurat/edit/<?= $b['idSurat']; ?>>" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
+                                <a href="/dasarsurat/edit/<?= $b['idSurat']; ?>" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
 
                             </form>
 
