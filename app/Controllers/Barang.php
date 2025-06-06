@@ -108,7 +108,6 @@ class Barang extends BaseController
                     'errors' => $errors,
                 ];
 
-                d($errors);
                 return view('/barang/create', $data);
             }
         }

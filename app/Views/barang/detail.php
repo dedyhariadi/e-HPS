@@ -82,7 +82,14 @@
                             ?>
 
                         </td>
-                        <td><?= $b['link']; ?></td>
+                        <td width="30%">
+
+                            <span class="d-inline-block text-truncate" style="max-width: 350px;">
+                                <?= anchor_popup($b['link'],); ?>
+                            </span>
+
+
+                        </td>
                         <td class="text-end">
                             <?php
                             echo "Rp ";

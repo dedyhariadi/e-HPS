@@ -17,7 +17,6 @@ class Dasarsurat extends BaseController
     }
     public function index()
     {
-        echo "ini halaman index dasar surat";
         $data =
             [
                 'dasarSurat' => $this->dasarSuratModel->findAll()
@@ -72,5 +71,16 @@ class Dasarsurat extends BaseController
         // kembali ke index kegiatan
         session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
         return redirect()->to('/dasarsurat');
+    }
+
+    public function hapus()
+    {
+        // d($this->request->getVar());
+        echo "ini halaman kontroller dasarsurat method hapus";
+
+        $this->dasarSuratModel->delete($this->request->getVar('idSurat'));
+
+        session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        return redirect()->to('/dasarsurat/');
     }
 }

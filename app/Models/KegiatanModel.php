@@ -24,7 +24,7 @@ class KegiatanModel extends Model
 
 
     protected $validationRules = [
-        'namaKegiatan' => 'required|min_length[3]|max_length[100]|is_unique[barang.namaBarang,idBarang,{idBarang}]',
+        'namaKegiatan' => 'required|min_length[3]|max_length[100]|is_unique[kegiatan.namaKegiatan,idKegiatan,{idKegiatan}]',
     ];
 
     protected $validationMessages = [

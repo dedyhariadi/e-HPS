@@ -306,7 +306,7 @@ use CodeIgniter\I18n\Time;
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Referensi untuk
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Referensi untuk
                         <span class="text-uppercase fs-5 fw-bold">
                             <?php
                             foreach ($barang as $brg) :
@@ -317,8 +317,10 @@ use CodeIgniter\I18n\Time;
                             endforeach;
                             ?>
                         </span>
+
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                 </div>
                 <div class="modal-body fs-3">
                     <div class="row m-2 mt-3">
@@ -372,6 +374,7 @@ use CodeIgniter\I18n\Time;
 
                 </div>
                 <div class="modal-footer">
+                    <a href="/referensi/create/<?= $b['barangId']; ?>" class="btn btn-success   ">Tambah Referensi</a>
                     <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>

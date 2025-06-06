@@ -46,7 +46,7 @@
                     <th scope="col">No</th>
                     <th scope="col">Nomor Surat</th>
                     <th scope="col">Tanggal</th>
-                    <th scope="col">Perihal</th>
+                    <th scope="col" width="40%">Perihal</th>
                     <th scope="col">Pejabat</th>
                     <th scope="col">Aksi</th>
                 </tr>
@@ -59,10 +59,21 @@
                         <th scope="row" class="text-center"><?= $i++; ?></th>
                         <td><?= $b['noSurat']; ?></td>
                         <td><?= date('d M Y', strtotime($b['tglSurat'])); ?></td>
-                        <td><?= $b['tentang']; ?></td>
+                        <td style="text-align: justify;"><?= $b['tentang']; ?></td>
                         <td><?= $b['pejabat']; ?></td>
 
-                        <td class="text-center"><a type="button" class="btn btn-warning" href="/dasarsurat/<?= $b['idSurat']; ?>">Detail</a></td>
+                        <td class="text-center">
+                            <form action="/dasarsurat/<?= $b['idSurat']; ?>" method="post" class="d-inline">
+                                <?= csrf_field(); ?>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="idSurat" value="<?= $b['idSurat']; ?>">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
+
+                                <a href="/dasarsurat/edit/<?= $b['idSurat']; ?>>" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
+
+                            </form>
+
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
