@@ -63,7 +63,17 @@
                         </td>
                         <td class="text-center"><?= $p['NRP']; ?></td>
                         <td class="text-center"><?= $p['jabatan']; ?></td>
-                        <td class="text-center"><a type="button" class="btn btn-warning" href="/barang/<?= $p['idPejabat']; ?>">Detail</a></td>
+                        <td class="text-center">
+                            <form action="/pejabat/<?= $p['idPejabat']; ?>" method="post" class="d-inline">
+                                <?= csrf_field(); ?>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="idPejabat" value="<?= $p['idPejabat']; ?>">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
+
+                                <a href="/pejabat/edit/<?= $p['idPejabat']; ?>" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
+
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

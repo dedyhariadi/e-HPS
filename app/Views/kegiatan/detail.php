@@ -345,6 +345,7 @@ use CodeIgniter\I18n\Time;
                                             <th scope="row" class="text-center"><?= $i++; ?></th>
                                             <td>
                                                 <form action="" method="post">
+                                                    <?= csrf_field(); ?>
                                                     <input type="hidden" name="trxGiatBarangId" value="<?= $b['idTrxGiatBarang']; ?>">
                                                     <input type="hidden" name="referensiId" value="<?= $r['idReferensi']; ?>">
                                                     <input type="hidden" name="idKegiatan" value="<?= $idKegiatan; ?>">

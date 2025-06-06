@@ -68,4 +68,14 @@ class Pejabat extends BaseController
         session()->setFlashdata('pesan', 'Data pejabat berhasil ditambah.');
         return redirect()->to('/pejabat');
     }
+
+    public function hapus($id)
+    {
+        echo 'ini halaman hapus dengan id' . $id;
+
+        $this->pejabatModel->delete($id);
+
+        session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        return redirect()->to('/pejabat/');
+    }
 }

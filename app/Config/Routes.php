@@ -30,9 +30,12 @@ $routes->delete('/referensi/(:num)', 'Referensi::hapus/$1');  // route ke hapus
 
 
 //pejabat
-$routes->match(['GET', 'POST'], '/pejabat', 'Pejabat::index');
-$routes->get('/pejabat/tambah', 'Pejabat::tambah');
-$routes->post('/pejabat/simpan', 'Pejabat::simpan');
+$routes->match(['GET', 'POST'], '/pejabat', 'Pejabat::index'); //route ke index utk list semua daftar pejabat
+$routes->get('/pejabat/tambah', 'Pejabat::tambah'); //route ke tambah
+$routes->post('/pejabat/simpan', 'Pejabat::simpan'); //proses penyimpanan tambah
+
+// hapus
+$routes->delete('pejabat/(:num)', 'Pejabat::hapus/$1');
 
 
 
