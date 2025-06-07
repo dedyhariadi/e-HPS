@@ -615,7 +615,7 @@
         GAMBAR
     </div>
     <br>
-    <p>A. Kebutuhan Materiel Pengecoran</p>
+    <p>A. Kebutuhan Materiel</p>
     <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;">
         <tr>
             <?php
