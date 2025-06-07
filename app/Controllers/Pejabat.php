@@ -71,8 +71,6 @@ class Pejabat extends BaseController
 
     public function hapus($id)
     {
-        echo 'ini halaman hapus dengan id' . $id;
-
         $this->pejabatModel->delete($id);
 
         session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
@@ -88,13 +86,11 @@ class Pejabat extends BaseController
             'pangkat' => $this->pangkatModel->findAll(),
             'errors' => $errors
         ];
-        d($data);
         return view('pejabat/edit', $data);
     }
 
     public function proses_edit()
     {
-        d($this->request->getVar());
 
         // menambahkan aturan validasi pada ID barang untuk ignore namaBarang yang sama dengan sebelumnya
         $idPejabat = 'idPejabat';
@@ -118,7 +114,7 @@ class Pejabat extends BaseController
             ];
             return view('pejabat/edit', $data);
         }
-        
+
         //jika sukses, kembali ke index pejabat
         session()->setFlashdata('pesan', 'Data pejabat berhasil diubah ');
         return redirect()->to('/pejabat');

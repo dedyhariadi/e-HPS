@@ -254,13 +254,18 @@ use CodeIgniter\I18n\Time;
                     <?= csrf_field(); ?>
 
                     <div class="row ms-5 mt-3">
-                        <label for="combobox" class="form-label col-sm-3">Material</label>
-                        <div class="col-sm-6">
+                        <label for="combobox" class="d-inline form-label col-sm-3">Material</label>
+                        <div class="col-sm-4 d-inline">
                             <select class="form-select mb-3 fs-4" id="combobox" name="idBarang">
                                 <?php foreach ($barang as $b) : ?>
                                     <option value=<?= $b['idBarang']; ?>><?= $b['namaBarang']; ?></option>
                                 <?php endforeach; ?>
                             </select>
+                            <?php
+                            ?>
+                        </div>
+                        <div class="d-inline col-sm-2">
+                            <?= anchor_popup('barang/create', 'add', ['class' => 'd-inline']); ?>
                         </div>
                     </div>
 
@@ -369,9 +374,7 @@ use CodeIgniter\I18n\Time;
                             </tbody>
                         </table>
 
-
                     </div>
-
 
                 </div>
                 <div class="modal-footer">

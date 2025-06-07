@@ -15,11 +15,21 @@ class Dasarsurat extends BaseController
     {
         $this->dasarSuratModel = new DasarSuratModel();
     }
-    public function index()
+    public function index($keyword = false)
     {
+
+
+        $keyword = $this->request->getVar('keyword');
+
+        if ($keyword) {
+            $dasarsurat = $this->dasarSuratModel->search($keyword);
+        } else {
+            $dasarsurat = $this->dasarSuratModel->orderBy('updated_at', 'DESC')->findAll();
+        }
+
         $data =
             [
-                'dasarSurat' => $this->dasarSuratModel->findAll()
+                'dasarSurat' => $dasarsurat
             ];
 
         return view('/dasarsurat/index', $data);

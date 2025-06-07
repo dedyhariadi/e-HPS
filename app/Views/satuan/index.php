@@ -58,8 +58,12 @@
                         <td><?= $p['namaSatuan']; ?></td>
                         <td class="text-center"><?= date('d M Y H:m:s', strtotime($p['updated_at'])); ?></td>
                         <td class="text-center">
-                            <a type="button" class="btn btn-warning" href="/satuan/edit/<?= $p['idSatuan']; ?>">Edit</a>
-                            <a type="button" class="btn btn-danger" href="/barang/<?= $p['idSatuan']; ?>">Hapus</a>
+                            <form action="/satuan/<?= $p['idSatuan']; ?>" method="post" class="d-inline">
+                                <?= csrf_field(); ?>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
+
+                                <a href="/satuan/edit/<?= $p['idSatuan']; ?>" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

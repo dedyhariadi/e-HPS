@@ -51,10 +51,13 @@ $routes->post('satuan/simpan', 'Satuan::simpan');
 //edit
 $routes->get('/satuan/edit/(:num)', 'Satuan::edit/$1');
 $routes->post('/satuan/prosesedit', 'Satuan::prosesedit');
+//hapus
+$routes->delete('satuan/(:num)', 'Satuan::hapus/$1');
 
 
 // dasar surat
-$routes->get('dasarsurat', 'dasarsurat::index');  //index
+$routes->match(['GET', 'POST'], 'dasarsurat', 'dasarsurat::index');  //index
+
 // tambah dasar surat
 $routes->get('dasarsurat/create', 'dasarsurat::tambah');
 $routes->post('dasarsurat/simpan', 'dasarsurat::simpan');

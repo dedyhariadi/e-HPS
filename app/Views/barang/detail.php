@@ -102,14 +102,16 @@
                         </td>
                         <td class="text-center"><?= date('d M Y H:m:s', strtotime($b['updated_at'])); ?></td>
                         <td class="text-center">
-                            <a type="button" class="btn btn-warning" href="/referensi/edit/<?= $b['idReferensi']; ?>">Edit</a>
+                            <a type="button" class="btn btn-warning" href="/referensi/edit/<?= $b['idReferensi']; ?>"><i class="bi bi-pencil"></i></a>
 
                             <form action="/referensi/<?= $b['idReferensi']; ?>" method="post" class="d-inline">
                                 <?= csrf_field(); ?>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="idBarang" value="<?= $b['idBarang']; ?>">
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
                             </form>
+
+
                         </td>
                     </tr>
                 <?php endforeach; ?>

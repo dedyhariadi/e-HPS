@@ -33,5 +33,13 @@ class DasarSuratModel extends Model
         ]
     ];
 
-     
+    public function search($keyword)
+    {
+        return $this->like('noSurat', $keyword)
+            ->orLike('tglSurat', $keyword)
+            ->orLike('tentang', $keyword)
+            ->orLike('pejabat', $keyword)
+            ->orderBy('updated_at', 'DESC')
+            ->findAll();
+    }
 }

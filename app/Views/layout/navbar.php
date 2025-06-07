@@ -1,7 +1,7 @@
  <!-- navbar -->
  <nav id="navbar-example2" class="navbar px-3 bg-primary" data-bs-theme="dark">
      <div class="container">
-         <a class="navbar-brand" href="#">
+         <a class="navbar-brand" href="/">
              <h2>e-SIAP</h2>
          </a>
          <ul class="nav nav-pills">

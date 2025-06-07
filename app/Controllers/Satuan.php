@@ -98,4 +98,13 @@ class Satuan extends BaseController
         session()->setFlashdata('pesan', 'Data satuan berhasil ditambah.');
         return redirect()->to('/satuan');
     }
+
+    public function hapus($id)
+    {
+
+        $this->satuanModel->delete($id);
+
+        session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        return redirect()->to('/satuan');
+    }
 }
