@@ -7,7 +7,7 @@
     <div class="col">
         <div class="row">
             <h2 class="my-4">Form Ubah Data Barang </h2>
-        </div>  
+        </div>
         <?php
         ?>
         <div class="row">
@@ -34,7 +34,8 @@
                     <label for="satuan" class="col-sm-2 col-form-label">Satuan</label>
                     <div class="col-sm-4">
                         <select class="form-select" name="idSatuan">
-                            <?php foreach ($satuan as $b) :
+                            <?php
+                            foreach ($satuan as $b) :
                                 if ($b['idSatuan'] == $barang['idSatuan']) {
                             ?>
                                     <option value="<?= ($b['idSatuan']); ?>" <?= set_select('idSatuan', $b['idSatuan']); ?> selected><?= $b['namaSatuan']; ?></option>

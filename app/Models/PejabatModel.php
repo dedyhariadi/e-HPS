@@ -18,13 +18,13 @@ class PejabatModel extends Model
     ];
 
     protected $validationRules = [
-        'namaPejabat' => 'required|is_unique[pejabat.namaPejabat,idSatuan,{idSatuan}]',
+        'namaPejabat' => 'required|is_unique[pejabat.namaPejabat,idPejabat,{idPejabat}]',
     ];
 
     protected $validationMessages = [
         'namaPejabat' => [
             'required' => 'Nama harus diisi',
-            'is_unique' => 'Nama tersebut yang anda masukkan sudah ada'
+            'is_unique' => 'Nama tersebut sudah ada di database'
         ],
 
     ];

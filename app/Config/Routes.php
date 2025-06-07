@@ -34,6 +34,10 @@ $routes->match(['GET', 'POST'], '/pejabat', 'Pejabat::index'); //route ke index 
 $routes->get('/pejabat/tambah', 'Pejabat::tambah'); //route ke tambah
 $routes->post('/pejabat/simpan', 'Pejabat::simpan'); //proses penyimpanan tambah
 
+// edit
+$routes->get('pejabat/edit/(:num)', 'Pejabat::edit/$1'); //route ke form edit
+$routes->post('pejabat/proses_edit', 'Pejabat::proses_edit'); // route ke proses edit
+
 // hapus
 $routes->delete('pejabat/(:num)', 'Pejabat::hapus/$1');
 

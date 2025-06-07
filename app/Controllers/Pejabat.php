@@ -78,4 +78,48 @@ class Pejabat extends BaseController
         session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
         return redirect()->to('/pejabat/');
     }
+
+    public function edit($idPejabat, $errors = false)
+    {
+
+        $data = [
+            'title' => 'Form Ubah Data Pejabat',
+            'pejabat' => $this->pejabatModel->find($idPejabat),
+            'pangkat' => $this->pangkatModel->findAll(),
+            'errors' => $errors
+        ];
+        d($data);
+        return view('pejabat/edit', $data);
+    }
+
+    public function proses_edit()
+    {
+        d($this->request->getVar());
+
+        // menambahkan aturan validasi pada ID barang untuk ignore namaBarang yang sama dengan sebelumnya
+        $idPejabat = 'idPejabat';
+        $aturan = 'max_length[19]|is_natural_no_zero';
+        $this->pejabatModel->setValidationRule($idPejabat, $aturan);
+
+        if ($this->pejabatModel->save([
+            'idPejabat' => $this->request->getVar('idPejabat'),
+            'namaPejabat' => $this->request->getVar('namaPejabat'),
+            'pangkatId' => $this->request->getVar('idPangkat'),
+            'NRP' => $this->request->getVar('NRP'),
+            'jabatan' => $this->request->getVar('jabatan'),
+        ]) == false) {
+            // jika gagal menyimpan
+            $errors = $this->pejabatModel->errors();
+            $data = [
+                'tittle' => 'update data pejabat',
+                'errors' => $errors,
+                'pejabat' => $this->pejabatModel->find($this->request->getVar('idPejabat')),
+                'pangkat' => $this->pangkatModel->findAll()
+            ];
+            return view('pejabat/edit', $data);
+        }
+        //jika sukses, kembali ke index pejabat
+        session()->setFlashdata('pesan', 'Data pejabat berhasil diubah ');
+        return redirect()->to('/pejabat');
+    }
 }
