@@ -27,7 +27,6 @@ class Barang extends BaseController
 
     public function index($tandaKeyword = false)
     {
-
         // proses pencarian
         $keyword = $this->request->getVar('keyword');
 

@@ -118,6 +118,7 @@ class Pejabat extends BaseController
             ];
             return view('pejabat/edit', $data);
         }
+        
         //jika sukses, kembali ke index pejabat
         session()->setFlashdata('pesan', 'Data pejabat berhasil diubah ');
         return redirect()->to('/pejabat');
