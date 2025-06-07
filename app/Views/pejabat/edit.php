@@ -68,8 +68,16 @@
 
 
 
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <?= form_close(); ?>
+            <div class="row">
+                <div class="col-2">
+                </div>
+                <div class="col-4">
+
+                    <a href="/pejabat" class="btn btn-warning me-3">Kembali</a>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </div>
+            </form>
         </div>
     </div>
 </div>

@@ -67,12 +67,18 @@ class Referensi extends BaseController
                 'errors' => $errors,
             ];
 
-            d($errors);
             return view('/referensi/create', $data);
         }
 
+
+
         session()->setFlashdata('pesan', 'Data referensi berhasil ditambahkan');
-        return redirect()->to('/barang/' . $this->request->getVar('barangId'));
+
+        if (session()->getFlashdata('idKegiatan')) {
+            return redirect()->to('/kegiatan/' . session()->getFlashdata('idKegiatan'));
+        } else {
+            return redirect()->to('/barang/' . $this->request->getVar('barangId'));
+        }
     }
 
     public function hapus($id)
@@ -132,7 +138,6 @@ class Referensi extends BaseController
                 'errors' => $errors,
             ];
 
-            d($errors);
             return view('/referensi/edit', $data);
         }
 

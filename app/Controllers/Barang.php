@@ -145,8 +145,8 @@ class Barang extends BaseController
 
         session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
 
-        if (session()->get('idKegiatan')) {
-            return redirect()->to('/kegiatan/' . session()->get('idKegiatan'));
+        if (session()->getFlashdata('idKegiatan')) {
+            return redirect()->to('/kegiatan/' . session()->getFlashdata('idKegiatan'));
         } else {
             return redirect()->to('/barang');
         }

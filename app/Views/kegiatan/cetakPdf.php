@@ -242,37 +242,40 @@
                 }
             endforeach;
 
-            foreach ($cetak as $c):
+            //pastikan ada referensi yang sudah dipilih
+            if (isset($cetak)) {
+                foreach ($cetak as $c):
         ?>
-                <tr>
-                    <td style="width: 10px;"></td>
-                    <td style="overflow-wrap:anywhere; max-width: 60%;">
-                        <?php
-                        for ($huruf = 1; $huruf <= $banyakHuruf; $huruf++) {
-                            echo $char;
-                        }
-                        if ($char == "z") {
-                            $banyakHuruf++;
-                            $char = "a";
-                        } else {
-                            $char++;
-                        };
-                        ?>.&nbsp;&nbsp;&nbsp;
-                        Dari referensi website <?= $c[0]['link']; ?> diketahui
-                        <?php
-
-                        foreach ($barang as $brg) :
-                            if ($b['barangId'] == $brg['idBarang']) {
-                                echo "1 " . $brg['namaSatuan'] . " " . $brg['namaBarang'];
+                    <tr>
+                        <td style="width: 10px;"></td>
+                        <td style="overflow-wrap:anywhere; max-width: 60%;">
+                            <?php
+                            for ($huruf = 1; $huruf <= $banyakHuruf; $huruf++) {
+                                echo $char;
                             }
-                        endforeach;
-                        ?>
-                        tanpa PPN 11% seharga Rp <?= number_format($c[0]['harga'], 0, ",", "."); ?>
-                    </td>
-                </tr>
+                            if ($char == "z") {
+                                $banyakHuruf++;
+                                $char = "a";
+                            } else {
+                                $char++;
+                            };
+                            ?>.&nbsp;&nbsp;&nbsp;
+                            Dari referensi website <?= $c[0]['link']; ?> diketahui
+                            <?php
+
+                            foreach ($barang as $brg) :
+                                if ($b['barangId'] == $brg['idBarang']) {
+                                    echo "1 " . $brg['namaSatuan'] . " " . $brg['namaBarang'];
+                                }
+                            endforeach;
+                            ?>
+                            tanpa PPN 11% seharga Rp <?= number_format($c[0]['harga'], 0, ",", "."); ?>
+                        </td>
+                    </tr>
         <?php
-            endforeach;
-            unset($cetak);
+                endforeach;
+                unset($cetak);
+            }
         endforeach;
         ?>
 
@@ -287,20 +290,20 @@
     </table>
 
 
-    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;">
+    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px; table-layout: fixed;">
         <thead>
 
             <tr>
-                <th style="width: 10px;">No</th>
-                <th style="width: 150px;">Materiel</th>
-                <th style="width: 20px;">Harga Satuan 1</th>
-                <th>Harga Satuan 2</th>
-                <th>Rata-rata Harga Satuan</th>
-                <th>Kebutuhan</th>
-                <th>Jumlah Harga</th>
+                <th style="width: 5%;">No</th>
+                <th style="width: 12%;">Materiel</th>
+                <th style="width: 8%;">Harga Satuan 1</th>
+                <th style="width: 8%;">Harga Satuan 2</th>
+                <th style="width: 8%;">Rata-rata Harga Satuan</th>
+                <th style="width: 10%;">Kebutuhan</th>
+                <th style="width: 10%;">Jumlah Harga</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="overflow-wrap: break-word;">
             <?php
             $n = 1;
             foreach ($trxGiatBarang as $b) :
@@ -459,80 +462,100 @@
 
 
     <div style="page-break-after: always;"></div>
+
+
     <!-- Lampiran II  -->
 
-    <span style="display: inline-block; width: 50%; text-align: left; text-indent:50px;">MARKAS BESAR ANGKATAN LAUT</span>
-    <span style="display: inline-block;  width: 49%;text-align:right; ">Lampiran II Surat Kadissenlekal</span>
-
-
-    <span style="display: inline-block; width: 52.4%; text-align: left;" class="custom-underline">
-        DINAS MATERIEL SENJATA DAN ELEKTRONIKA
-    </span>
-    <span style="display: inline-block;  width: 46.5%;text-align:right; ">Nomor R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/IV/2024</span>
-
-
-    <span style="display: inline-block; width: 430px; text-align: left;"></span>
-    <span class="custom-underline" style="line-height: 1.5;">Tanggal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;April 2024</span>
-
+    <table border="0" cellpading=0 style="line-height: 1; width:100%;">
+        <tr>
+            <td style="width:337px;text-align: center;">
+                MARKAS BESAR ANGKATAN LAUT
+            </td>
+            <td style="width:80px;"></td>
+            <td colspan="2">
+                Lampiran II Surat Kadissenlekal
+            </td>
+        </tr>
+        <tr>
+            <td style=" text-align: center;" class="custom-underline">
+                DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+            </td>
+            <td></td>
+            <td style="width: 100px;">
+                Nomor R/
+            </td>
+            <td style="text-align: right;">
+                /<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Tanggal</td>
+            <td style="text-align: right;"><?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></td>
+        </tr>
+        <!-- untuk memperjauh garis bawah -->
+        <tr style="line-height: 0.1;padding:0px; margin:0px;">
+            <td></td>
+            <td></td>
+            <td style="border-bottom: 1px solid;"></td>
+            <td style="text-align: right;border-bottom: 1px solid;"></td>
+        </tr>
+    </table>
     <br><br>
+
     <div style="text-align: center;">
         SPESIFIKASI TEKNIS<br>
-        PEMELIHARAAN AMUNISI TIDAK LAYAK PAKAI DENGAN PENGECORAN ARSENAL
+        <?= $kegiatan['namaKegiatan']; ?>
     </div>
     <br>
 
-    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;">
-        <thead>
+    <table border=1 cellpadding="5" cellspacing="0" style="width: 100%; text-align: center;">
+        <thead style="line-height: 2;">
             <th>NO</th>
             <th>SPESIFIKASI TEKNIS/URAIAN PEKERJAAN</th>
             <th>JUMLAH/SAT</th>
         </thead>
         <tbody>
             <tr style="font-weight: bold;">
-                <td style="width: 30px;">A.</td>
-                <td style="text-align: left; ">Kebutuhan materiel pengecoran</td>
+                <td style="width: 30px;"></td>
+                <td style="text-align: left;padding-left:20px; ">Kebutuhan materiel</td>
                 <td></td>
             </tr>
-            <tr>
-                <td style="width: 30px;">1</td>
-                <td style="text-align: left;">Keranjang</td>
-                <td>5 buah</td>
-            </tr>
-            <tr>
-                <td style="width: 30px;">2</td>
-                <td style="text-align: left;">Kawat</td>
-                <td>5 kg</td>
-            </tr>
-            <tr>
-                <td style="width: 30px;">3</td>
-                <td style="text-align: left;">Bahan bakar</td>
-                <td>5 liter</td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr style="font-weight: bold;">
-                <td style="width: 30px;">B.</td>
-                <td style="text-align: left; ">Kebutuhan materiel pendukung</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td style="width: 30px;">1</td>
-                <td style="text-align: left;">Keranjang</td>
-                <td>5 buah</td>
-            </tr>
-            <tr>
-                <td style="width: 30px;">2</td>
-                <td style="text-align: left;">Kawat</td>
-                <td>5 kg</td>
-            </tr>
-            <tr>
-                <td style="width: 30px;">3</td>
-                <td style="text-align: left;">Bahan bakar</td>
-                <td>5 liter</td>
-            </tr>
+            <?php
+            $n = 1;
+            foreach ($trxGiatBarang as $b) :
+            ?>
+                <tr>
+                    <td style="width: 30px;"><?= $n++; ?></td>
+                    <td style="text-align: left; padding-left:20px;">
+
+                        <?php
+                        foreach ($barang as $brg) :
+                            if ($b['barangId'] == $brg['idBarang']) {
+                                echo $brg['namaBarang'];
+                            }
+                        endforeach;
+                        ?>
+
+                    </td>
+                    <td style="text-align: right;padding-right:20px;">
+                        <?php
+
+                        echo $b['kebutuhan'] . " ";
+
+                        foreach ($barang as $brg) :
+                            if ($b['barangId'] == $brg['idBarang']) {
+                                echo $brg['namaSatuan'];
+                            }
+                        endforeach;
+                        ?>
+
+                    </td>
+                </tr>
+            <?php
+            endforeach;
+            ?>
         </tbody>
     </table>
 
@@ -542,27 +565,52 @@
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>
     <br><br><br><br>
-    <div style="text-align: center; text-indent: 50%;"> Eddy Saputra, S.T., M.A.P.</div>
-    <div style="text-align: center; text-indent: 50%;"> Kolonel Laut (E) NRP 13367/P</div>
+    <div style="text-align: center; text-indent: 50%;"><?= $kegiatan['namaPejabat']; ?></div>
+    <div style="text-align: center; text-indent: 50%;"><?= $pangkat['pangkat']; ?> <?= str_contains($pangkat['pangkat'], 'Laksamana') ? "" : " NRP " . $kegiatan['NRP']; ?></div>
 
 
     <div style="page-break-after: always;"></div>
-    <!-- Lampiran II  -->
 
-    <span style="display: inline-block; width: 50%; text-align: left; text-indent:50px;">MARKAS BESAR ANGKATAN LAUT</span>
-    <span style="display: inline-block;  width: 49%;text-align:right; ">Lampiran III Surat Kadissenlekal</span>
+    <!-- Lampiran III  -->
 
-
-    <span style="display: inline-block; width: 52.4%; text-align: left;" class="custom-underline">
-        DINAS MATERIEL SENJATA DAN ELEKTRONIKA
-    </span>
-    <span style="display: inline-block;  width: 46.5%;text-align:right; ">Nomor R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/IV/2024</span>
-
-
-    <span style="display: inline-block; width: 430px; text-align: left;"></span>
-    <span class="custom-underline" style="line-height: 1.5;">Tanggal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;April 2024</span>
-
+    <table border="0" cellpading=0 style="line-height: 1; width:100%;">
+        <tr>
+            <td style="width:337px;text-align: center;">
+                MARKAS BESAR ANGKATAN LAUT
+            </td>
+            <td style="width:75px;"></td>
+            <td colspan="2">
+                Lampiran III Surat Kadissenlekal
+            </td>
+        </tr>
+        <tr>
+            <td style=" text-align: center;" class="custom-underline">
+                DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+            </td>
+            <td></td>
+            <td style="width: 100px;">
+                Nomor R/
+            </td>
+            <td style="text-align: right;">
+                /<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Tanggal</td>
+            <td style="text-align: right;"><?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></td>
+        </tr>
+        <!-- untuk memperjauh garis bawah -->
+        <tr style="line-height: 0.1;padding:0px; margin:0px;">
+            <td></td>
+            <td></td>
+            <td style="border-bottom: 1px solid;"></td>
+            <td style="text-align: right;border-bottom: 1px solid;"></td>
+        </tr>
+    </table>
     <br><br>
+
     <div style="text-align: center;">
         GAMBAR
     </div>
@@ -682,83 +730,8 @@
         </tr>
     </table>
     <br>
-    <p>B. Kebutuhan Materiel Pendukung</p>
-    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;">
-        <tr>
-            <?php
-            // cara menyisipkan gambar
-            $imagePath = FCPATH . 'assets/images/pemandangan.jpg'; // Path to your image file
-            $imageData = base64_encode(file_get_contents($imagePath));
-            $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
-            ?>
 
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-        </tr>
-        <tr>
-            <?php
-            // cara menyisipkan gambar
-            $imagePath = FCPATH . 'assets/images/semen.jpg'; // Path to your image file
-            $imageData = base64_encode(file_get_contents($imagePath));
-            $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
-            ?>
 
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-        </tr>
-    </table>
 
     <br><br>
     <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Dissenlekal</div>
@@ -766,14 +739,10 @@
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>
     <br><br><br><br>
-    <div style="text-align: center; text-indent: 50%;"> Eddy Saputra, S.T., M.A.P.</div>
-    <div style="text-align: center; text-indent: 50%;"> Kolonel Laut (E) NRP 13367/P</div>
+    <div style="text-align: center; text-indent: 50%;"><?= $kegiatan['namaPejabat']; ?></div>
+    <div style="text-align: center; text-indent: 50%;"><?= $pangkat['pangkat']; ?> <?= str_contains($pangkat['pangkat'], 'Laksamana') ? "" : " NRP " . $kegiatan['NRP']; ?></div>
 
-    <script>
-        const pageCount = document.querySelectorAll('.page').length; // Contoh: menghitung jumlah elemen dengan class 'page'
-        const pageTotalElement = document.querySelector('.page-total');
-        pageTotalElement.textContent = pageCount;
-    </script>
+
 </body>
 
 </html>

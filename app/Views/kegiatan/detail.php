@@ -266,12 +266,9 @@ use CodeIgniter\I18n\Time;
                         </div>
                         <div class="d-inline col-sm-2">
                             <?php
-                            $kegiatan = [
-                                'idKegiatan' => $idKegiatan
-                            ];
-                            session()->set($kegiatan);
+                            session()->setFlashdata('idKegiatan', $idKegiatan);
+                            echo anchor('barang/create', 'add', ['class' => '']);
                             ?>
-                            <?= anchor('barang/create', 'add', ['class' => '']); ?>
 
                         </div>
                     </div>
@@ -385,7 +382,15 @@ use CodeIgniter\I18n\Time;
 
                 </div>
                 <div class="modal-footer">
-                    <a href="/referensi/create/<?= $b['barangId']; ?>" class="btn btn-success   ">Tambah Referensi</a>
+
+
+                    <div class="d-inline col-sm-3 text-end">
+                        <?php
+                        session()->setFlashdata('idKegiatan', $idKegiatan);
+                        echo anchor('referensi/create/' . $b['barangId'], 'Tambah Referensi', ['class' => 'btn btn-success']);
+                        ?>
+
+                    </div>
                     <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
