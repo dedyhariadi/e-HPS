@@ -87,6 +87,7 @@
                 <div class="row text-start">
                     <div class="col-8"></div>
                     <div class="col-4 mt-3">
+                        <a href="/kegiatan" class="btn btn-warning me-3">Kembali</a>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>

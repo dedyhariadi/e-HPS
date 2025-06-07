@@ -265,7 +265,14 @@ use CodeIgniter\I18n\Time;
                             ?>
                         </div>
                         <div class="d-inline col-sm-2">
-                            <?= anchor_popup('barang/create', 'add', ['class' => 'd-inline']); ?>
+                            <?php
+                            $kegiatan = [
+                                'idKegiatan' => $idKegiatan
+                            ];
+                            session()->set($kegiatan);
+                            ?>
+                            <?= anchor('barang/create', 'add', ['class' => '']); ?>
+
                         </div>
                     </div>
 

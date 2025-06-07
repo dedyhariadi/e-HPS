@@ -142,8 +142,14 @@ class Barang extends BaseController
             $gambar->move('assets/images', $barang['gambar']);  // pindahkan gambar ke folder images
 
         }
+
         session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
-        return redirect()->to('/barang');
+
+        if (session()->get('idKegiatan')) {
+            return redirect()->to('/kegiatan/' . session()->get('idKegiatan'));
+        } else {
+            return redirect()->to('/barang');
+        }
     }
 
     public function hapus($id)

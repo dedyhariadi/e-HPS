@@ -57,10 +57,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-4">
 
-
-
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a href="/pejabat" class="btn btn-warning me-3">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

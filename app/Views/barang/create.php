@@ -38,7 +38,7 @@
                     </div>
                 </div>
 
-                <div class="row mb-3">
+                <div class="row mb-1">
                     <label for="gambar" class="form-label col-sm-2">Gambar</label>
                     <div class="col-sm-4">
                         <span class="input-group-btn">
@@ -52,8 +52,28 @@
                         <img id='img-upload' />
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-4">
+                        <?php
+                        if (session()->get('idKegiatan')) {
 
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                        ?>
+                            <a href="/kegiatan/<?= session('idKegiatan'); ?>" class="btn btn-warning me-3">Kembali</a>
+                        <?php
+                        } else {
+
+                        ?>
+
+                            <a href="/barang" class="btn btn-warning me-3">Kembali</a>
+                        <?php
+                        }
+                        ?>
+
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

@@ -89,8 +89,15 @@
                     </div>
 
             </div>
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-3">
 
-            <button type="submit" class="btn btn-primary">Simpan</button>
+
+                    <a href="/barang/<?= $barang['idBarang']; ?>" class="btn btn-warning me-3">Kembali</a>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </div>
             </form>
         </div>
     </div>
