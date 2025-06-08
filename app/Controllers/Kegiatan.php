@@ -144,7 +144,6 @@ class Kegiatan extends BaseController
         }
         // proses menambah referensi ke trxreferensi
         if ($tandaTambah == 2) {
-            d($this->request->getVar());
             $tambahReferensi = $this->request->getVar();
             if ($tambahReferensi) {
                 if ($this->trxReferensiModel->save([

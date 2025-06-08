@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kegiatan</title>
     <style>
-        /* @font-face {
+        @font-face {
             font-family: 'Arial';
             src: url('Arial.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
-        } */
+        }
 
         @page {
             margin-top: 2.03cm;
@@ -21,7 +21,7 @@
         }
 
         body {
-            /* font-family: 'Arial', sans-serif; */
+            font-family: 'Arial', sans-serif;
             font-size: 11pt;
             line-height: 1.1;
         }
@@ -50,12 +50,6 @@
             width: 100%;
             overflow: hidden;
             /* Clearfix */
-        }
-
-        .kiri-float {
-            float: left;
-            width: 10px;
-            /* border: 1px solid black; */
         }
 
         header {
