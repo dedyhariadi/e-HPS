@@ -88,11 +88,11 @@
     </footer> -->
 
 
-    <span style="display:block;text-indent : 50px;">
-        MARKAS BESAR ANGKATAN LAUT <br>
+    <span style="display:block;">
+        DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL<br>
     </span>
     <div class="custom-underline">
-        DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+        ARSENAL
     </div>
     <div style="text-align: right;">Jakarta, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></div>
     <div class="container-float">
@@ -159,8 +159,8 @@
         3. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Untuk menjadi perhatian dan pelaksanaan.
     </p>
     <br><br>
-    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Dissenlekal</div>
-    <div style="text-align: center; text-indent: 50%;"> Sekdis</div>
+    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Arsenal</div>
+    <div style="text-align: center; text-indent: 50%;"> Kabag Rendalmat</div>
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>
     <br><br><br><br>
@@ -170,28 +170,28 @@
 
     <div>
         <span style="display:block; text-align: center; text-indent: 50%;"><?= $pangkat['pangkat']; ?> <?= str_contains($pangkat['pangkat'], 'Laksamana') ? "" : " NRP " . $kegiatan['NRP']; ?></span><br>
-        <span class="custom-underline" style="text-align: left;">Kadissenlekal selaku KPA</span>
+        <span class="custom-underline" style="text-align: left;">Kaarsenal selaku KPA</span>
 
     </div>
 
     <div style="page-break-after: always;"></div>
 
-    <table border="0" cellpading=0 style="line-height: 1;">
+    <table border="0" cellpading=0 style="line-height: 1; width:100%;">
         <tr>
-            <td style="width:337px;text-align: center;">
-                MARKAS BESAR ANGKATAN LAUT
+            <td style="width:390px;text-align: center;">
+                DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL
             </td>
-            <td style="width:70px;"></td>
+            <td style="width:55px;"></td>
             <td colspan="2">
-                Lampiran I Surat Kadissenlekal
+                Lampiran I Surat Kaarsenal
             </td>
         </tr>
         <tr>
-            <td style="text-align: center;" class="custom-underline">
-                DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+            <td style="width:390px; text-align: center;" class="custom-underline">
+                ARSENAL
             </td>
             <td></td>
-            <td style="width: 100px;">
+            <td style="width: 70px;">
                 Nomor R/
             </td>
             <td style="text-align: right;">
@@ -235,12 +235,9 @@
             <td style="width: 30px;"></td>
             <td>b.&nbsp;&nbsp;&nbsp;Surat Edaran Kadissenlekal nomor SE/237/IV/2021 tanggal 19 April 2021 tentang Format Penyusun HPS Satker Dissenlekal;</td>
         </tr>
-        <tr>
-            <td style="width: 30px;"></td>
-            <td>c.&nbsp;&nbsp;&nbsp;Data harga dari situs jual beli online di Indonesia (Tokopedia, Bukalapak, Monotaro, Shopee, Blibli, dan beberapa situs lainnya);</td>
-        </tr>
+
         <?php
-        $char = "d";
+        $char = "c";
         $banyakHuruf = 1;
         $cetakHuruf = "";
         $a = 0;
@@ -464,8 +461,8 @@
         </tr>
     </table>
 
-    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Dissenlekal</div>
-    <div style="text-align: center; text-indent: 50%;"> Sekdis</div>
+    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Arsenal</div>
+    <div style="text-align: center; text-indent: 50%;"> Kabag Rendalmat</div>
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>
     <br><br><br><br>
@@ -483,20 +480,20 @@
 
     <table border="0" cellpading=0 style="line-height: 1; width:100%;">
         <tr>
-            <td style="width:337px;text-align: center;">
-                MARKAS BESAR ANGKATAN LAUT
+            <td style="width:390px;text-align: center;">
+                DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL
             </td>
-            <td style="width:80px;"></td>
+            <td style="width:50px;"></td>
             <td colspan="2">
-                Lampiran II Surat Kadissenlekal
+                Lampiran II Surat Kaarsenal
             </td>
         </tr>
         <tr>
-            <td style=" text-align: center;" class="custom-underline">
-                DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+            <td style="width:390px; text-align: center;" class="custom-underline">
+                ARSENAL
             </td>
             <td></td>
-            <td style="width: 100px;">
+            <td style="width: 70px;">
                 Nomor R/
             </td>
             <td style="text-align: right;">
@@ -575,8 +572,8 @@
     </table>
 
     <br><br>
-    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Dissenlekal</div>
-    <div style="text-align: center; text-indent: 50%;"> Sekdis</div>
+    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Arsenal</div>
+    <div style="text-align: center; text-indent: 50%;"> Kabag Rendalmat</div>
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>
     <br><br><br><br>
@@ -590,17 +587,17 @@
 
     <table border="0" cellpading=0 style="line-height: 1; width:100%;">
         <tr>
-            <td style="width:337px;text-align: center;">
-                MARKAS BESAR ANGKATAN LAUT
+            <td style="width:390px;text-align: center;">
+                DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL
             </td>
-            <td style="width:75px;"></td>
+            <td style="width:45px;"></td>
             <td colspan="2">
-                Lampiran III Surat Kadissenlekal
+                Lampiran III Surat Kaarsenal
             </td>
         </tr>
         <tr>
-            <td style=" text-align: center;" class="custom-underline">
-                DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+            <td style="width:390px; text-align: center;" class="custom-underline">
+                ARSENAL
             </td>
             <td></td>
             <td style="width: 100px;">
