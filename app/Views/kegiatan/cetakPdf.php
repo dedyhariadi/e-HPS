@@ -144,7 +144,7 @@
         unset($harga, $hargaRata2);
     endforeach;
     // echo "ini jumlah seluruhnya" . array_sum($jumlahTiapBarang);
-    $jumlahHarga = (((array_sum($jumlahTiapBarang) * 15 / 100) + array_sum($jumlahTiapBarang)) * 11 / 100) + ((array_sum($jumlahTiapBarang) * 15 / 100) + array_sum($jumlahTiapBarang));
+    $jumlahHarga = (((array_sum($jumlahTiapBarang) * 15 / 100) + array_sum($jumlahTiapBarang)) * 12 / 100) + ((array_sum($jumlahTiapBarang) * 15 / 100) + array_sum($jumlahTiapBarang));
     // echo "ini jumlah total " . $jumlahHarga;
     $hps = (bulatkan_rupiah($jumlahHarga));
 
@@ -281,7 +281,7 @@
                                 }
                             endforeach;
                             ?>
-                            tanpa PPN 11% seharga Rp <?= number_format($c[0]['harga'], 0, ",", "."); ?>
+                            tanpa PPN 12% seharga Rp <?= number_format($c[0]['harga'], 0, ",", "."); ?>
                         </td>
                     </tr>
         <?php
@@ -412,7 +412,7 @@
                 <td colspan="6"> PPN</td>
                 <td>
                     <?php
-                    $ppn = $total * 11 / 100;
+                    $ppn = $total * 12 / 100;
                     echo number_format($ppn, 2, ",", ".");
                     ?>
 
