@@ -409,7 +409,7 @@
                 </td>
             </tr>
             <tr style="text-align: right;">
-                <td colspan="6"> PPN</td>
+                <td colspan="6"> PPN 12%</td>
                 <td>
                     <?php
                     $ppn = $total * 12 / 100;
