@@ -130,8 +130,29 @@
     <br>
 
     <!-- perhitungan total HPS -->
+    <?php
+    foreach ($trxGiatBarang as $b):
+        // menghitung rata2
+        foreach ($trxReferensi as $trxR) :
+            if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
+                $harga[] = $trxR['harga'];
+            }
+
+        endforeach;
+        $hargaRata2 = array_sum($harga) / count($harga);
+        $jumlahTiapBarang[] = $b['kebutuhan'] * $hargaRata2;
+        unset($harga, $hargaRata2);
+    endforeach;
+    // echo "ini jumlah seluruhnya" . array_sum($jumlahTiapBarang);
+    $jumlahHarga = (((array_sum($jumlahTiapBarang) * 15 / 100) + array_sum($jumlahTiapBarang)) * 11 / 100) + ((array_sum($jumlahTiapBarang) * 15 / 100) + array_sum($jumlahTiapBarang));
+    // echo "ini jumlah total " . $jumlahHarga;
+    $hps = (bulatkan_rupiah($jumlahHarga));
+
+    // echo number_format($hps, 0, ",", ".") . " (" . terbilang($hps) . " rupiah)"
+    ?>
+    <!-- akhir perhitungan HPS -->
     <div style="display:inline-block;text-align: justify;">
-        2. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sehubungan dasar tersebut, dikirimkan data Harga Perkiraan Sendiri (HPS) dan Spesifikasi Teknis <?= $kegiatan['namaKegiatan']; ?>, senilai Rp 199.981.000,00 (<?= trim(terbilang(199981000)); ?>) sesuai lampiran.
+        2. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sehubungan dasar tersebut, dikirimkan data Harga Perkiraan Sendiri (HPS) dan Spesifikasi Teknis <?= $kegiatan['namaKegiatan']; ?>, senilai Rp <?= number_format($hps, 0, ",", ".") . " (" . trim(terbilang($hps)) . " rupiah)"; ?> sesuai lampiran.
     </div>
     <br><br>
     <p style="text-align: justify;">
@@ -200,7 +221,7 @@
     <table style="text-align:justify;margin: left -5px; width: 100%;">
         <tr>
             <td style="width: 30px;">1. </td>
-            <td>Total HPS = Rp 199.981.000,00</td>
+            <td>Total HPS = Rp <?= number_format($hps, 2, ",", "."); ?></td>
         </tr>
         <tr>
             <td style="width: 30px;">2. </td>
@@ -223,7 +244,7 @@
         $banyakHuruf = 1;
         $cetakHuruf = "";
         $a = 0;
-        foreach ($trxGiatBarang as $b) :
+        foreach ($trxGiatBarang as $b) : //list barang yang dipilih
             foreach ($trxReferensi as $trxR) :
                 if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
                     $cetak[$a] = [
@@ -279,7 +300,7 @@
         </tr>
         <tr>
             <td style="width: 30px;"></td>
-            <td>a. &nbsp;&nbsp;&nbsp; Biaya kebutuhan material pengecoran projectile:</td>
+            <td>a. &nbsp;&nbsp;&nbsp; Biaya kebutuhan material:</td>
         </tr>
     </table>
 
@@ -294,7 +315,7 @@
                 <th style="width: 8%;">Harga Satuan 2</th>
                 <th style="width: 8%;">Rata-rata Harga Satuan</th>
                 <th style="width: 10%;">Kebutuhan</th>
-                <th style="width: 10%;">Jumlah Harga</th>
+                <th style="width: 13%;">Jumlah Harga</th>
             </tr>
         </thead>
         <tbody style="overflow-wrap: break-word;">
@@ -439,7 +460,7 @@
 
     <table style="text-align:justify;margin: left -5px;">
         <tr>
-            <td colspan="2">4. &nbsp;&nbsp;&nbsp;&nbsp;Kesimpulan.&nbsp;&nbsp;&nbsp;Dari analisa harga di atas, diperoleh HPS yang dapat dijadikan sebagai acuan dalam penentuan biaya Pemeliharaan Amunisi Tidak Layak Pakai dengan pengecoran Arsenal adalah Rp <?= number_format(bulatkan_rupiah($total), 0, ",", ".") . " (" . terbilang($total_bulat) . " rupiah)"; ?>. <br><br></td>
+            <td colspan="2">4. &nbsp;&nbsp;&nbsp;&nbsp;Kesimpulan.&nbsp;&nbsp;&nbsp;Dari analisa harga di atas, diperoleh HPS yang dapat dijadikan sebagai acuan dalam penentuan biaya <?= $kegiatan['namaKegiatan']; ?> adalah Rp <?= number_format(bulatkan_rupiah($total), 0, ",", ".") . " (" . terbilang($total_bulat) . " rupiah)"; ?>. <br><br></td>
         </tr>
     </table>
 
