@@ -315,7 +315,7 @@
                 <th style="width: 8%;">Harga Satuan 2</th>
                 <th style="width: 8%;">Rata-rata Harga Satuan</th>
                 <th style="width: 10%;">Kebutuhan</th>
-                <th style="width: 13%;">Jumlah Harga</th>
+                <th style="width: 12%;">Jumlah Harga</th>
             </tr>
         </thead>
         <tbody style="overflow-wrap: break-word;">
