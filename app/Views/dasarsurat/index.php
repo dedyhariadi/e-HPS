@@ -64,6 +64,15 @@
 
                         <td class="text-center">
                             <form action="/dasarsurat/<?= $b['idSurat']; ?>" method="post" class="d-inline">
+
+
+                                <?php
+                                if ($b['filePdf'] != 'noFile.pdf') {
+                                ?>
+                                    <a href="/assets/pdf/<?= $b['filePdf']; ?>" target="_blank" class="btn btn-success"><i class="bi bi-file-arrow-down"></i></a>
+                                <?php }
+                                ?>
+
                                 <?= csrf_field(); ?>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="idSurat" value="<?= $b['idSurat']; ?>">
