@@ -616,118 +616,43 @@
     </div>
     <br>
     <p>A. Kebutuhan Materiel</p>
-    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;">
+    <table cellpadding="4" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;border-collapse: collapse;">
         <tr>
             <?php
-            // cara menyisipkan gambar
-            $imagePath = FCPATH . 'assets/images/pemandangan.jpg'; // Path to your image file
-            $imageData = base64_encode(file_get_contents($imagePath));
-            $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
-            ?>
+            $n = 1;
+            foreach ($trxGiatBarang as $b) :
+                foreach ($barang as $brg) :
+                    if ($b['barangId'] == $brg['idBarang']) {
 
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                Keranjang
-            </td>
+                        $imagePath = FCPATH . 'assets/images/' . $brg['gambar']; // Path to your image file
+
+                        $imageData = base64_encode(file_get_contents($imagePath));
+                        $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
+                        if ($n <= 7) {
+                            $n++;
+            ?>
+                            <td style="width: 15%;border:1px solid black;">
+                                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                                <?= $brg['namaBarang']; ?>
+                            </td>
+                        <?php
+                        } else { ?>
         </tr>
         <tr>
-            <?php
-            // cara menyisipkan gambar
-            $imagePath = FCPATH . 'assets/images/semen.jpg'; // Path to your image file
-            $imageData = base64_encode(file_get_contents($imagePath));
-            $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
-            ?>
+            <td style="width: 15%;border:1px solid black;">
+                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
+                <?= $brg['namaBarang']; ?>
+            </td>
 
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                semen
-            </td>
-        </tr>
-        <tr>
-            <?php
-            // cara menyisipkan gambar
-            $imagePath = FCPATH . 'assets/images/pasir.jpg'; // Path to your image file
-            $imageData = base64_encode(file_get_contents($imagePath));
-            $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
-            ?>
+<?php
+                            $n = 1;
+                        }
+                    }
+                endforeach;
 
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                pasir
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                pasir
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                pasir
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                pasir
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                pasir
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                pasir
-            </td>
-            <td style="width: 15%;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                pasir
-            </td>
-        </tr>
+            endforeach;
+?>
+
     </table>
     <br>
 
