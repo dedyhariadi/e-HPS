@@ -224,7 +224,7 @@ class Kegiatan extends BaseController
         ];
 
         $options = new Options();
-        $options->set('defaultFont', 'Helvetica');
+        $options->set('defaultFont', 'Arial');
         $options->set('isRemoteEnabled', true);
         $options->set('ishtml5ParserEnabled', true);
         $options->set('isPhpEnabled', true);

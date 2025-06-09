@@ -1,0 +1,3 @@
+jalankan perintah di Bawah melalui cmd di folder root aplikasi d:\e-hps
+
+php vendor/dompdf/dompdf/src/load_font.php "Arial" D:\e-HPS\public\raw material\font\ARIAL.ttf C:\Users\dedya\Downloads\arial\font\ARIALBD.ttf C:\Users\dedya\Downloads\arial\font\ARIALI.ttf C:\Users\dedya\Downloads\arial\font\ARIALBI.ttf

@@ -1,3 +1,27 @@
+<<<<<<< HEAD
+<table style="width: 100%;">
+    <tr>
+        <td style="width: 100px;">Nomor</td>
+        <td>: R / VI / 2025</td>
+        <td style="text-align: right;">Jakarta, ....</td>
+    </tr>
+    <tr>
+        <td>Klasifikasi</td>
+        <td>: Rahasia</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Lampiran</td>
+        <td>:</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Perihal</td>
+        <td>: Dukungan Harga Perkiraan Sendiri 23423423</td>
+        <td></td>
+    </tr>
+</table>
+=======
 <!DOCTYPE html>
 <html>
 
@@ -47,3 +71,4 @@
 </body>
 
 </html>
+>>>>>>> a8f3af678d84a7431baa9a981243346c0f86548d

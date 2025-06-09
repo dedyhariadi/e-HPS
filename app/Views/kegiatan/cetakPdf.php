@@ -74,8 +74,33 @@
             content: counter(page);
         }
 
-        /* CSS tambahan untuk menyembunyikan border */
-        /* Targetkan sel dengan konten */
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* Penting: menempatkan item pertama ke kiri, item kedua ke kanan */
+            width: 100%;
+            /* Atau lebar yang Anda inginkan untuk kontainer */
+            margin-top: 20px;
+            /* Optional: tambahkan border untuk melihat batas container */
+            /* border: 1px dashed blue; */
+        }
+
+        .line {
+            flex-grow: 1;
+            /* Garis akan mengambil sisa ruang yang tersedia */
+            height: 2px;
+            /* Tebal garis */
+            background-color: #888;
+            /* Warna abu-abu untuk garis */
+            margin-right: 10px;
+            /* Jarak antara garis dan tulisan */
+        }
+
+        .date-location {
+            white-space: nowrap;
+            /* Mencegah tulisan pecah baris */
+        }
     </style>
 
 </head>
