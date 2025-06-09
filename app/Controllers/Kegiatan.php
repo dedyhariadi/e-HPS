@@ -224,21 +224,23 @@ class Kegiatan extends BaseController
         ];
 
 
-        ob_end_clean(); //untuk memperbaiki tulisan failed to load PDF document
 
 
         $options = new Options();
         $options->set('defaultFont', 'Arial');
         $options->set('isRemoteEnabled', true);
         $options->set('ishtml5ParserEnabled', true);
-        // $options->set('isPhpEnabled', true);
+        $options->set('isPhpEnabled', true);
         $dompdf = new Dompdf($options);
 
 
         // return view('kegiatan/cetakPdf', $data);
 
         $html = view('kegiatan/cetakPdf', $data);
+        ob_end_clean(); //untuk memperbaiki tulisan failed to load PDF document
+
         $dompdf->loadHtml($html);
+
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
@@ -252,7 +254,7 @@ class Kegiatan extends BaseController
                 $font = $fontMetrics->getFont("Arial", "normal");
                 $size = 11;
                 $x = 134.5;
-                $y = 138.5;  //satu <br> senilai 11.5
+                $y = 141;  //satu <br> senilai 11.5
                 $this->text($x, $y, $text, $font, $size);
                  }
                 ');
