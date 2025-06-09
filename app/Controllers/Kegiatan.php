@@ -251,8 +251,8 @@ class Kegiatan extends BaseController
                 $text = "' . $terbilang . ' lembar";
                 $font = $fontMetrics->getFont("Arial", "normal");
                 $size = 11;
-                $x = 130;
-                $y = 123.5;
+                $x = 134.5;
+                $y = 138.5;  //satu <br> senilai 11.5
                 $this->text($x, $y, $text, $font, $size);
                  }
                 ');

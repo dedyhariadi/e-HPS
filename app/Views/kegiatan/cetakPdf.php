@@ -7,8 +7,8 @@
     <title>e-Siap</title>
     <style>
         @font-face {
-            font-family: 'Arial';
-            src: url('Arial.ttf') format('truetype');
+            /* font-family: 'Arial';
+            src: url('Arial.ttf') format('truetype'); */
             font-weight: normal;
             font-style: normal;
         }
@@ -21,7 +21,7 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            /* font-family: 'Arial', sans-serif; */
             font-size: 11pt;
             line-height: 1.1;
         }
@@ -73,6 +73,34 @@
         .page-number:before {
             content: counter(page);
         }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* Penting: menempatkan item pertama ke kiri, item kedua ke kanan */
+            width: 100%;
+            /* Atau lebar yang Anda inginkan untuk kontainer */
+            margin-top: 20px;
+            /* Optional: tambahkan border untuk melihat batas container */
+            /* border: 1px dashed blue; */
+        }
+
+        .line {
+            flex-grow: 1;
+            /* Garis akan mengambil sisa ruang yang tersedia */
+            height: 2px;
+            /* Tebal garis */
+            background-color: #888;
+            /* Warna abu-abu untuk garis */
+            margin-right: 10px;
+            /* Jarak antara garis dan tulisan */
+        }
+
+        .date-location {
+            white-space: nowrap;
+            /* Mencegah tulisan pecah baris */
+        }
     </style>
 
 </head>
@@ -87,33 +115,92 @@
         Ini adalah Footer - Halaman <span class="page-number"></span> dari <span class="page-count"></span>
     </footer> -->
 
+    <table border="0" cellpading=0 style="line-height: 1; width:100%;border-collapse:collapse;">
+        <tr>
+            <td style="width:390px;text-align: center;">
+                DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL
+            </td>
+            <td style="width:55px;"></td>
+            <td colspan="2">
 
-    <span style="display:block;">
-        DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL<br>
-    </span>
-    <div class="custom-underline">
-        ARSENAL
-    </div>
-    <div style="text-align: right;">Jakarta, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></div>
-    <div class="container-float">
-        Nomor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?> <br>
-        Klasifikasi : Rahasia<br>
-        Lampiran&nbsp;&nbsp;: <br>
-        <table border=0 style="margin: left -3px;">
-            <tr>
-                <td style="width: 65.5px; vertical-align: top;">
-                    Perihal
-                </td>
-                <td style="vertical-align: top;">
-                    :
-                </td>
-                <td style="width: 300px;border-bottom: 1px solid; text-align:justify;">
-                    Dukungan Harga Perkiraan Sendiri <?= $kegiatan['namaKegiatan']; ?>
-                </td>
-            </tr>
-        </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:390px; text-align: center;">
+                ARSENAL
+            </td>
+            <td></td>
+            <td style="width: 70px;">
+            </td>
+            <td style="text-align: right;">
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0;vertical-align:middle;width:100%;">
+                <div style="height:1px;background-color:#888;"></div>
+            </td>
+            <td></td>
+            <td style="white-space: nowrap;padding-left:0;">
+                <div class="date-location">Jakarta, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></div>
+            </td>
+            <td></td>
+        </tr>
+    </table>
 
-    </div>
+
+    <br>
+
+    <table border=0 style="margin: left -3px;table-layout: fixed;width:100%;">
+        <tr>
+            <td style="width: 12%;">
+                Nomor
+            </td>
+            <td style="width: 1%;">
+                :
+            </td>
+            <td style="width:40%;">
+                R/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                Klasifikasi
+            </td>
+            <td>
+                :
+            </td>
+            <td>
+                Rahasia
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                Lampiran
+            </td>
+            <td>
+                :
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td style="vertical-align: top;">
+                Perihal
+            </td>
+            <td style="vertical-align: top;">
+                :
+            </td>
+            <td style="border-bottom: 1px solid; text-align:justify;">
+                Dukungan Harga Perkiraan Sendiri <?= $kegiatan['namaKegiatan']; ?>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+
+    <!-- </div> -->
 
 
     <div style=" text-indent: 78%;">Kepada
