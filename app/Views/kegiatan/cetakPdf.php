@@ -7,8 +7,8 @@
     <title>e-Siap</title>
     <style>
         @font-face {
-            /* font-family: 'Arial';
-            src: url('Arial.ttf') format('truetype'); */
+            font-family: 'Arial';
+            src: url('Arial.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
@@ -21,7 +21,7 @@
         }
 
         body {
-            /* font-family: 'Arial', sans-serif; */
+            font-family: 'Arial', sans-serif;
             font-size: 11pt;
             line-height: 1.1;
         }
@@ -74,33 +74,8 @@
             content: counter(page);
         }
 
-        .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            /* Penting: menempatkan item pertama ke kiri, item kedua ke kanan */
-            width: 100%;
-            /* Atau lebar yang Anda inginkan untuk kontainer */
-            margin-top: 20px;
-            /* Optional: tambahkan border untuk melihat batas container */
-            /* border: 1px dashed blue; */
-        }
-
-        .line {
-            flex-grow: 1;
-            /* Garis akan mengambil sisa ruang yang tersedia */
-            height: 2px;
-            /* Tebal garis */
-            background-color: #888;
-            /* Warna abu-abu untuk garis */
-            margin-right: 10px;
-            /* Jarak antara garis dan tulisan */
-        }
-
-        .date-location {
-            white-space: nowrap;
-            /* Mencegah tulisan pecah baris */
-        }
+        /* CSS tambahan untuk menyembunyikan border */
+        /* Targetkan sel dengan konten */
     </style>
 
 </head>
@@ -715,44 +690,71 @@
     </div>
     <br>
     <p>A. Kebutuhan Materiel</p>
-    <table cellpadding="4" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px;border-collapse: collapse;">
-        <tr>
-            <?php
-            $n = 1;
-            foreach ($trxGiatBarang as $b) :
-                foreach ($barang as $brg) :
-                    if ($b['barangId'] == $brg['idBarang']) {
 
-                        $imagePath = FCPATH . 'assets/images/' . $brg['gambar']; // Path to your image file
+    <!-- menampilkan data di tabel -->
+    <?php
+    // ... (Bagian pra-proses data barang, sama seperti sebelumnya) ...
+    $columnLimit = 7;
+    $displayItems = [];
+    foreach ($trxGiatBarang as $b) {
+        foreach ($barang as $brg) {
+            if ($b['barangId'] == $brg['idBarang']) {
+                $imagePath = FCPATH . 'assets/images/' . $brg['gambar'];
+                $imageSrc = 'data:image/png;charset=utf-8;base64,iVBORw0KGgoAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='; // Default transparent pixel
 
-                        $imageData = base64_encode(file_get_contents($imagePath));
-                        $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
-                        if ($n <= 7) {
-                            $n++;
-            ?>
-                            <td style="width: 15%;border:1px solid black;">
-                                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                                <?= $brg['namaBarang']; ?>
-                            </td>
-                        <?php
-                        } else { ?>
-        </tr>
-        <tr>
-            <td style="width: 15%;border:1px solid black;">
-                <img src="<?= $imageSrc; ?>" width="75" height="75" alt="Logo"><br>
-                <?= $brg['namaBarang']; ?>
-            </td>
+                if (file_exists($imagePath)) {
+                    $imageData = base64_encode(file_get_contents($imagePath));
+                    $imageSrc = 'data:image/png;charset=utf-8;base64,' . $imageData;
+                } else {
+                    error_log("Image not found: " . $imagePath);
+                }
 
-<?php
-                            $n = 1;
-                        }
-                    }
-                endforeach;
+                $displayItems[] = [
+                    'name' => $brg['namaBarang'],
+                    'image_src' => $imageSrc
+                ];
+            }
+        }
+    }
+    ?>
 
-            endforeach;
-?>
+    <table cellpadding="0" cellspacing="0" style="width: 100%; text-align: center; margin-top: 10px; border-collapse: collapse;border:none">
+        <?php
+        $itemCount = count($displayItems);
+        $currentItemIndex = 0;
 
+        while ($currentItemIndex < $itemCount) {
+            echo '<tr>';
+            for ($i = 0; $i < $columnLimit; $i++) {
+                if ($currentItemIndex < $itemCount) {
+                    $item = $displayItems[$currentItemIndex];
+                    // Tambahkan kelas 'has-content' untuk sel yang ada isinya
+                    echo '<td class="has-content" style="width: ' . (100 / $columnLimit) . '%; border: 1px solid black; padding: 5px;">';
+                    echo '<img src="' . $item['image_src'] . '" width="75" height="75" alt="' . $item['name'] . '"><br>';
+                    echo $item['name'];
+                    echo '</td>';
+                    $currentItemIndex++;
+                } else {
+                    // Untuk sel kosong, jangan tambahkan border di inline style
+                    echo '<td class="empty-cell" style="width: ' . (100 / $columnLimit) . '%; padding: 5px;border:none;">';
+                    echo '&nbsp;'; // Penting agar sel tidak collapse
+                    echo '</td>';
+                }
+            }
+            echo '</tr>';
+        }
+        ?>
     </table>
+
+
+
+    <!-- akhir menampilkan data di tabel -->
+
+
+
+
+
+
     <br>
 
 
