@@ -7,8 +7,8 @@
     <title>e-Siap</title>
     <style>
         @font-face {
-            /* font-family: 'Arial';
-            src: url('Arial.ttf') format('truetype'); */
+            font-family: 'Arial';
+            src: url('Arial.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
@@ -21,7 +21,7 @@
         }
 
         body {
-            /* font-family: 'Arial', sans-serif; */
+            font-family: 'Arial', sans-serif;
             font-size: 11pt;
             line-height: 1.1;
         }
@@ -98,7 +98,7 @@
         }
 
         .date-location {
-            white-space: nowrap;
+            /* white-space: nowrap; */
             /* Mencegah tulisan pecah baris */
         }
     </style>
