@@ -19,7 +19,7 @@ $routes->delete('/barang/(:num)', 'Barang::hapus/$1'); // route ke hapus
 $routes->get('/barang/(:any)', 'Barang::detail/$1'); //route ke detail
 
 
-// kontroller referensi
+// kontroller referensi (tidak ada index)
 $routes->get('/referensi/create/(:num)', 'Referensi::create/$1'); // route ke create
 $routes->post('/referensi/save', 'Referensi::save'); // route ke save
 
@@ -29,7 +29,7 @@ $routes->post('/referensi/proses_edit', 'Referensi::proses_edit'); // route ke p
 $routes->delete('/referensi/(:num)', 'Referensi::hapus/$1');  // route ke hapus
 
 
-//pejabat
+//pejabat (lengkap)
 $routes->match(['GET', 'POST'], '/pejabat', 'Pejabat::index'); //route ke index utk list semua daftar pejabat
 $routes->get('/pejabat/tambah', 'Pejabat::tambah'); //route ke tambah
 $routes->post('/pejabat/simpan', 'Pejabat::simpan'); //proses penyimpanan tambah
@@ -43,7 +43,7 @@ $routes->delete('pejabat/(:num)', 'Pejabat::hapus/$1');
 
 
 
-// satuan
+// satuan (lengkap)
 $routes->match(['GET', 'POST'], '/satuan', 'Satuan::index'); //route ke index utk list semua . hasil pecarian
 //tambah
 $routes->get('satuan/tambah', 'Satuan::tambah');
@@ -55,10 +55,10 @@ $routes->post('/satuan/prosesedit', 'Satuan::prosesedit');
 $routes->delete('satuan/(:num)', 'Satuan::hapus/$1');
 
 
-// dasar surat
+// dasar surat (lengkap)
 $routes->match(['GET', 'POST'], 'dasarsurat', 'dasarsurat::index');  //index
 
-// tambah dasar surat
+// tambah 
 $routes->get('dasarsurat/create', 'dasarsurat::tambah');
 $routes->post('dasarsurat/simpan', 'dasarsurat::simpan');
 
@@ -69,7 +69,7 @@ $routes->get('/dasarsurat/edit/(:num)', 'Dasarsurat::edit/$1');
 $routes->post('/dasarsurat/prosesedit/(:num)', 'Dasarsurat::prosesedit/$1');
 
 
-// kontroller kegiatan
+// kontroller kegiatan (kurang edit)
 //cetak pdf
 $routes->get('/kegiatan/cetakPdf/(:num)', 'Kegiatan::cetakPdf/$1'); // route ke cetak pdf
 
@@ -83,3 +83,7 @@ $routes->match(['GET', 'POST'], '/kegiatan/(:num)', 'Kegiatan::detail/$1'); //ro
 
 //hapus
 $routes->delete('/kegiatan/(:num)', 'Kegiatan::hapus/$1');  // route ke hapus
+
+// edit
+$routes->get('/kegiatan/edit/(:num)', 'Kegiatan::edit/$1');
+$routes->post('/kegiatan/prosesedit/(:num)', 'Kegiatan::prosesedit/$1');

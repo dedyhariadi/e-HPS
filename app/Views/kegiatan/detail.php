@@ -64,12 +64,12 @@ use CodeIgniter\I18n\Time;
 
                                 <form action="/kegiatan/<?= $kegiatan['idKegiatan']; ?>" method="post" class="d-inline">
                                     <?= csrf_field(); ?>
+                                    <a href="/kegiatan/edit/<?= $kegiatan['idKegiatan']; ?>" class="btn btn-warning">Edit</a>
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="idKegiatan" value="<?= $kegiatan['idKegiatan']; ?>">
                                     <input type="hidden" name="tandaHapus" value="hapusKegiatan">
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
 
-                                    <!-- <a href="/kegiatan/edit/ idkegiatan>" class="btn btn-warning">Edit</a> -->
 
                                     <input type="button" value="Cetak Pdf" onclick="window.open('/kegiatan/cetakPdf/<?= $kegiatan['idKegiatan']; ?>', '_blank');" class="btn btn-primary">
 

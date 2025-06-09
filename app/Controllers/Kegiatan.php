@@ -223,9 +223,6 @@ class Kegiatan extends BaseController
             'sumber' => $this->sumberModel->findAll()
         ];
 
-
-
-
         $options = new Options();
         $options->set('defaultFont', 'Helvetica');
         $options->set('isRemoteEnabled', true);
@@ -262,5 +259,28 @@ class Kegiatan extends BaseController
         $dompdf->stream('kegiatanku.pdf', array(
             'Attachment' => 0 // 0 untuk menampilkan di browser, 1 untuk mengunduh
         ));
+    }
+
+    public function edit($idKegiatan = false)
+    {
+        echo "Masuk ke fungsi edit";
+        $kegiatan = $this->kegiatanModel->getKegiatan($idKegiatan);
+        die;
+        if (!$kegiatan) {
+            // throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Data Kegiatan tidak ditemukan.');
+        }
+
+        $data = [
+            'title' => 'Edit Kegiatan',
+            'kegiatan' => $kegiatan,
+            'pejabat' => $this->pejabatModel->findAll(),
+            'dasar' => $this->dasarModel->findAll(),
+        ];
+
+        return view('kegiatan/edit', $data);
+    }
+
+    public function prosesedit() {
+        
     }
 }
