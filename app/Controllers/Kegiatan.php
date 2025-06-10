@@ -261,26 +261,69 @@ class Kegiatan extends BaseController
         ));
     }
 
-    public function edit($idKegiatan = false)
+    public function edit($idKegiatan = false, $errors = false)
     {
-        echo "Masuk ke fungsi edit";
-        $kegiatan = $this->kegiatanModel->getKegiatan($idKegiatan);
-        die;
-        if (!$kegiatan) {
-            // throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Data Kegiatan tidak ditemukan.');
-        }
+        // $kegiatan = $this->kegiatanModel->getKegiatan($idKegiatan);
+        // jika idKegiatan tidak ditemukan, tampilkan halaman 404
+
+        // if (!$kegiatan) {
+        // throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Data Kegiatan tidak ditemukan.');
+        // }
 
         $data = [
             'title' => 'Edit Kegiatan',
-            'kegiatan' => $kegiatan,
+            'kegiatan' => $this->kegiatanModel->getKegiatan($idKegiatan),
             'pejabat' => $this->pejabatModel->findAll(),
             'dasar' => $this->dasarModel->findAll(),
+            'errors' => $errors,
         ];
-
+        // dd($data);
         return view('kegiatan/edit', $data);
     }
 
-    public function prosesedit() {
-        
+    public function prosesedit($id)
+    {
+        d($this->request->getVar());
+
+        // menambahkan aturan validasi pada ID barang untuk ignore namaBarang yang sama dengan sebelumnya
+        $idKegiatan = 'idKegiatan';
+        $aturan = 'max_length[19]|is_natural_no_zero';
+        $this->kegiatanModel->setValidationRule($idKegiatan, $aturan);
+
+
+        $filePdf = $this->request->getFile('filePdf');  // ambil filePdf
+
+        // cek apakah ada gambar yang diupload
+        if ($filePdf->getError() == 4) {
+            $namaFile = 'noFile.pdf';
+        } else {
+            $namaFile = $filePdf->getRandomName();
+            $filePdf->move('assets/pdf', $namaFile); //pindahkan file ke folder upload pdf
+        }
+
+        // proses simpan ke database
+        if ($this->kegiatanModel->save([
+            'idKegiatan' => $id,
+            'namaKegiatan' => $this->request->getVar('namaKegiatan'),
+            'tglSurat' => date('Y-m-d H:i:s', strtotime($this->request->getVar('tglSurat'))),
+            'pejabatId' => $this->request->getVar('pejabatId'),
+            'suratId' => $this->request->getVar('suratId'),
+            'filePdf' => $namaFile
+        ]) == false) {
+            // jika gagal simpan data
+            $errors = $this->kegiatanModel->errors();
+            $data = [
+                'title' => 'Ubah Data Kegiatan',
+                'pejabat' => $this->pejabatModel->findAll(),
+                'dasar' => $this->dasarModel->findAll(),
+                'errors' => $errors,
+                'kegiatan' => $this->kegiatanModel->find($id)
+            ];
+            return view('/kegiatan/edit', $data);
+        }
+
+        // kembali ke index kegiatan
+        session()->setFlashdata('pesan', 'Data Berhasil diubah.');
+        return redirect()->to('/kegiatan');
     }
 }

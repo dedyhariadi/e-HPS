@@ -6,11 +6,11 @@
 <div class="container">
     <div class="col">
         <div class="row">
-            <h2 class="my-4">Form Tambah Kegiatan</h2>
+            <h2 class="my-4">Form Edit Kegiatan</h2>
         </div>
 
         <div class="row">
-            <form action="/kegiatan/simpan" method="post" enctype="multipart/form-data">
+            <form action="/kegiatan/prosesedit/<?= $kegiatan['idKegiatan']; ?>" method="post" enctype="multipart/form-data">
 
                 <?= csrf_field(); ?>
 
@@ -19,7 +19,7 @@
                     <label for="namaKegiatan" class="col-sm-2 col-form-label">Nama Kegiatan</label>
                     <!-- <textarea class="form-control" aria-label="With textarea" name=""> -->
                     <div class="col-sm-4">
-                        <textarea type="text" class="form-control <?= (isset($errors['namaKegiatan'])) ? 'is-invalid' : ''; ?>" name="namaKegiatan" autofocus></textarea>
+                        <textarea type="text" class="form-control <?= (isset($errors['namaKegiatan'])) ? 'is-invalid' : ''; ?>" name="namaKegiatan" autofocus><?= set_value('namaKegiatan', $kegiatan['namaKegiatan']); ?></textarea>
                         <div class="invalid-feedback">
                             <?= (isset($errors['namaKegiatan'])) ? $errors['namaKegiatan'] : ''; ?>
                         </div>
@@ -31,11 +31,20 @@
                     <!-- input pejabat -->
                     <label for="pejabat" class="col-sm-1 col-form-label">Pejabat</label>
                     <div class="col-sm-3 ms-0">
-                        <select class="form-select" name="pejabatId">
-                            <?php foreach ($pejabat as $p) : ?>
-                                <option value="<?= ($p['idPejabat']); ?>" <?= set_select('idPejabat', $p['idPejabat']); ?>><?= $p['namaPejabat']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+
+                        <?php
+                        foreach ($pejabat as $p) {
+                            $pejabat['idPejabat'][] = $p['idPejabat'];
+                            $pejabat['namaPejabat'][] = $p['namaPejabat'];
+                        }
+
+                        $pejabat = array_combine($pejabat['idPejabat'], $pejabat['namaPejabat']);
+                        echo form_dropdown('pejabatId', $pejabat, set_value('pejabatId', $kegiatan['pejabatId']), ['class' => 'form-select']);
+
+                        ?>
+                        <div class="invalid-feedback">
+                            <?= (isset($errors['pejabatId'])) ? $errors['pejabatId'] : ''; ?>
+                        </div>
                     </div>
                 </div>
 
@@ -44,7 +53,7 @@
                     <!-- input no Surat -->
                     <label for="noSurat" class="col-sm-2 col-form-label">No Surat</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control <?= (isset($errors['noSurat'])) ? 'is-invalid' : ''; ?>" name="noSurat" value="<?= set_value('noSurat'); ?>">
+                        <input type="text" class="form-control <?= (isset($errors['noSurat'])) ? 'is-invalid' : ''; ?>" name="noSurat" value="<?= set_value('noSurat', $kegiatan['noSurat']); ?>">
                         <div class="invalid-feedback">
                             <?= (isset($errors['noSurat'])) ? $errors['noSurat'] : ''; ?>
                         </div>
@@ -55,7 +64,7 @@
                     <!-- input tanggal surat -->
                     <label for="tanggal" class="col-sm-1 pe-0 col-form-label">Tanggal Surat</label>
                     <div class="col-sm-2">
-                        <input type="text" autocomplete="off" class="form-control <?= (isset($errors['tglSurat'])) ? 'is-invalid' : ''; ?>" name="tglSurat" value="<?= set_value('tglSurat'); ?>" id="tanggal">
+                        <input type="text" autocomplete="off" class="form-control <?= (isset($errors['tglSurat'])) ? 'is-invalid' : ''; ?>" name="tglSurat" value="<?= set_value('tglSurat', date('d F Y', strtotime($kegiatan['tglSurat']))); ?>" id="tanggal">
                         <div class="invalid-feedback">
                             <?= (isset($errors['tglSurat'])) ? $errors['tglSurat'] : ''; ?>
                         </div>
@@ -66,11 +75,20 @@
                 <div class="row mb-3">
                     <label for="suratId" class="col-sm-2 col-form-label">Dasar Surat</label>
                     <div class="col-sm-2">
-                        <select class="form-select" name="suratId">
-                            <?php foreach ($dasar as $d) : ?>
-                                <option value="<?= ($d['idSurat']); ?>" <?= set_select('idSurat', $d['idSurat']); ?>><?= $d['noSurat']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <?php
+                        foreach ($dasar as $d) {
+                            $dasar['idSurat'][] = $d['idSurat'];
+                            $dasar['noSurat'][] = $d['noSurat'];
+                        }
+
+                        $dasar = array_combine($dasar['idSurat'], $dasar['noSurat']);
+                        echo form_dropdown('suratId', $dasar, set_value('suratId', $kegiatan['dasarId']), ['class' => 'form-select']);
+
+                        ?>
+                        <div class="invalid-feedback">
+                            <?= (isset($errors['suratId'])) ? $errors['suratId'] : ''; ?>
+                        </div>
+
                     </div>
                     <div class="col-sm-3"></div>
 

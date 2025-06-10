@@ -11,7 +11,6 @@ class KegiatanModel extends Model
     protected $useAutoIncrement = true;
     protected $useTimestamps    = true;
     protected $allowedFields    = [
-        'idKegiatan',
         'namaKegiatan',
         'noSurat',
         'tglSurat',

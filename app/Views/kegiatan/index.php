@@ -70,7 +70,15 @@
                             <?= date('d', strtotime($b['updated_at'])); ?>
                             <?= $bulan[intval(date('m', strtotime($b['updated_at']))) - 1] . " " . date('Y', strtotime($b['updated_at'])); ?>
                         </td>
-                        <td class="text-center"><a type="button" class="btn btn-warning" href="/kegiatan/<?= $b['idKegiatan']; ?>">Detail</a></td>
+                        <td class="text-end">
+                            <?php
+                            if ($b['filePdf'] != 'noFile.pdf') {
+                            ?>
+                                <a href="/assets/pdf/<?= $b['filePdf']; ?>" target="_blank" class="btn btn-success"><i class="bi bi-file-arrow-down"></i></a>
+                            <?php }
+                            ?>
+                            <a type="button" class="btn btn-warning" href="/kegiatan/<?= $b['idKegiatan']; ?>">Detail</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
