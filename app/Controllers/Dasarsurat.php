@@ -107,43 +107,123 @@ class Dasarsurat extends BaseController
 
     public function prosesedit($id)
     {
-        // menambahkan aturan validasi pada ID barang untuk ignore namaBarang yang sama dengan sebelumnya
-        $idSurat = 'idSurat';
-        $aturan = 'max_length[19]|is_natural_no_zero';
-        $this->dasarSuratModel->setValidationRule($idSurat, $aturan);
+        // Menambahkan aturan validasi pada ID surat (ini tidak terkait dengan upload file, jadi tetap biarkan)
+        $idSuratField = 'idSurat'; // Gunakan nama variabel yang lebih deskriptif
+        $aturanId = 'max_length[19]|is_natural_no_zero';
+        $this->dasarSuratModel->setValidationRule($idSuratField, $aturanId);
 
+        // 1. Inisialisasi variabel untuk nama file PDF yang akan disimpan ke DB
+        // Ambil nama file PDF lama dari database berdasarkan ID surat
+        $suratLama = $this->dasarSuratModel->find($id);
+        $namaFileUntukDB = $suratLama['filePdf'] ?? null; // Default null jika tidak ada file lama
 
-        $filePdf = $this->request->getFile('filePdf');  // ambil filePdf
+        // 2. Tangani Unggahan File Baru (Jika ada)
+        $filePdf = $this->request->getFile('filePdf'); // 'filePdf' adalah nama input di form HTML
 
-        // cek apakah ada gambar yang diupload
-        if ($filePdf->getError() == 4) {
-            $namaFile = 'noFile.pdf';
-        } else {
-            $namaFile = $filePdf->getRandomName();
-            $filePdf->move('assets/pdf', $namaFile); //pindahkan file ke folder upload pdf
+        // Cek apakah ada file baru yang diunggah dan valid
+        // getError() == 4 artinya UPLOAD_ERR_NO_FILE (tidak ada file diunggah)
+        if ($filePdf && $filePdf->getError() !== UPLOAD_ERR_NO_FILE) {
+            // File diunggah, sekarang validasi file ini
+
+            // Logika validasi file di controller, bukan di model.
+            $validationRules = [
+                'filePdf' => [ // Pastikan nama field ini cocok dengan input form
+                    'uploaded[filePdf]', // Pastikan file benar-benar diunggah
+                    'mime_in[filePdf,application/pdf]', // Hanya izinkan tipe MIME PDF
+                    'max_size[filePdf,2048]', // Ukuran maksimum 2MB
+                ],
+            ];
+
+            // Tambahkan pesan validasi kustom
+            $validationMessages = [
+                'filePdf' => [
+                    'uploaded' => 'Anda harus mengunggah file PDF.',
+                    'mime_in'  => 'File yang Anda unggah harus berformat PDF.',
+                    'max_size' => 'Ukuran file PDF tidak boleh melebihi 2MB.',
+                ],
+            ];
+
+            // Lakukan validasi menggunakan Validator CI4
+            if (! $this->validate($validationRules, $validationMessages)) {
+                // Jika validasi gagal, kembalikan ke form edit dengan error
+                $errors = $this->validator->getErrors();
+                $data = [
+                    'title' => 'Edit Dasar Surat',
+                    'errors' => $errors,
+                    'surat' => $suratLama // Pastikan data surat lama tetap ditampilkan
+                ];
+                return view('/dasarsurat/edit', $data);
+            }
+
+            // Jika validasi file berhasil, pindahkan file
+            $namaFileBaru = $filePdf->getRandomName(); // Menghasilkan nama unik
+            $targetPath = ROOTPATH . 'public/assets/pdf'; // Path absolut ke direktori tujuan
+
+            // Pastikan direktori tujuan ada dan dapat ditulis
+            if (!is_dir($targetPath)) {
+                // mkdir akan mengembalikan true jika berhasil, false jika gagal
+                if (!mkdir($targetPath, 0777, true)) {
+                    // Tangani error jika gagal membuat direktori
+                    $errors = ['filePdf' => 'Gagal membuat direktori unggahan.'];
+                    $data = [
+                        'title' => 'Edit Dasar Surat',
+                        'errors' => $errors,
+                        'surat' => $suratLama
+                    ];
+                    return view('/dasarsurat/edit', $data);
+                }
+            }
+
+            try {
+                $filePdf->move($targetPath, $namaFileBaru);
+
+                // Jika ada file lama yang berhasil dipindahkan, hapus file lama untuk menghemat ruang
+                if ($namaFileUntukDB && file_exists($targetPath . '/' . $namaFileUntukDB)) {
+                    unlink($targetPath . '/' . $namaFileUntukDB);
+                }
+
+                // Perbarui nama file yang akan disimpan ke database dengan nama file baru
+                $namaFileUntukDB = $namaFileBaru;
+            } catch (\Exception $e) {
+                // Tangani error jika gagal memindahkan file (misalnya karena izin)
+                $errors = ['filePdf' => 'Gagal memindahkan file: ' . $e->getMessage()];
+                $data = [
+                    'title' => 'Edit Dasar Surat',
+                    'errors' => $errors,
+                    'surat' => $suratLama
+                ];
+                return view('/dasarsurat/edit', $data);
+            }
         }
+        // Jika tidak ada file baru diunggah ($filePdf->getError() == UPLOAD_ERR_NO_FILE),
+        // $namaFileUntukDB akan tetap berisi nama file lama dari database.
 
-        // proses simpan ke database
-        if ($this->dasarSuratModel->save([
-            'idSurat' => $id,
-            'noSurat' => $this->request->getVar('noSurat'),
+        // 3. Siapkan data untuk disimpan ke database
+        $dataToSave = [
+            'idSurat'  => $id,
+            'noSurat'  => $this->request->getVar('noSurat'),
             'tglSurat' => date('Y-m-d H:i:s', strtotime($this->request->getVar('tglSurat'))),
-            'pejabat' => $this->request->getVar('pejabat'),
-            'tentang' => $this->request->getVar('tentang'),
-            'filePdf' => $namaFile
-        ]) == false) {
-            // jika gagal simpan data
+            'pejabat'  => $this->request->getVar('pejabat'),
+            'tentang'  => $this->request->getVar('tentang'),
+            'filePdf'  => $namaFileUntukDB // Gunakan nama file yang sudah diproses (baru atau lama)
+        ];
+
+        // 4. Coba simpan data ke model
+        // PENTING: Pastikan tidak ada aturan validasi file (uploaded, mime_in, dll.) di DasarsuratModel.php
+        if ($this->dasarSuratModel->save($dataToSave) === false) { // Gunakan === false untuk perbandingan yang lebih ketat
+            // jika gagal simpan data (ini akan menangkap error validasi dari model,
+            // tetapi BUKAN error file upload lagi karena sudah divalidasi dan dipindahkan sebelumnya)
             $errors = $this->dasarSuratModel->errors();
             $data = [
-                'title' => 'Tambah Dasar Surat',
+                'title' => 'Edit Dasar Surat',
                 'errors' => $errors,
-                'surat' => $this->dasarSuratModel->find($id)
+                'surat' => $suratLama // Pastikan data surat lama tetap dikirim ke view
             ];
             return view('/dasarsurat/edit', $data);
         }
 
-        // kembali ke index kegiatan
-        session()->setFlashdata('pesan', 'Data Berhasil diubah.');
+        // Jika berhasil
+        session()->setFlashdata('pesan', 'Data Dasar Surat berhasil diubah.');
         return redirect()->to('/dasarsurat');
     }
 }

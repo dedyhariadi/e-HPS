@@ -283,46 +283,130 @@ class Kegiatan extends BaseController
 
     public function prosesedit($id)
     {
-        d($this->request->getVar());
+        // Menambahkan aturan validasi pada ID kegiatan (ini tidak terkait dengan upload file, jadi tetap biarkan)
+        $idKegiatanField = 'idKegiatan'; // Gunakan nama variabel yang lebih deskriptif
+        $aturanId = 'max_length[19]|is_natural_no_zero'; // Asumsi aturan ini relevan untuk ID kegiatan
+        $this->kegiatanModel->setValidationRule($idKegiatanField, $aturanId);
 
-        // menambahkan aturan validasi pada ID barang untuk ignore namaBarang yang sama dengan sebelumnya
-        $idKegiatan = 'idKegiatan';
-        $aturan = 'max_length[19]|is_natural_no_zero';
-        $this->kegiatanModel->setValidationRule($idKegiatan, $aturan);
+        // 1. Inisialisasi variabel untuk nama file PDF yang akan disimpan ke DB
+        // Ambil data kegiatan lama dari database berdasarkan ID kegiatan
+        $kegiatanLama = $this->kegiatanModel->find($id);
+        // Default nama file untuk DB adalah nama file lama (jika ada), atau null
+        $namaFileUntukDB = $kegiatanLama['filePdf'] ?? null;
 
+        // 2. Tangani Unggahan File Baru (Jika ada)
+        $filePdf = $this->request->getFile('filePdf'); // 'filePdf' adalah nama input di form HTML
 
-        $filePdf = $this->request->getFile('filePdf');  // ambil filePdf
+        // Cek apakah ada file baru yang diunggah (error code 4 = UPLOAD_ERR_NO_FILE)
+        if ($filePdf && $filePdf->getError() !== UPLOAD_ERR_NO_FILE) {
+            // File diunggah, sekarang validasi file ini di controller
 
-        // cek apakah ada gambar yang diupload
-        if ($filePdf->getError() == 4) {
-            $namaFile = 'noFile.pdf';
-        } else {
-            $namaFile = $filePdf->getRandomName();
-            $filePdf->move('assets/pdf', $namaFile); //pindahkan file ke folder upload pdf
+            $validationRules = [
+                'filePdf' => [ // Pastikan nama field ini cocok dengan input form HTML
+                    'uploaded[filePdf]',          // Aturan: file harus diunggah
+                    'mime_in[filePdf,application/pdf]', // Aturan: tipe MIME harus PDF
+                    'max_size[filePdf,2048]',    // Aturan: ukuran maksimum 2MB
+                ],
+            ];
+
+            // Tambahkan pesan validasi kustom
+            $validationMessages = [
+                'filePdf' => [
+                    'uploaded' => 'Anda harus mengunggah file PDF.',
+                    'mime_in'  => 'File yang Anda unggah harus berformat PDF.',
+                    'max_size' => 'Ukuran file PDF tidak boleh melebihi 2MB.',
+                ],
+            ];
+
+            // Lakukan validasi menggunakan Validator CI4
+            if (! $this->validate($validationRules, $validationMessages)) {
+                // Jika validasi gagal, kembalikan ke form edit dengan error
+                $errors = $this->validator->getErrors();
+                $data = [
+                    'title'    => 'Ubah Data Kegiatan',
+                    'pejabat'  => $this->pejabatModel->findAll(), // Pastikan model Pejabat ada
+                    'dasar'    => $this->dasarModel->findAll(),   // Pastikan model Dasar ada
+                    'errors'   => $errors,
+                    'kegiatan' => $kegiatanLama // Pastikan data kegiatan lama tetap ditampilkan
+                ];
+                return view('/kegiatan/edit', $data);
+            }
+
+            // Jika validasi file berhasil, pindahkan file
+            $namaFileBaru = $filePdf->getRandomName(); // Menghasilkan nama unik
+            $targetPath = ROOTPATH . 'public/assets/pdf'; // Path absolut ke direktori tujuan
+
+            // Pastikan direktori tujuan ada dan dapat ditulis
+            if (!is_dir($targetPath)) {
+                // mkdir akan mengembalikan true jika berhasil, false jika gagal
+                if (!mkdir($targetPath, 0777, true)) {
+                    // Tangani error jika gagal membuat direktori
+                    $errors = ['filePdf' => 'Gagal membuat direktori unggahan.'];
+                    $data = [
+                        'title'    => 'Ubah Data Kegiatan',
+                        'pejabat'  => $this->pejabatModel->findAll(),
+                        'dasar'    => $this->dasarModel->findAll(),
+                        'errors'   => $errors,
+                        'kegiatan' => $kegiatanLama
+                    ];
+                    return view('/kegiatan/edit', $data);
+                }
+            }
+
+            try {
+                $filePdf->move($targetPath, $namaFileBaru);
+
+                // Jika ada file lama (bukan 'noFile.pdf' atau null), hapus file lama untuk menghemat ruang
+                if ($namaFileUntukDB && $namaFileUntukDB !== 'noFile.pdf' && file_exists($targetPath . '/' . $namaFileUntukDB)) {
+                    unlink($targetPath . '/' . $namaFileUntukDB);
+                }
+
+                // Perbarui nama file yang akan disimpan ke database dengan nama file baru
+                $namaFileUntukDB = $namaFileBaru;
+            } catch (\Exception $e) {
+                // Tangani error jika gagal memindahkan file (misalnya karena izin)
+                $errors = ['filePdf' => 'Gagal memindahkan file: ' . $e->getMessage()];
+                $data = [
+                    'title'    => 'Ubah Data Kegiatan',
+                    'pejabat'  => $this->pejabatModel->findAll(),
+                    'dasar'    => $this->dasarModel->findAll(),
+                    'errors'   => $errors,
+                    'kegiatan' => $kegiatanLama
+                ];
+                return view('/kegiatan/edit', $data);
+            }
         }
+        // Jika tidak ada file baru diunggah ($filePdf->getError() == UPLOAD_ERR_NO_FILE),
+        // $namaFileUntukDB akan tetap berisi nama file lama dari database.
+        // Jika $namaFileUntukDB awalnya null dan tidak ada upload, maka akan tetap null.
 
-        // proses simpan ke database
-        if ($this->kegiatanModel->save([
-            'idKegiatan' => $id,
+        // 3. Siapkan data untuk disimpan ke database
+        $dataToSave = [
+            'idKegiatan'   => $id,
             'namaKegiatan' => $this->request->getVar('namaKegiatan'),
-            'tglSurat' => date('Y-m-d H:i:s', strtotime($this->request->getVar('tglSurat'))),
-            'pejabatId' => $this->request->getVar('pejabatId'),
-            'suratId' => $this->request->getVar('suratId'),
-            'filePdf' => $namaFile
-        ]) == false) {
-            // jika gagal simpan data
+            'tglSurat'     => date('Y-m-d H:i:s', strtotime($this->request->getVar('tglSurat'))),
+            'pejabatId'    => $this->request->getVar('pejabatId'),
+            'suratId'      => $this->request->getVar('suratId'),
+            'filePdf'      => $namaFileUntukDB // Gunakan nama file yang sudah diproses (baru atau lama)
+        ];
+
+        // 4. Coba simpan data ke model
+        // PENTING: Pastikan tidak ada aturan validasi file (uploaded, mime_in, dll.) di KegiatanModel.php
+        if ($this->kegiatanModel->save($dataToSave) === false) { // Gunakan === false untuk perbandingan yang lebih ketat
+            // jika gagal simpan data (ini akan menangkap error validasi dari model,
+            // tetapi BUKAN error file upload lagi karena sudah divalidasi dan dipindahkan sebelumnya)
             $errors = $this->kegiatanModel->errors();
             $data = [
-                'title' => 'Ubah Data Kegiatan',
-                'pejabat' => $this->pejabatModel->findAll(),
-                'dasar' => $this->dasarModel->findAll(),
-                'errors' => $errors,
-                'kegiatan' => $this->kegiatanModel->find($id)
+                'title'    => 'Ubah Data Kegiatan',
+                'pejabat'  => $this->pejabatModel->findAll(),
+                'dasar'    => $this->dasarModel->findAll(),
+                'errors'   => $errors,
+                'kegiatan' => $kegiatanLama // Pastikan data kegiatan lama tetap dikirim ke view
             ];
             return view('/kegiatan/edit', $data);
         }
 
-        // kembali ke index kegiatan
+        // Jika berhasil
         session()->setFlashdata('pesan', 'Data Berhasil diubah.');
         return redirect()->to('/kegiatan');
     }

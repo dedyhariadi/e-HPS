@@ -22,6 +22,7 @@ class DasarSuratModel extends Model
     // Validation
     protected $validationRules = [
         'noSurat' => 'required|min_length[3]|max_length[100]|is_unique[dasarsurat.noSurat,idSurat,{idSurat}]',
+
     ];
 
     protected $validationMessages = [

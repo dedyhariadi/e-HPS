@@ -718,6 +718,7 @@
 
     <!-- menampilkan data di tabel -->
     <?php
+    
     // ... (Bagian pra-proses data barang, sama seperti sebelumnya) ...
     $columnLimit = 7;
     $displayItems = [];
