@@ -1,74 +1,53 @@
-<<<<<<< HEAD
-<table style="width: 100%;">
-    <tr>
-        <td style="width: 100px;">Nomor</td>
-        <td>: R / VI / 2025</td>
-        <td style="text-align: right;">Jakarta, ....</td>
-    </tr>
-    <tr>
-        <td>Klasifikasi</td>
-        <td>: Rahasia</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Lampiran</td>
-        <td>:</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Perihal</td>
-        <td>: Dukungan Harga Perkiraan Sendiri 23423423</td>
-        <td></td>
-    </tr>
-</table>
-=======
-<!DOCTYPE html>
-<html>
+    <!DOCTYPE html>
+    <html>
 
-<head>
-    <title>Dompdf Border Test</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            /* WAJIB! */
-            /* border-spacing: 0; */
-            /* Ini diabaikan jika border-collapse: collapse */
-        }
+    <head>
+        <title>Kegiatan</title>
+        <style>
+            body {
+                font-family: DejaVu Sans, sans-serif;
+                /* Penting untuk dukungan karakter */
+            }
 
-        td {
-            border: 1px solid black;
-            /* Border yang Anda inginkan */
-            padding: 10px;
-            /* Agar ada ruang */
-            height: 50px;
-            /* Pastikan sel punya tinggi */
-            text-align: center;
-        }
-    </style>
-</head>
+            .page-number {
+                text-align: right;
+            }
+        </style>
+    </head>
 
-<body>
+    <body>
+        <h1>Daftar Kegiatan</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Kegiatan</th>
+                    <th>Tanggal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($kegiatan as $item): ?>
+                    <tr>
+                        <td><?= $item['nama'] ?></td>
+                        <td><?= $item['tanggal'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
-    <table style="width: 80%; margin: 20px auto;">
-        <tr>
-            <td>Data 1.1</td>
-            <td>Data 1.2</td>
-            <td>Data 1.3</td>
-        </tr>
-        <tr>
-            <td>Data 2.1</td>
+        <div class="page-number">
+            Halaman
+            <script type="text/php">
+                if ( isset($pdf) ) {
+                    $pdf->page_script('
+                        $font = $fontMetrics->get_font("DejaVu Sans", "normal");
+                        $size = 9;
+                        $y = $pdf->get_height() - 35;
+                        $x = $pdf->get_width() - 15 - $fontMetrics->get_text_width("Halaman " . $PAGE_NUM . " dari " . $PAGE_COUNT . "", $font, $size);
+                        $pdf->text($x, $y, "Halaman " . $PAGE_NUM . " dari " . $PAGE_COUNT . "", $font, $size);
+                    ');
+                }
+            </script>
+        </div>
+    </body>
 
-
-        </tr>
-        <tr>
-            <td>Data 3.1</td>
-            <td>Data 3.2</td>
-            <td>Data 3.3</td>
-        </tr>
-    </table>
-
-</body>
-
-</html>
->>>>>>> a8f3af678d84a7431baa9a981243346c0f86548d
+    </html>

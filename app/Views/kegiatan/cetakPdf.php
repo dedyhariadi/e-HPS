@@ -176,13 +176,12 @@
             <td></td>
         </tr>
         <tr>
+            <td style="width: 100px; vertical-align: top;">Lampiran</td>
+            <td style="width: 10px; vertical-align: top;"></td>
             <td>
-                Lampiran
+                : Halaman {PAGE_NUM} dari<br>
+                &nbsp;&nbsp;{PAGE_COUNT}
             </td>
-            <td>
-                :
-            </td>
-            <td></td>
             <td></td>
         </tr>
 
@@ -288,16 +287,25 @@
         <tr>
             <td></td>
             <td></td>
-            <td>Tanggal</td>
-            <td style="text-align: right;"><?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></td>
+            <td colspan="2">
+                <div style="width: 100%;"> <span style="float: left;">Tanggal</span>
+                    <span style="float: right;">
+                        <?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?>
+                    </span>
+                    <div style="clear: both; height: 0;"></div>
+                </div>
+            </td>
         </tr>
-        <!-- untuk memperjauh garis bawah -->
         <tr style="line-height: 0.1;padding:0px; margin:0px;">
             <td></td>
             <td></td>
-            <td style="border-bottom: 1px solid;"></td>
-            <td style="text-align: right;border-bottom: 1px solid;"></td>
+            <td colspan="2" style="border-bottom: 1px solid;"></td>
         </tr>
+
+
+
+
+
     </table>
     <br><br>
     <div style="text-align: center;">
@@ -590,15 +598,19 @@
         <tr>
             <td></td>
             <td></td>
-            <td>Tanggal</td>
-            <td style="text-align: right;"><?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></td>
+            <td colspan="2">
+                <div style="width: 100%;"> <span style="float: left;">Tanggal</span>
+                    <span style="float: right;">
+                        <?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?>
+                    </span>
+                    <div style="clear: both; height: 0;"></div>
+                </div>
+            </td>
         </tr>
-        <!-- untuk memperjauh garis bawah -->
         <tr style="line-height: 0.1;padding:0px; margin:0px;">
             <td></td>
             <td></td>
-            <td style="border-bottom: 1px solid;"></td>
-            <td style="text-align: right;border-bottom: 1px solid;"></td>
+            <td colspan="2" style="border-bottom: 1px solid;"></td>
         </tr>
     </table>
     <br><br>
@@ -697,15 +709,19 @@
         <tr>
             <td></td>
             <td></td>
-            <td>Tanggal</td>
-            <td style="text-align: right;"><?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></td>
+            <td colspan="2">
+                <div style="width: 100%;"> <span style="float: left;">Tanggal</span>
+                    <span style="float: right;">
+                        <?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?>
+                    </span>
+                    <div style="clear: both; height: 0;"></div>
+                </div>
+            </td>
         </tr>
-        <!-- untuk memperjauh garis bawah -->
         <tr style="line-height: 0.1;padding:0px; margin:0px;">
             <td></td>
             <td></td>
-            <td style="border-bottom: 1px solid;"></td>
-            <td style="text-align: right;border-bottom: 1px solid;"></td>
+            <td colspan="2" style="border-bottom: 1px solid;"></td>
         </tr>
     </table>
     <br><br>
@@ -718,7 +734,7 @@
 
     <!-- menampilkan data di tabel -->
     <?php
-    
+
     // ... (Bagian pra-proses data barang, sama seperti sebelumnya) ...
     $columnLimit = 7;
     $displayItems = [];

@@ -211,36 +211,47 @@ class Kegiatan extends BaseController
 
     public function cetakPdf($kegiatanId = false)
     {
+        ob_start(); // Mulai output buffering
         $tandaTambah = $this->request->getVar('tandaTambah');
 
 
         $kegiatan = $this->kegiatanModel->getKegiatan($kegiatanId);
 
-        $data = [
-            'bulan' => $this->bulan,
-            'idKegiatan' => $kegiatanId,
-            'kegiatan' => $kegiatan,
-            'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
-            'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
-            'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $kegiatanId])->findAll(),
-            'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
-            'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
+        // $data = [
+        //     'bulan' => $this->bulan,
+        //     'idKegiatan' => $kegiatanId,
+        //     'kegiatan' => $kegiatan,
+        //     'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
+        //     'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
+        //     'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $kegiatanId])->findAll(),
+        //     'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
+        //     'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
 
-            'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
-            'sumber' => $this->sumberModel->findAll()
+        //     'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
+        //     'sumber' => $this->sumberModel->findAll()
+        // ];
+
+        $data['kegiatan'] = [
+            ['nama' => 'Kegiatan A', 'tanggal' => '2024-01-01'],
+            ['nama' => 'Kegiatan B', 'tanggal' => '2024-01-02'],
+            ['nama' => 'Kegiatan C', 'tanggal' => '2024-01-03'],
         ];
 
         $options = new Options();
-        $options->set('defaultFont', 'Arial');
+        $options->set('defaultFont', 'DejaVu Sans');
         $options->set('isRemoteEnabled', true);
         $options->set('ishtml5ParserEnabled', true);
         $options->set('isPhpEnabled', true);
+        $options->set('enable_php', true); // Tambahkan ini
+        $options->set('enable_html5_parser', true);
+
+
         $dompdf = new Dompdf($options);
 
 
         // return view('kegiatan/cetakPdf', $data);
 
-        $html = view('kegiatan/cetakPdf', $data);
+        $html = view('kegiatan/cetak', $data);
         ob_end_clean(); //untuk memperbaiki tulisan failed to load PDF document
 
         $dompdf->loadHtml($html);
@@ -248,23 +259,26 @@ class Kegiatan extends BaseController
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
-        // menulis jumlah lampiran pada halaman pertama PDF
-        $canvas = $dompdf->getCanvas();
-        $totalPages = $canvas->get_page_count() - 1;
-        $terbilang = trim(ucwords(terbilang($totalPages)));
-        $canvas->page_script('
-         if ($PAGE_NUM === 1) {
-                $text = "' . $terbilang . ' lembar";
-                $font = $fontMetrics->getFont("Arial", "normal");
-                $size = 11;
-                $x = 134.5;
-                $y = 141;  //satu <br> senilai 11.5
-                $this->text($x, $y, $text, $font, $size);
-                 }
-                ');
-
         $dompdf->stream('kegiatanku.pdf', array(
             'Attachment' => 0 // 0 untuk menampilkan di browser, 1 untuk mengunduh
+
+
+
+            // menulis jumlah lampiran pada halaman pertama PDF
+            // $canvas = $dompdf->getCanvas();
+            // $totalPages = $canvas->get_page_count() - 1;
+            // $terbilang = trim(ucwords(terbilang($totalPages)));
+            // $canvas->page_script('
+            //  if ($PAGE_NUM === 1) {
+            //         $text = "' . $terbilang . ' lembar";
+            //         $font = $fontMetrics->getFont("Arial", "normal");
+            //         $size = 11;
+            //         $x = 134.5;
+            //         $y = 141;  //satu <br> senilai 11.5
+            //         $this->text($x, $y, $text, $font, $size);
+            //          }
+            //         ');
+
         ));
     }
 
