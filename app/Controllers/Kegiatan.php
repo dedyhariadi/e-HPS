@@ -186,13 +186,20 @@ class Kegiatan extends BaseController
             return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
         }
 
-
         $listBarang = $this->trxGiatBarangModel->where(['kegiatanId' => $id])->findAll();
 
         // proses hapus di tabel trxReferensi
         foreach ($listBarang as $list) :
             $this->trxReferensiModel->where(['trxGiatBarangId' => $list['idTrxGiatBarang']])->delete();
         endforeach;
+
+        $targetPath = ROOTPATH . 'public/assets/pdf'; // Path absolut ke direktori tujuan
+        $namaFileUntukDB = $this->kegiatanModel->find($id)['filePdf'] ?? null; // Ambil nama file dari database
+
+        // Jika ada file lama (bukan 'noFile.pdf' atau null), hapus file lama untuk menghemat ruang
+        if ($namaFileUntukDB && $namaFileUntukDB !== 'noFile.pdf' && file_exists($targetPath . '/' . $namaFileUntukDB)) {
+            unlink($targetPath . '/' . $namaFileUntukDB);
+        }
 
         $this->trxGiatBarangModel->where(['kegiatanId' => $id])->delete(); //hapus di tabel trxGiatBarang
         $this->kegiatanModel->delete($id); //hapus di tabel Kegiatan

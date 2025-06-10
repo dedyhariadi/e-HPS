@@ -86,9 +86,18 @@ class Dasarsurat extends BaseController
     public function hapus()
     {
         // d($this->request->getVar());
-        echo "ini halaman kontroller dasarsurat method hapus";
 
-        $this->dasarSuratModel->delete($this->request->getVar('idSurat'));
+        $id = $this->request->getVar('idSurat'); // Ambil ID surat dari request
+
+        $targetPath = ROOTPATH . 'public/assets/pdf'; // Path absolut ke direktori tujuan
+        $namaFileUntukDB = $this->dasarSuratModel->find($id)['filePdf'] ?? null; // Ambil nama file dari database
+
+        // Jika ada file lama (bukan 'noFile.pdf' atau null), hapus file lama untuk menghemat ruang
+        if ($namaFileUntukDB && $namaFileUntukDB !== 'noFile.pdf' && file_exists($targetPath . '/' . $namaFileUntukDB)) {
+            unlink($targetPath . '/' . $namaFileUntukDB);
+        }
+
+        $this->dasarSuratModel->delete($id);
 
         session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
         return redirect()->to('/dasarsurat/');
