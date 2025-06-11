@@ -71,7 +71,7 @@
         }
 
         .page-number:before {
-            content: counter(page);
+            content: counter(page) " dari " counter(pages);
         }
 
         .container {
@@ -177,10 +177,11 @@
         </tr>
         <tr>
             <td style="width: 100px; vertical-align: top;">Lampiran</td>
-            <td style="width: 10px; vertical-align: top;"></td>
             <td>
-                : Halaman {PAGE_NUM} dari<br>
-                &nbsp;&nbsp;{PAGE_COUNT}
+                :
+            </td>
+            <td style="text-align: left;">
+                <?= (isset($jumlahHalaman)) ? ucwords(trim(terbilang($jumlahHalaman - 1))) : ''; ?> Lembar
             </td>
             <td></td>
         </tr>

@@ -218,79 +218,55 @@ class Kegiatan extends BaseController
 
         $kegiatan = $this->kegiatanModel->getKegiatan($kegiatanId);
 
-        // $data = [
-        //     'bulan' => $this->bulan,
-        //     'idKegiatan' => $kegiatanId,
-        //     'kegiatan' => $kegiatan,
-        //     'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
-        //     'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
-        //     'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $kegiatanId])->findAll(),
-        //     'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
-        //     'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
+        $data = [
+            'bulan' => $this->bulan,
+            'idKegiatan' => $kegiatanId,
+            'kegiatan' => $kegiatan,
+            'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
+            'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
+            'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $kegiatanId])->findAll(),
+            'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
+            'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
 
-        //     'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
-        //     'sumber' => $this->sumberModel->findAll()
-        // ];
-
-        $data['kegiatan'] = [
-            ['nama' => 'Kegiatan A', 'tanggal' => '2024-01-01'],
-            ['nama' => 'Kegiatan B', 'tanggal' => '2024-01-02'],
-            ['nama' => 'Kegiatan C', 'tanggal' => '2024-01-03'],
+            'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
+            'sumber' => $this->sumberModel->findAll()
         ];
+
+        ob_end_clean(); //untuk memperbaiki tulisan failed to load PDF document
 
         $options = new Options();
         $options->set('defaultFont', 'DejaVu Sans');
         $options->set('isRemoteEnabled', true);
         $options->set('ishtml5ParserEnabled', true);
         $options->set('isPhpEnabled', true);
-        $options->set('enable_php', true); // Tambahkan ini
-        $options->set('enable_html5_parser', true);
 
 
         $dompdf = new Dompdf($options);
-
-
-        // return view('kegiatan/cetakPdf', $data);
-
-        $html = view('kegiatan/cetak', $data);
-        ob_end_clean(); //untuk memperbaiki tulisan failed to load PDF document
+        $html = view('kegiatan/cetakPdf', $data);
 
         $dompdf->loadHtml($html);
 
         $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
+        $dompdf->render(); //untuk mendapatkan jumlah halaman pdf
 
+        $canvas = $dompdf->getCanvas();
+        $totalPages = $canvas->get_page_count(); // Mendapatkan jumlah halaman PDF
+        $data['jumlahHalaman'] = $totalPages;
+        // dd($data);
+
+        $dompdf = new Dompdf($options); // Membuat instance baru untuk menghindari error
+        $html2 = view('kegiatan/cetakPdf', $data);
+        $dompdf->loadHtml($html2);
+
+        $dompdf->render(); //render ulang untuk mengirim jumlahHalaman
         $dompdf->stream('kegiatanku.pdf', array(
             'Attachment' => 0 // 0 untuk menampilkan di browser, 1 untuk mengunduh
-
-
-
-            // menulis jumlah lampiran pada halaman pertama PDF
-            // $canvas = $dompdf->getCanvas();
-            // $totalPages = $canvas->get_page_count() - 1;
-            // $terbilang = trim(ucwords(terbilang($totalPages)));
-            // $canvas->page_script('
-            //  if ($PAGE_NUM === 1) {
-            //         $text = "' . $terbilang . ' lembar";
-            //         $font = $fontMetrics->getFont("Arial", "normal");
-            //         $size = 11;
-            //         $x = 134.5;
-            //         $y = 141;  //satu <br> senilai 11.5
-            //         $this->text($x, $y, $text, $font, $size);
-            //          }
-            //         ');
 
         ));
     }
 
     public function edit($idKegiatan = false, $errors = false)
     {
-        // $kegiatan = $this->kegiatanModel->getKegiatan($idKegiatan);
-        // jika idKegiatan tidak ditemukan, tampilkan halaman 404
-
-        // if (!$kegiatan) {
-        // throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Data Kegiatan tidak ditemukan.');
-        // }
 
         $data = [
             'title' => 'Edit Kegiatan',
