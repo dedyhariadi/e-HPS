@@ -87,3 +87,8 @@ $routes->delete('/kegiatan/(:num)', 'Kegiatan::hapus/$1');  // route ke hapus
 // edit
 $routes->get('/kegiatan/edit/(:num)', 'Kegiatan::edit/$1');
 $routes->post('/kegiatan/prosesedit/(:num)', 'Kegiatan::prosesedit/$1');
+
+
+
+// Rute yang memerlukan otentikasi
+$routes->get('/home/logout', 'Home::logout');

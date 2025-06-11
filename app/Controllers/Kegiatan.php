@@ -48,6 +48,7 @@ class Kegiatan extends BaseController
 
     public function index($keyword = false)
     {
+
         // proses pencarian
         $keyword = $this->request->getVar('keyword');
 

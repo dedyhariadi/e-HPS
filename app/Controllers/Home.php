@@ -8,4 +8,12 @@ class Home extends BaseController
     {
         return view('home');
     }
+
+    public function logout()
+    {
+        // session()->destroy();
+        $auth = service('authentication');
+        $auth->logout();
+        return redirect()->to('/login');
+    }
 }

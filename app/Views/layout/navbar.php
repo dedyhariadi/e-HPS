@@ -19,10 +19,17 @@
                  <ul class="dropdown-menu">
                      <li><a class="dropdown-item" href="/pejabat">Pejabat</a></li>
                      <li><a class="dropdown-item" href="/satuan">Satuan</a></li>
+                     <li><a class="dropdown-item" href="/dasarsurat">Dasar Surat</a></li>
                      <li>
                          <hr class="dropdown-divider">
                      </li>
-                     <li><a class="dropdown-item" href="/dasarsurat">Dasar Surat</a></li>
+                     <li><a class="dropdown-item" href="/home/logout">Logout
+                             <?php
+                                if (logged_in()) {
+                                    echo "(" . user()->username . ")";
+                                }
+                                ?>
+                         </a></li>
                  </ul>
              </li>
          </ul>
