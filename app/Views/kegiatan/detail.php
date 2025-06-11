@@ -71,8 +71,27 @@ use CodeIgniter\I18n\Time;
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
 
 
-                                    <input type="button" value="Cetak Pdf" onclick="window.open('/kegiatan/cetakPdf/<?= $kegiatan['idKegiatan']; ?>', '_blank');" class="btn btn-primary">
 
+
+                                    <?php
+                                    foreach ($trxGiatBarang as $b) :
+
+                                        $banyakReferensi = 0;
+                                        foreach ($trxReferensi as $trxR) :
+                                            if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
+                                                $cetakLink[] = $trxR['link'];
+                                                $cetakHarga[] = $trxR['harga'];
+
+                                                foreach ($sumber as $s):
+                                                    if ($s['idSumber'] == $trxR['sumberId'])
+                                                        $namaSumber[] = $s['namaSumber'];
+                                                endforeach;
+                                                $banyakReferensi++;
+                                            }
+                                        endforeach;
+                                    endforeach;
+                                    ?>
+                                    <input type="button" value="Cetak Pdf" onclick="window.open('/kegiatan/cetakPdf/<?= $kegiatan['idKegiatan']; ?>', '_blank');" class="btn btn-primary" <?= (count($trxGiatBarang) == 0 || $banyakReferensi == 0) ? "disabled" : ""; ?>>
                                 </form>
 
 
@@ -133,6 +152,7 @@ use CodeIgniter\I18n\Time;
                 <tbody class="table-group-divider">
                     <?php
                     $i = 1;
+
                     foreach ($trxGiatBarang as $b) : ?>
                         <tr>
                             <th scope="row" class="text-center"><?= $i++; ?></th>
@@ -159,6 +179,7 @@ use CodeIgniter\I18n\Time;
                             </td>
 
                             <?php
+
                             foreach ($trxReferensi as $trxR) :
                                 if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
                                     $cetakLink[] = $trxR['link'];
@@ -168,6 +189,7 @@ use CodeIgniter\I18n\Time;
                                         if ($s['idSumber'] == $trxR['sumberId'])
                                             $namaSumber[] = $s['namaSumber'];
                                     endforeach;
+                                    $banyakReferensi++;
                                 }
                             endforeach;
 
