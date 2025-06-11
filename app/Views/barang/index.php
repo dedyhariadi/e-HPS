@@ -46,7 +46,6 @@
                     <th scope="col">No</th>
                     <th scope="col">Barang</th>
                     <th scope="col">Satuan</th>
-                    <th scope="col">Jumlah Referensi</th>
                     <th scope="col">Last Updated</th>
                     <th scope="col">Aksi</th>
                 </tr>
@@ -65,14 +64,6 @@
                         <th scope="row" class="text-center"><?= $i++; ?></th>
                         <td><?= $b['namaBarang']; ?></td>
                         <td><?= $b['namaSatuan']; ?></td>
-                        <td style="text-align: center;">
-                            <?php
-                            $banyakReferensi = 0;
-                            foreach ($trxReferensi as $r) : ($b['idBarang'] == $r['barangId']) ? $banyakReferensi++ : "";
-                            endforeach;
-                            echo $banyakReferensi;
-                            ?>
-                        </td>
                         <td class="text-center"><?= date('d M Y H:m:s', strtotime($b['updated_atBarang'])); ?></td>
                         <td class="text-center"><a type="button" class="btn btn-warning" href="/barang/<?= $b['idBarang']; ?>">Detail</a></td>
                     </tr>
