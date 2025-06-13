@@ -46,8 +46,8 @@ class Barang extends BaseController
             'barang' => $barang,
             'pager' => $this->barangModel->pager,
             'currentPage' => $currentPage,
-            'tandaKeyword' => $tandaKeyword
-
+            'tandaKeyword' => $tandaKeyword,
+            'trxReferensi' => $this->referensiModel->findAll()
         ];
 
         // Load the view for the index page
