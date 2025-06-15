@@ -132,7 +132,7 @@ class Kegiatan extends BaseController
                     'kegiatanId' => $idKegiatan,
                     'barangId' => $this->request->getVar('idBarang'),
                     'kebutuhan' => $this->request->getVar('kebutuhan'),
-                    'jenis' => $this->request->getVar('jenis'),
+                    'jenis' => 'utama', // default jenis utama
                 ]) == false) {
                     // jika gagal simpan data
                     $errors = $this->trxGiatBarangModel->errors();
@@ -143,6 +143,7 @@ class Kegiatan extends BaseController
                 }
             }
         }
+
         // proses menambah referensi ke trxreferensi
         if ($tandaTambah == 2) {
             $tambahReferensi = $this->request->getVar();
@@ -180,12 +181,27 @@ class Kegiatan extends BaseController
 
     public function hapus($id)
     {
+
+
+        // proses hapus data barang
         if (!$this->request->getVar('tandaHapus')) {
             $this->trxGiatBarangModel->delete($id);
             $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
             session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
             return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
         }
+
+        // proses hapus di tabel trxReferensi
+        if ($this->request->getVar('tandaHapus') == 1) {
+            // dd($this->request->getVar());
+            $idReferensi = $this->request->getVar('idReferensi');
+            $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->where(['referensiId' => $idReferensi])->delete();
+
+            session()->setFlashdata('pesan', 'Data Referensi Berhasil dihapus.');
+            return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
+        }
+
+
 
         $listBarang = $this->trxGiatBarangModel->where(['kegiatanId' => $id])->findAll();
 

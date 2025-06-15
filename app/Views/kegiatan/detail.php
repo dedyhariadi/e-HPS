@@ -184,6 +184,7 @@ use CodeIgniter\I18n\Time;
                                 if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
                                     $cetakLink[] = $trxR['link'];
                                     $cetakHarga[] = $trxR['harga'];
+                                    $referensiId[] = $trxR['referensiId'];
 
                                     foreach ($sumber as $s):
                                         if ($s['idSumber'] == $trxR['sumberId'])
@@ -195,10 +196,24 @@ use CodeIgniter\I18n\Time;
 
                             ?>
 
-                            <td class="text-truncate" style="max-width: 150px;">
+                            <td style="max-width: 150px;">
                                 <?php
                                 if (isset($cetakLink[0])) {
-                                    echo anchor_popup($cetakLink[0], $namaSumber[0]);
+                                ?>
+                                    <span class="float-start">
+                                        <?php
+                                        echo anchor_popup($cetakLink[0], $namaSumber[0], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']);
+
+                                        ?></span>
+                                    <span class="float-end">
+                                        <?= form_open('/kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[0], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE']);
+                                        ?>
+
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin menghaus?');"><i class="bi bi-x-square-fill "></i></button>
+
+                                        <?= form_close(); ?>
+                                    </span>
+                                <?php
                                 } else {
                                 ?>
                                     <a href="" class="" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang']; ?>">add</a>
@@ -214,7 +229,18 @@ use CodeIgniter\I18n\Time;
                             <td class="text-truncate" style="max-width: 150px;">
                                 <?php
                                 if (isset($cetakLink[1])) {
-                                    echo anchor_popup($cetakLink[1], $namaSumber[1]);
+                                ?>
+                                    <span class="float-start">
+                                        <?php
+                                        echo anchor_popup($cetakLink[1], $namaSumber[1], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']);
+
+                                        ?></span>
+                                    <span class="float-end">
+                                        <?php
+                                        echo anchor_popup($cetakLink[1], '<i class="bi bi-x-square-fill "></i>', ['class' => 'text-danger text-end']);
+                                        ?>
+                                    </span>
+                                <?php
                                 } else {
                                 ?>
                                     <a href="" class="" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang']; ?>">add</a>
@@ -241,6 +267,7 @@ use CodeIgniter\I18n\Time;
                             unset($cetakLink);
                             unset($cetakHarga);
                             unset($namaSumber);
+                            unset($referensiId);
                             ?>
                             </td>
                             <td class="text-center">
@@ -295,7 +322,7 @@ use CodeIgniter\I18n\Time;
                         </div>
                     </div>
 
-                    <div class="row ms-5 mt-2">
+                    <!-- <div class="row ms-5 mt-2">
                         <label for="jenis" class="form-label col-sm-3">Jenis</label>
                         <div class="col-sm-4">
                             <select class="form-select fs-4" id="jenis" name="jenis">
@@ -304,7 +331,7 @@ use CodeIgniter\I18n\Time;
                                 <option value="3">Jasa</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row ms-5 mt-2">
                         <label for="kebutuhan" class="col-sm-3 col-form-label">Kebutuhan</label>
                         <div class="col-sm-3">
@@ -380,6 +407,7 @@ use CodeIgniter\I18n\Time;
                                                     <input type="hidden" name="trxGiatBarangId" value="<?= $b['idTrxGiatBarang']; ?>">
                                                     <input type="hidden" name="referensiId" value="<?= $r['idReferensi']; ?>">
                                                     <input type="hidden" name="idKegiatan" value="<?= $idKegiatan; ?>">
+                                                    <input type="hidden" name="indeksKe" value="">
                                                     <input type="hidden" name="tandaTambah" value="2">
                                                     <button type="submit" class="btn-btn primary"><i class="bi bi-pencil-fill"></i></button>
                                                 </form>

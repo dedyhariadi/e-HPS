@@ -24,7 +24,13 @@ class TrxReferensi extends Migration
                 'type'       => 'INT',
                 'constraint' => 11,
                 'unsigned'       => true,
-            ]
+            ],
+            'indeks' => [
+                'type'       => 'INT',
+                'constraint' => 3,
+                'unsigned'       => true,
+                'null'       => true, // Allow null for index
+            ],
         ]);
         $this->forge->addKey('idTrxReferensi', true);
         $this->forge->addForeignKey('trxGiatBarangId', 'trxGiatBarang', 'idTrxGiatBarang', 'CASCADE', 'CASCADE');

@@ -69,7 +69,7 @@ $routes->get('/dasarsurat/edit/(:num)', 'Dasarsurat::edit/$1');
 $routes->post('/dasarsurat/prosesedit/(:num)', 'Dasarsurat::prosesedit/$1');
 
 
-// kontroller kegiatan (kurang edit)
+// kontroller kegiatan
 //cetak pdf
 $routes->get('/kegiatan/cetakPdf/(:num)', 'Kegiatan::cetakPdf/$1'); // route ke cetak pdf
 
