@@ -121,7 +121,7 @@ class Kegiatan extends BaseController
 
     public function detail($idKegiatan = false)
     {
-
+        d($this->request->getVar());
         $tandaTambah = $this->request->getVar('tandaTambah');
 
         // proses menambah barang ke kegiatan
@@ -151,6 +151,7 @@ class Kegiatan extends BaseController
                 if ($this->trxReferensiModel->save([
                     'trxGiatBarangId' => $this->request->getVar('trxGiatBarangId'),
                     'referensiId' => $this->request->getVar('referensiId'),
+                    'indeks' => $this->request->getVar('indeksKe'),
                 ]) == false) {
                     // jika gagal simpan data
                     $errors = $this->trxReferensiModel->errors();
@@ -193,7 +194,6 @@ class Kegiatan extends BaseController
 
         // proses hapus di tabel trxReferensi
         if ($this->request->getVar('tandaHapus') == 1) {
-            // dd($this->request->getVar());
             $idReferensi = $this->request->getVar('idReferensi');
             $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->where(['referensiId' => $idReferensi])->delete();
 

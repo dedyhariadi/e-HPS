@@ -185,6 +185,7 @@ use CodeIgniter\I18n\Time;
                                     $cetakLink[] = $trxR['link'];
                                     $cetakHarga[] = $trxR['harga'];
                                     $referensiId[] = $trxR['referensiId'];
+                                    $indeksKe[] = $trxR['indeks'];
 
                                     foreach ($sumber as $s):
                                         if ($s['idSumber'] == $trxR['sumberId'])
@@ -198,7 +199,7 @@ use CodeIgniter\I18n\Time;
 
                             <td style="max-width: 150px;">
                                 <?php
-                                if (isset($cetakLink[0])) {
+                                if (array_search('1', $indeksKe)) {
                                 ?>
                                     <span class="float-start">
                                         <?php
@@ -216,7 +217,7 @@ use CodeIgniter\I18n\Time;
                                 <?php
                                 } else {
                                 ?>
-                                    <a href="" class="" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang']; ?>">add</a>
+                                    <a href="" class="" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r1'; ?>">add</a>
                                 <?php
                                 }
                                 ?>
@@ -228,7 +229,7 @@ use CodeIgniter\I18n\Time;
                             </td>
                             <td class="text-truncate" style="max-width: 150px;">
                                 <?php
-                                if (isset($cetakLink[1])) {
+                                if (array_search('2', $indeksKe)) {
                                 ?>
                                     <span class="float-start">
                                         <?php
@@ -243,7 +244,7 @@ use CodeIgniter\I18n\Time;
                                 <?php
                                 } else {
                                 ?>
-                                    <a href="" class="" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang']; ?>">add</a>
+                                    <a href="" class="" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r2'; ?>">add</a>
                                 <?php
                                 }
                                 ?>
@@ -360,7 +361,8 @@ use CodeIgniter\I18n\Time;
 <?php foreach ($trxGiatBarang as $b): ?>
     <!-- Modal Form Tambah Referensi Tiap Barang-->
 
-    <div class="modal fade" id="modalTambahReferensi<?= $b['idTrxGiatBarang']; ?>" tabindex="-1" aria-hidden="true">
+    <!-- modal tambah referensi 1 -->
+    <div class="modal fade" id="modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r1'; ?>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -407,7 +409,7 @@ use CodeIgniter\I18n\Time;
                                                     <input type="hidden" name="trxGiatBarangId" value="<?= $b['idTrxGiatBarang']; ?>">
                                                     <input type="hidden" name="referensiId" value="<?= $r['idReferensi']; ?>">
                                                     <input type="hidden" name="idKegiatan" value="<?= $idKegiatan; ?>">
-                                                    <input type="hidden" name="indeksKe" value="">
+                                                    <input type="hidden" name="indeksKe" value="1">
                                                     <input type="hidden" name="tandaTambah" value="2">
                                                     <button type="submit" class="btn-btn primary"><i class="bi bi-pencil-fill"></i></button>
                                                 </form>
@@ -448,6 +450,98 @@ use CodeIgniter\I18n\Time;
             </div>
         </div>
     </div>
+
+    <!-- modal tambah referensi 2 -->
+    <div class="modal fade" id="modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r2'; ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Referensi untuk
+                        <span class="text-uppercase fs-5 fw-bold">
+                            <?php
+                            foreach ($barang as $brg) :
+                                if ($b['barangId'] == $brg['idBarang']) {
+                                    $namabarang = $brg['namaBarang'];
+                                    echo $namabarang;
+                                }
+                            endforeach;
+                            ?>
+                        </span>
+
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body fs-3">
+                    <div class="row m-2 mt-3">
+                        <table class="table table-hover fs-5">
+                            <thead class="text-center">
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col"></th>
+                                    <th scope="col">Sumber</th>
+                                    <th scope="col">Link</th>
+                                    <th scope="col" colspan="2">Harga</th>
+                                    <th scope="col">Last Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $i = 1;
+                                foreach ($referensi as $r) :
+                                    if ($r['barangId'] == $b['barangId']) {
+                                ?>
+                                        <tr>
+                                            <th scope="row" class="text-center"><?= $i++; ?></th>
+                                            <td>
+                                                <form action="" method="post">
+                                                    <?= csrf_field(); ?>
+                                                    <input type="hidden" name="trxGiatBarangId" value="<?= $b['idTrxGiatBarang']; ?>">
+                                                    <input type="hidden" name="referensiId" value="<?= $r['idReferensi']; ?>">
+                                                    <input type="hidden" name="idKegiatan" value="<?= $idKegiatan; ?>">
+                                                    <input type="hidden" name="indeksKe" value="2">
+                                                    <input type="hidden" name="tandaTambah" value="2">
+                                                    <button type="submit" class="btn-btn primary"><i class="bi bi-pencil-fill"></i></button>
+                                                </form>
+                                            </td>
+                                            <td><?= $r['namaSumber']; ?> </td>
+                                            <td class="text-truncate"><?= $r['link']; ?></td>
+                                            <td class="text-end"><?= "Rp "; ?></td>
+                                            <td class="text-end"><?= number_format($r['harga'], 0, ",", "."); ?></td>
+                                            <td class="text-center"><?= date('d M Y', strtotime($r['updated_at'])); ?></td>
+
+
+                                        </tr>
+                                <?php
+                                    };
+                                endforeach;
+                                ?>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+
+                    <div class="d-inline col-sm-3 text-end">
+                        <?php
+                        session()->setFlashdata('idKegiatan', $idKegiatan);
+                        echo anchor('referensi/create/' . $b['barangId'], 'Tambah Referensi', ['class' => 'btn btn-success']);
+                        ?>
+
+                    </div>
+                    <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
 <?php endforeach; ?>
 
 <!-- akhir content -->

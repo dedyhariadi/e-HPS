@@ -11,7 +11,8 @@ class TrxReferensiModel extends Model
     protected $useAutoIncrement = true;
     protected $allowedFields    = [
         'trxGiatBarangId',
-        'referensiId'
+        'referensiId',
+        'indeks'
     ];
 
     protected $validationRules      = [];
