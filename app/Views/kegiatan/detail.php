@@ -179,7 +179,7 @@ use CodeIgniter\I18n\Time;
                             </td>
 
                             <?php
-
+                            $indeksKe[] = 0;
                             foreach ($trxReferensi as $trxR) :
                                 if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
                                     $cetakLink[] = $trxR['link'];
