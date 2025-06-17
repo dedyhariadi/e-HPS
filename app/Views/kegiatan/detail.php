@@ -214,9 +214,9 @@ use CodeIgniter\I18n\Time;
                                         <?= anchor_popup($cetakLink[$indeks], $namaSumber[$indeks], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']); ?>
                                     </span>
                                     <span class="float-end">
-                                        <?= form_open('/kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[0], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '1']); ?>
+                                        <?= form_open('/kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '1']); ?>
 
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin menghaus?');"><i class="bi bi-x-square-fill "></i></button>
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square-fill "></i></button>
 
                                         <?= form_close(); ?>
                                     </span>
@@ -252,9 +252,11 @@ use CodeIgniter\I18n\Time;
 
                                         ?></span>
                                     <span class="float-end">
-                                        <?php
-                                        echo anchor_popup($cetakLink[$indeks], '<i class="bi bi-x-square-fill "></i>', ['class' => 'text-danger text-end']);
-                                        ?>
+                                        <?= form_open('/kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '2']); ?>
+
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square-fill "></i></button>
+
+                                        <?= form_close(); ?>
                                     </span>
                                 <?php
                                 } else {
