@@ -179,14 +179,8 @@ use CodeIgniter\I18n\Time;
                             </td>
 
                             <?php
-                            unset($cetakLink);
-                            unset($cetakHarga);
-                            unset($namaSumber);
-                            unset($referensiId);
-                            unset($indeksKe);
-                            unset($hargaHitung);
-                            $Found = false;
-                            foreach ($trxReferensi as $trxR):
+
+                            foreach ($trxReferensi as $trxR) :
                                 if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
                                     $cetakLink[] = $trxR['link'];
                                     $cetakHarga[] = $trxR['harga'];
@@ -194,27 +188,27 @@ use CodeIgniter\I18n\Time;
                                     $indeksKe[] = $trxR['indeks'];
 
                                     foreach ($sumber as $s):
-                                        if ($s['idSumber'] == $trxR['sumberId']) {
+                                        if ($s['idSumber'] == $trxR['sumberId'])
                                             $namaSumber[] = $s['namaSumber'];
-                                        }
                                     endforeach;
-                                    $Found = true;
+                                    $banyakReferensi++;
                                 }
                             endforeach;
+
                             ?>
 
                             <td style="max-width: 150px;">
                                 <?php
-                                $hargaTampil = '';
-                                if ($Found && in_array('1', $indeksKe)) {
-                                    $indeks = array_search('1', $indeksKe);
-                                    $hargaTampil = $cetakHarga[$indeks];
+                                if (array_search('1', $indeksKe)) {
                                 ?>
                                     <span class="float-start">
-                                        <?= anchor_popup($cetakLink[$indeks], $namaSumber[$indeks], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']); ?>
-                                    </span>
+                                        <?php
+                                        echo anchor_popup($cetakLink[0], $namaSumber[0], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']);
+
+                                        ?></span>
                                     <span class="float-end">
-                                        <?= form_open('/kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[0], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '1']); ?>
+                                        <?= form_open('/kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[0], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE']);
+                                        ?>
 
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin menghaus?');"><i class="bi bi-x-square-fill "></i></button>
 
@@ -230,30 +224,21 @@ use CodeIgniter\I18n\Time;
 
                             </td>
                             <td class="text-end">
-
-                                <?php
-                                if ($hargaTampil !== '') {
-                                    $hargaHitung[] = $hargaTampil;
-                                }
-                                ?>
-                                <?= ($hargaTampil !== '') ? number_format($hargaTampil, 0, ",", ".") : ""; ?>
+                                <?= (isset($cetakHarga[0])) ? number_format($cetakHarga[0], 0, ",", ".") : ""; ?>
 
                             </td>
                             <td class="text-truncate" style="max-width: 150px;">
                                 <?php
-                                $hargaTampil = '';
-                                if ($Found && in_array('2', $indeksKe)) {
-                                    $indeks = array_search('2', $indeksKe);
-                                    $hargaTampil = $cetakHarga[$indeks];
+                                if (array_search('2', $indeksKe)) {
                                 ?>
                                     <span class="float-start">
                                         <?php
-                                        echo anchor_popup($cetakLink[$indeks], $namaSumber[$indeks], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']);
+                                        echo anchor_popup($cetakLink[1], $namaSumber[1], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']);
 
                                         ?></span>
                                     <span class="float-end">
                                         <?php
-                                        echo anchor_popup($cetakLink[$indeks], '<i class="bi bi-x-square-fill "></i>', ['class' => 'text-danger text-end']);
+                                        echo anchor_popup($cetakLink[1], '<i class="bi bi-x-square-fill "></i>', ['class' => 'text-danger text-end']);
                                         ?>
                                     </span>
                                 <?php
@@ -265,13 +250,7 @@ use CodeIgniter\I18n\Time;
                                 ?>
                             </td>
                             <td class="text-end">
-                                <?php
-                                if ($hargaTampil !== '') {
-                                    $hargaHitung[] = $hargaTampil;
-                                }
-                                ?>
-                                <?= ($hargaTampil !== '') ? number_format($hargaTampil, 0, ",", ".") : ""; ?>
-
+                                <?= (isset($cetakHarga[1])) ? number_format($cetakHarga[1], 0, ",", ".") : ""; ?>
                             <td class="text-end">
                                 <?php
                                 echo "Rp ";
@@ -279,14 +258,19 @@ use CodeIgniter\I18n\Time;
                             </td>
                             <td class="text-end">
                                 <?php
-                                if (isset($hargaHitung) && count($hargaHitung) > 0) {
-                                    $cetakAverage = array_sum($hargaHitung) / count($hargaHitung);
+                                if (isset($cetakHarga)) {
+                                    $cetakAverage = array_sum($cetakHarga) / count($cetakHarga);
                                     echo number_format($cetakAverage, 0, ",", ".");
                                 }
                                 ?>
                             </td>
-
-
+                            <?php
+                            unset($cetakLink);
+                            unset($cetakHarga);
+                            unset($namaSumber);
+                            unset($referensiId);
+                            ?>
+                            </td>
                             <td class="text-center">
                                 <form action="/kegiatan/<?= $b['idTrxGiatBarang']; ?>" method="post" class="d-inline">
                                     <?= csrf_field(); ?>
@@ -296,15 +280,7 @@ use CodeIgniter\I18n\Time;
                                 </form>
                             </td>
                         </tr>
-                    <?php
-                        unset($cetakLink);
-                        unset($cetakHarga);
-                        unset($namaSumber);
-                        unset($referensiId);
-                        unset($indeksKe);
-                        unset($hargaHitung);
-                    endforeach;
-                    ?>
+                    <?php endforeach; ?>
 
                 </tbody>
             </table>
