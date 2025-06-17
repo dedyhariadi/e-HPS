@@ -195,7 +195,8 @@ class Kegiatan extends BaseController
         // proses hapus di tabel trxReferensi
         if ($this->request->getVar('tandaHapus') == 1) {
             $idReferensi = $this->request->getVar('idReferensi');
-            $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->where(['referensiId' => $idReferensi])->delete();
+            $indeksKe = $this->request->getVar('indeksKe');
+            $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->where(['referensiId' => $idReferensi])->where(['indeks' => $indeksKe])->delete();
 
             session()->setFlashdata('pesan', 'Data Referensi Berhasil dihapus.');
             return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
