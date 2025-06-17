@@ -216,7 +216,7 @@ use CodeIgniter\I18n\Time;
                                     <span class="float-end">
                                         <?= form_open('/kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '1']); ?>
 
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square-fill "></i></button>
+                                        <button type="submit" class="btn btn-outline-danger border-0" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square "></i></button>
 
                                         <?= form_close(); ?>
                                     </span>
@@ -254,7 +254,7 @@ use CodeIgniter\I18n\Time;
                                     <span class="float-end">
                                         <?= form_open('/kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '2']); ?>
 
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square-fill "></i></button>
+                                        <button type="submit" class="btn btn-outline-danger border-0" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square "></i></button>
 
                                         <?= form_close(); ?>
                                     </span>
