@@ -223,7 +223,9 @@ use CodeIgniter\I18n\Time;
                                 <?php
                                 } else {
                                 ?>
-                                    <a href="" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r1'; ?>">add</a>
+                                    <span class="float-end">
+                                        <a href="" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r1'; ?>">add</a>
+                                    </span>
                                 <?php
                                 }
                                 ?>
@@ -261,7 +263,11 @@ use CodeIgniter\I18n\Time;
                                 <?php
                                 } else {
                                 ?>
-                                    <a href="" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r2'; ?>">add</a>
+                                    <span class="float-end">
+                                        <a href="" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                                            data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r2'; ?>">add
+                                        </a>
+                                    </span>
                                 <?php
                                 }
                                 ?>
