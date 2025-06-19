@@ -33,8 +33,8 @@ class TrxReferensi extends Migration
             ],
         ]);
         $this->forge->addKey('idTrxReferensi', true);
-        $this->forge->addForeignKey('trxGiatBarangId', 'trxGiatBarang', 'idTrxGiatBarang', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('referensiId', 'referensi', 'idReferensi', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('trxGiatBarangId', 'trxGiatBarang', 'idTrxGiatBarang', 'CASCADE', 'RESTRICT');
+        $this->forge->addForeignKey('referensiId', 'referensi', 'idReferensi', 'CASCADE', 'RESTRICT');
         $this->forge->createTable('trxReferensi');
     }
 

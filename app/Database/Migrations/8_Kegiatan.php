@@ -54,8 +54,8 @@ class Kegiatan extends Migration
 
         ]);
         $this->forge->addKey('idKegiatan', true);
-        $this->forge->addForeignKey('pejabatId', 'pejabat', 'idPejabat', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('dasarId', 'dasarsurat', 'idSurat', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('pejabatId', 'pejabat', 'idPejabat', 'CASCADE', 'RESTRICT');
+        $this->forge->addForeignKey('dasarId', 'dasarsurat', 'idSurat', 'CASCADE', 'RESTRICT');
         $this->forge->createTable('kegiatan');
     }
 

@@ -21,7 +21,7 @@ class Pejabat extends Migration
             ],
             'pangkatId' => [
                 'type'           => 'INT',
-                'constraint'     => 11,
+                'constraint'     => 5,
                 'unsigned'       => true,
             ],
             'NRP' => [
@@ -43,6 +43,8 @@ class Pejabat extends Migration
 
         ]);
         $this->forge->addKey('idPejabat', true);
+        $this->forge->addForeignKey('pangkatId', 'pangkat', 'idPangkat', 'CASCADE', 'RESTRICT');
+        $this->forge->addForeignKey('dasarId', 'dasarsurat', 'idSurat', 'CASCADE', 'RESTRICT');
         $this->forge->createTable('pejabat');
     }
 

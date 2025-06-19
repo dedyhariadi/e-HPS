@@ -4,27 +4,18 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Referensi extends Migration
+class TrxGiatBarang extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'idReferensi' => [
+            'idTrxGiatBarang' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'sumberId' => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => true,
-            ],
-            'link' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 255,
-            ],
-            'harga' => [
+            'kegiatanId' => [
                 'type'       => 'INT',
                 'constraint' => 11,
                 'unsigned'       => true,
@@ -33,6 +24,14 @@ class Referensi extends Migration
                 'type'       => 'INT',
                 'constraint' => 11,
                 'unsigned'       => true,
+            ],
+            'kebutuhan' => [
+                'type'       => 'INT',
+                'constraint' => 11,
+            ],
+            'jenis' => [
+                'type'       => 'ENUM',
+                'constraint' => ['utama', 'pendukung', 'jasa'],
             ],
             'created_at' => [
                 'type'       => 'DATETIME',
@@ -44,14 +43,16 @@ class Referensi extends Migration
             ],
 
         ]);
-        $this->forge->addKey('idReferensi', true);
-        $this->forge->addForeignKey('barangId', 'barang', 'idBarang', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('referensi');
+        $this->forge->addKey('idTrxGiatBarang', true);
+        $this->forge->addForeignKey('kegiatanId', 'kegiatan', 'idKegiatan', 'CASCADE', 'RESTRICT');
+        $this->forge->addForeignKey('barangId', 'barang', 'idBarang', 'CASCADE', 'RESTRICT');
+        $this->forge->createTable('trxGiatBarang');
     }
 
     public function down()
     {
-        $this->forge->dropForeignKey('referensi', 'referensi_barangId_foreign');
-        $this->forge->dropTable('referensi');
+        $this->forge->dropForeignKey('trxGiatBarang', 'trxGiatBarang_kegiatanId_foreign');
+        $this->forge->dropForeignKey('trxGiatBarang', 'trxGiatBarang_barangId_foreign');
+        $this->forge->dropTable('trxGiatBarang');
     }
 }
