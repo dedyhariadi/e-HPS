@@ -25,7 +25,7 @@ class Pejabat extends BaseController
         if ($keyword) {
             $pejabat = $this->pejabatModel->search($keyword);
         } else {
-            $pejabat = $this->pejabatModel->join('pangkat', 'pangkat.idPangkat = pejabat.pangkatId')->orderBy('updated_at', 'DESC')->findAll();
+            $pejabat = $this->pejabatModel->join('pangkat', 'pangkat.idPangkat = pejabat.pangkatId')->orderBy('pejabat.updated_at', 'DESC')->findAll();
         }
 
         $data = [
