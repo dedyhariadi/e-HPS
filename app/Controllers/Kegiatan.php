@@ -17,6 +17,7 @@ use App\Models\TrxReferensModel;
 use \Dompdf\Dompdf;
 use \Dompdf\Options;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 class Kegiatan extends BaseController
 {
@@ -184,8 +185,36 @@ class Kegiatan extends BaseController
     {
 
 
+
+
+
+        try {
+            // Logika untuk menghapus pejabat (yang mungkin akan memicu error)
+            $this->pejabatModel->delete($pejabatId);
+
+            // Jika berhasil
+            return redirect()->to('/daftar-pejabat')->with('success', 'Pejabat berhasil dihapus.');
+        } catch (DatabaseException $e) {
+            // Tangkap exception spesifik untuk foreign key constraint
+            if (strpos($e->getMessage(), '1451') !== false || strpos($e->getMessage(), 'foreign key constraint fails') !== false) {
+                return redirect()->to('/daftar-pejabat')->with('error', 'Tidak dapat menghapus pejabat ini karena masih ada kegiatan yang terkait dengannya. Harap hapus kegiatan terkait terlebih dahulu.');
+            } else {
+                // Tangani error database lainnya
+                return redirect()->to('/daftar-pejabat')->with('error', 'Terjadi kesalahan database: ' . $e->getMessage());
+            }
+        } catch (\Exception $e) {
+            // Tangani exception umum lainnya
+            return redirect()->to('/daftar-pejabat')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+
+
+
+
+
+
         // proses hapus data barang
         if (!$this->request->getVar('tandaHapus')) {
+            try {}
             $this->trxGiatBarangModel->delete($id);
             $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
             session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
