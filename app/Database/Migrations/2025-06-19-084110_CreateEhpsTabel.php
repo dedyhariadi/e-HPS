@@ -192,6 +192,20 @@ class CreateEhpsTabel extends Migration
 
         $this->forge->createTable('dasarSurat', true);
 
+        // Insert initial data into dasarSurat table
+        $dataDasarSurat = [
+            [
+                'noSurat' => 'B/782/IV/2024',
+                'tglSurat' => date('Y-m-d H:i:s'),
+                'tentang' => 'Permohonan dukungan harga perkiraan sendiri (HPS) dan Spesifikasi Teknis Pemeliharaan Amunisi Tidak Layak Pakai dengan Pengecoran Arsenal',
+                'pejabat' => 'Pejabat Pengadaan Barang/Jasa Dissenlekal',
+                'filePdf' => 'noFile.pdf',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]
+        ];
+        $this->db->table('dasarSurat')->insertBatch($dataDasarSurat);
+
         //akhir dasar surat
 
 
@@ -227,6 +241,21 @@ class CreateEhpsTabel extends Migration
         $this->forge->addKey('idPejabat', true);
         $this->forge->addForeignKey('pangkatId', 'pangkat', 'idPangkat', 'CASCADE', 'RESTRICT');
         $this->forge->createTable('pejabat', true);
+
+        $dataPejabat = [
+            [
+                'namaPejabat' => 'Kade Jayus, S.T.,M.Tr.Opsla.',
+                'pangkatId' => 3, // Assuming this is the ID for "Laksamana Pertama TNI"
+                'NRP' => '16613/P',
+                'jabatan' => 'Kabagren',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]
+
+        ];
+        $this->db->table('pejabat')->insertBatch($dataPejabat);
+
+
 
         // akhir pejabat
 
