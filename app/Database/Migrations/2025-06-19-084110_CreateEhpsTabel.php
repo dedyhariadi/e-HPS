@@ -16,7 +16,7 @@ class CreateEhpsTabel extends Migration
             'pangkat' => ['type' => 'VARCHAR', 'constraint' => '100'],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+
         ]);
 
         $this->forge->addKey('idPangkat', true);
@@ -26,10 +26,27 @@ class CreateEhpsTabel extends Migration
 
         // Insert initial data into pangkat table
         $data = [
-            ['pangkat' => 'Laksamana Pertama TNI'],
-            ['pangkat' => 'Kolonel Laut (E)'],
-            ['pangkat' => 'Letkol Laut (E)'],
-            ['pangkat' => 'Mayor Laut (E)'],
+            [
+                'pangkat' => 'Laksamana Pertama TNI',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'pangkat' => 'Kolonel Laut (E)',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'pangkat' => 'Letkol Laut (E)',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'pangkat' => 'Mayor Laut (E)',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+
         ];
         $this->db->table('pangkat')->insertBatch($data);
         //akhir pangkat table
@@ -41,7 +58,7 @@ class CreateEhpsTabel extends Migration
             'namaSumber' => ['type' => 'VARCHAR', 'constraint' => '100'],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true]
+
         ]);
 
         $this->forge->addKey('idSumber', true);
@@ -49,11 +66,31 @@ class CreateEhpsTabel extends Migration
         $this->forge->createTable('sumber', true);
         // Insert initial data into sumber table
         $dataSumber = [
-            ['namaSumber' => 'Shopee'],
-            ['namaSumber' => 'Tokopedia'],
-            ['namaSumber' => 'Lazada'],
-            ['namaSumber' => 'Monotaro'],
-            ['namaSumber' => 'Giat Sebelumnya']
+            [
+                'namaSumber' => 'Shopee',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSumber' => 'Tokopedia',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSumber' => 'Lazada',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSumber' => 'Monotaro',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSumber' => 'Giat Sebelumnya',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]
 
         ];
         $this->db->table('sumber')->insertBatch($dataSumber);
@@ -65,32 +102,78 @@ class CreateEhpsTabel extends Migration
             'namaSatuan' => ['type' => 'VARCHAR', 'constraint' => '100'],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true]
+
         ]);
         $this->forge->addKey('idSatuan', true);
         $this->forge->createTable('satuan', true);
 
         // Insert initial data into satuan table
-        // $dataSatuan = [
-        //     ['namaSatuan' => 'Unit'],
-        //     ['namaSatuan' => 'Pcs'],
-        //     ['namaSatuan' => 'Set'],
-        //     ['namaSatuan' => 'Lembar'],
-        //     ['namaSatuan' => 'Buah'],
-        //     ['namaSatuan' => 'Kg'],
-        //     ['namaSatuan' => 'Meter'],
-        //     ['namaSatuan' => 'Liter'],
-        //     ['namaSatuan' => 'Koli'],
-        //     ['namaSatuan' => 'Dus'],
-        //     ['namaSatuan' => 'Box'],
-        //     ['namaSatuan' => 'Paket'],
-        //     ['namaSatuan' => 'Roll'],
-        //     ['namaSatuan' => 'Kantong'],
-        //     ['namaSatuan' => 'Kepala'],
-        //     ['namaSatuan]' => 'm3']
-        // ];
+        $dataSatuan = [
+            [
+                'namaSatuan' => 'Unit',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSatuan' => 'Pcs',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSatuan' => 'Set',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSatuan' => 'Lembar',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSatuan' => 'Buah',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSatuan' => 'Kg',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSatuan' => 'Meter',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSatuan' => 'Liter',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSatuan' => 'Koli',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSatuan' => 'Dus',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSatuan' => 'Box',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'namaSatuan' => 'm3',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
 
-        // $this->db->table('satuan')->insertBatch($dataSatuan);
+        ];
+
+        $this->db->table('satuan')->insertBatch($dataSatuan);
+
         // akhir satuan tabel
 
         //awal dasar surat
@@ -103,7 +186,7 @@ class CreateEhpsTabel extends Migration
             'filePdf' => ['type' => 'VARCHAR', 'constraint' => '255'],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+
         ]);
         $this->forge->addKey('idSurat', true);
 
@@ -120,7 +203,7 @@ class CreateEhpsTabel extends Migration
             'satuanId' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+
         ]);
         $this->forge->addKey('idBarang', true);
         $this->forge->addForeignKey('satuanId', 'satuan', 'idSatuan', 'CASCADE', 'RESTRICT');
@@ -139,7 +222,7 @@ class CreateEhpsTabel extends Migration
             'jabatan' => ['type' => 'VARCHAR', 'constraint' => '255'],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+
         ]);
         $this->forge->addKey('idPejabat', true);
         $this->forge->addForeignKey('pangkatId', 'pangkat', 'idPangkat', 'CASCADE', 'RESTRICT');
@@ -160,7 +243,7 @@ class CreateEhpsTabel extends Migration
             'filePdf' => ['type' => 'VARCHAR', 'constraint' => '255', 'null' => true],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+
         ]);
         $this->forge->addKey('idKegiatan', true);
         $this->forge->addForeignKey('pejabatId', 'pejabat', 'idPejabat', 'CASCADE', 'RESTRICT');
@@ -175,14 +258,18 @@ class CreateEhpsTabel extends Migration
 
         $this->forge->addField([
             'idReferensi' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
-            'namaReferensi' => ['type' => 'VARCHAR', 'constraint' => '255'],
+            'link' => ['type' => 'VARCHAR', 'constraint' => '255'],
+            'harga' => ['type' => 'INT', 'constraint' => '11', 'unsigned' => true, 'null' => true],
+            'barangId' => ['type' => 'INT', 'constraint' => '11', 'unsigned' => true],
+
             'sumberId' => ['type' => 'INT', 'constraint' => 5, 'unsigned' => true],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+
         ]);
         $this->forge->addKey('idReferensi', true);
         $this->forge->addForeignKey('sumberId', 'sumber', 'idSumber', 'CASCADE', 'RESTRICT');
+        $this->forge->addForeignKey('barangId', 'barang', 'idBarang', 'CASCADE', 'RESTRICT');
         $this->forge->createTable('referensi', true);
         // akhir referensi
 
@@ -195,7 +282,7 @@ class CreateEhpsTabel extends Migration
             'jenis' => ['type' => 'ENUM', 'constraint' => ['utama', 'pendukung', 'jasa'], 'default' => 'utama'],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+
         ]);
 
         $this->forge->addKey('idTrxGiatBarang', true);
@@ -213,7 +300,7 @@ class CreateEhpsTabel extends Migration
             'indeks' => ['type' => 'INT', 'constraint' => 3, 'unsigned' => true, 'null' => true], // Allow null for index
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+
         ]);
         $this->forge->addKey('idTrxReferensi', true);
         $this->forge->addForeignKey('trxGiatBarangId', 'trxGiatBarang', 'idTrxGiatBarang', 'CASCADE', 'RESTRICT');
@@ -228,15 +315,7 @@ class CreateEhpsTabel extends Migration
 
         if ($this->db->DBDriver !== 'SQLite3') {
             // Drop foreign key constraints first
-            $this->forge->dropForeignKey('trxReferensi', 'trxReferensi_trxGiatBarangId_foreign');
-            $this->forge->dropForeignKey('trxReferensi', 'trxReferensi_referensiId_foreign');
-            $this->forge->dropForeignKey('trxGiatBarang', 'trxGiatBarang_kegiatanId_foreign');
-            $this->forge->dropForeignKey('trxGiatBarang', 'trxGiatBarang_barangId_foreign');
-            $this->forge->dropForeignKey('referensi', 'referensi_sumberId_foreign');
-            $this->forge->dropForeignKey('pejabat', 'pejabat_pangkatId_foreign');
-            $this->forge->dropForeignKey('kegiatan', 'kegiatan_pejabatId_foreign');
-            $this->forge->dropForeignKey('kegiatan', 'kegiatan_dasarId_foreign');
-            $this->forge->dropForeignKey('barang', 'barang_satuanId_foreign');
+
         }
 
         // SQLite does not support foreign key constraints, so we need to drop tables in reverse order
@@ -249,5 +328,6 @@ class CreateEhpsTabel extends Migration
         $this->forge->dropTable('dasarSurat', true);
         $this->forge->dropTable('sumber', true);
         $this->forge->dropTable('pangkat', true);
+        $this->forge->dropTable('satuan', true);
     }
 }

@@ -10,6 +10,7 @@ class KegiatanModel extends Model
     protected $primaryKey       = 'idKegiatan';
     protected $useAutoIncrement = true;
     protected $useTimestamps    = true;
+    
     protected $allowedFields    = [
         'namaKegiatan',
         'noSurat',

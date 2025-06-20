@@ -10,6 +10,7 @@ class DasarSuratModel extends Model
     protected $primaryKey       = 'idSurat';
     protected $useTimestamps = true;
     protected $useAutoIncrement = true;
+    
     protected $allowedFields    = [
         'noSurat',
         'tglSurat',

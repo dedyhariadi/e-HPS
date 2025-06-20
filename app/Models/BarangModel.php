@@ -10,6 +10,8 @@ class BarangModel extends Model
     protected $primaryKey       = 'idBarang';
     protected $useAutoIncrement = true;
     protected $useTimestamps = true;
+    
+
 
     protected $allowedFields    = [
         'idBarang',
