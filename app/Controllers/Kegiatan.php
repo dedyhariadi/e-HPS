@@ -214,7 +214,16 @@ class Kegiatan extends BaseController
 
         // proses hapus data barang
         if (!$this->request->getVar('tandaHapus')) {
-            try {}
+            try {
+                $id = $this->request->getVar('idTrxGiatBarang');
+            } catch (\Exception $e) {
+                // Tangani error jika idTrxGiatBarang tidak ditemukan
+                session()->setFlashdata('error', 'ID Barang tidak ditemukan.');
+                return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
+            }
+
+            // Proses hapus di tabel trxGiatBarang
+            
             $this->trxGiatBarangModel->delete($id);
             $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
             session()->setFlashdata('pesan', 'Data Berhasil dihapus.');

@@ -244,8 +244,8 @@ class CreateEhpsTabel extends Migration
 
         $dataPejabat = [
             [
-                'namaPejabat' => 'Kade Jayus, S.T.,M.Tr.Opsla.',
-                'pangkatId' => 3, // Assuming this is the ID for "Laksamana Pertama TNI"
+                'namaPejabat' => 'Kade Jayus, S.T., M.Tr.Opsla.',
+                'pangkatId' => 3, // Assuming this is the ID for "Letkol Laut (E)"
                 'NRP' => '16613/P',
                 'jabatan' => 'Kabagren',
                 'created_at' => date('Y-m-d H:i:s'),
