@@ -122,7 +122,6 @@ class Kegiatan extends BaseController
 
     public function detail($idKegiatan = false)
     {
-        d($this->request->getVar());
         $tandaTambah = $this->request->getVar('tandaTambah');
 
         // proses menambah barang ke kegiatan
