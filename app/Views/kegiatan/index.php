@@ -49,7 +49,7 @@
                     <th scope="col">Tanggal Surat</th>
                     <th scope="col">Pejabat</th>
                     <th scope="col">Last Updated</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col">File</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -59,7 +59,10 @@
                 foreach ($kegiatan as $b) : ?>
                     <tr>
                         <th scope="row" class="text-center"><?= $i++; ?></th>
-                        <td style="width: 600px;"><?= $b['namaKegiatan']; ?></td>
+                        <td style="width: 600px;">
+                            <a class="link-body-emphasis link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover" href="/kegiatan/<?= $b['idKegiatan']; ?>"><?= $b['namaKegiatan']; ?></a>
+
+                        </td>
                         <td><?= $b['noSurat']; ?></td>
                         <td class="text-left">
                             <?= date('d', strtotime($b['tglSurat'])); ?>
@@ -75,9 +78,10 @@
                             if ($b['filePdf'] != 'noFile.pdf') {
                             ?>
                                 <a href="/assets/pdf/<?= $b['filePdf']; ?>" target="_blank" class="btn btn-success"><i class="bi bi-file-arrow-down"></i></a>
-                            <?php }
-                            ?>
-                            <a type="button" class="btn btn-warning" href="/kegiatan/<?= $b['idKegiatan']; ?>">Detail</a>
+                            <?php } else { ?>
+                                <a href="#" class="btn btn-secondary disabled"><i class="bi bi-file-arrow-down"></i></a>
+                            <?php } ?>
+
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -38,6 +38,15 @@
             </div>
 
         <?php endif; ?>
+
+        <?php if (session()->getFlashdata('error')) : ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-bookmarks-fill"></i>
+                <?= session()->getFlashdata('error'); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+        <?php endif; ?>
         <!-- akhir alert -->
 
         <table class="table table-hover" name="barang">

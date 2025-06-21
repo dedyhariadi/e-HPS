@@ -102,9 +102,18 @@ class Satuan extends BaseController
     public function hapus($id)
     {
 
-        $this->satuanModel->delete($id);
-
-        session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        try {
+            $this->satuanModel->delete($id);
+            session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        } catch (\Exception $e) {
+            // jika terjadi error saat menghapus data
+            if ($e->getCode() == 1451) {
+                session()->setFlashdata('error', 'Data tidak dapat dihapus karena masih digunakan pada barang.');
+            } else {
+                session()->setFlashdata('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
+            } ///
+        }
+        // d($e, $id);
         return redirect()->to('/satuan');
     }
 }

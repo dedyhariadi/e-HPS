@@ -97,9 +97,18 @@ class Dasarsurat extends BaseController
             unlink($targetPath . '/' . $namaFileUntukDB);
         }
 
-        $this->dasarSuratModel->delete($id);
 
-        session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        try {
+            $this->dasarSuratModel->delete($id);
+            session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        } catch (\Exception $e) {
+            if ($e->getCode() == 1451) {
+                session()->setFlashdata('error', 'Gagal menghapus data: Data ini sedang digunakan di tempat lain.');
+            } else {
+                // Tangani error lainnya
+                session()->setFlashdata('error', 'Gagal menghapus data: ' . $e->getMessage());
+            }
+        }
         return redirect()->to('/dasarsurat/');
     }
 

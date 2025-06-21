@@ -71,9 +71,18 @@ class Pejabat extends BaseController
 
     public function hapus($id)
     {
-        $this->pejabatModel->delete($id);
 
-        session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        try {
+            $this->pejabatModel->delete($id);
+            session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, misalnya data tidak ditemukan
+            if ($e->getCode() == 1451) {
+                session()->setFlashdata('error', 'Data pejabat tidak dapat dihapus karena masih digunakan di kegiatan.');
+            } else {
+                session()->setFlashdata('error', 'Terjadi kesalahan saat menghapus data pejabat.');
+            }
+        }
         return redirect()->to('/pejabat/');
     }
 

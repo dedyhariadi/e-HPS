@@ -38,6 +38,16 @@
             </div>
 
         <?php endif; ?>
+        <?php if (session()->getFlashdata('error')) : ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-bookmarks-fill"></i>
+                <?= session()->getFlashdata('error'); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+        <?php endif; ?>
+
+
         <!-- akhir alert -->
 
         <table class="table table-hover" name="satuan">
@@ -62,8 +72,8 @@
                                 <?= csrf_field(); ?>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
-
-                                <a href="/satuan/edit/<?= $p['idSatuan']; ?>" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
+                            </form>
+                            <a href="/satuan/edit/<?= $p['idSatuan']; ?>" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -162,10 +162,20 @@ class Barang extends BaseController
             unlink('assets/images/' . $namaFile);
         }
 
-        $this->barangModel->delete($id);
-        session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+        try {
+            $this->barangModel->delete($id);
+            session()->setFlashdata('pesan', 'Data barang Berhasil dihapus.');
+        } catch (\Exception $e) {
+
+            if ($e->getCode() == 1451) {
+                session()->setFlashdata('error', 'Data tidak dapat dihapus karena masih digunakan di kegiatan lain.');
+            } else {
+                session()->setFlashdata('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
+            }
+        }
         return redirect()->to('/barang');
     }
+
 
     public function form_update($id, $errors = false)
     {
