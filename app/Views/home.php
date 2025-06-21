@@ -6,7 +6,7 @@
 
 <!-- awal jumbotron -->
 <section class="jumbotron text-center">
-    <img src="/assets/images/e-siap.png" alt="e-Harga Perkiraan Sendiri" width="250" class="rounded-circle mt-1">
+    <img src="/assets/images/e-siap.png" alt="e-Harga Perkiraan Sendiri" width="350" class="rounded-circle mt-1">
     <h1 class="display-1 mt-4 fw-bolder">e-Siap</h1>
     <p class="lead fs-3"> Arsenal - Dissenlekal</p>
 
