@@ -40,16 +40,16 @@
         <?php endif; ?>
         <!-- akhir alert -->
 
-        <table class="table table-hover" name="barang">
+        <table class="table table-hover" name="barang" width="100%">
             <thead class="text-center fs-5">
                 <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Nama Kegiatan</th>
-                    <th scope="col">No. Surat</th>
-                    <th scope="col">Tanggal Surat</th>
-                    <th scope="col">Pejabat</th>
-                    <th scope="col">Last Updated</th>
-                    <th scope="col ">Aksi</th>
+                    <th scope="col" width="10%">No</th>
+                    <th scope="col" width="25%">Nama Kegiatan</th>
+                    <th scope="col" width="15%">No. Surat</th>
+                    <th scope="col" width="10%">Tanggal Surat</th>
+                    <th scope="col" width="15%">Pejabat</th>
+                    <th scope="col" width="10%">Last Updated</th>
+                    <th scope="col" width="10%">Aksi</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">

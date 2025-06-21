@@ -103,7 +103,7 @@ class Dasarsurat extends BaseController
             session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
         } catch (\Exception $e) {
             if ($e->getCode() == 1451) {
-                session()->setFlashdata('error', 'Gagal menghapus data: Data ini sedang digunakan di tempat lain.');
+                session()->setFlashdata('error', 'Gagal menghapus data: Dasar surat ini sedang digunakan di kegiatan.');
             } else {
                 // Tangani error lainnya
                 session()->setFlashdata('error', 'Gagal menghapus data: ' . $e->getMessage());
