@@ -6,9 +6,9 @@
 
 <!-- awal jumbotron -->
 <section class="jumbotron text-center">
-    <img src="/assets/images/logo2.png" alt="e-Harga Perkiraan Sendiri" width="250" class="rounded-circle mt-1">
-    <h1 class="display-1 mt-4">Arsenal</h1>
-    <p class="lead fs-4"> Simple &nbsp;&nbsp;&&nbsp;&nbsp; Effortless</p>
+    <img src="/assets/images/e-siap.png" alt="e-Harga Perkiraan Sendiri" width="250" class="rounded-circle mt-1">
+    <h1 class="display-1 mt-4 fw-bolder">e-Siap</h1>
+    <p class="lead fs-3"> Arsenal - Dissenlekal</p>
 
     <!-- bentuk gelombang  | ambil dari getwaves.io-->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
