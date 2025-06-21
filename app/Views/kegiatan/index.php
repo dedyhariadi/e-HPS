@@ -49,7 +49,7 @@
                     <th scope="col">Tanggal Surat</th>
                     <th scope="col">Pejabat</th>
                     <th scope="col">Last Updated</th>
-                    <th scope="col">File</th>
+                    <th scope="col ">Aksi</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -81,7 +81,7 @@
                             <?php } else { ?>
                                 <a href="#" class="btn btn-secondary disabled"><i class="bi bi-file-arrow-down"></i></a>
                             <?php } ?>
-
+                            <a type="button" class="btn btn-warning" href="/kegiatan/<?= $b['idKegiatan']; ?>">Detail</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
