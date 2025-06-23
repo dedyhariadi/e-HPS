@@ -6,24 +6,24 @@
          </a>
          <ul class="nav nav-pills">
              <li class="nav-item">
-                 <a class="nav-link active" href="/">Home</a>
+                 <a class="nav-link active" href="home">Home</a>
              </li>
              <li class="nav-item">
-                 <a class="nav-link" href="/kegiatan">Kegiatan</a>
+                 <a class="nav-link" href="kegiatan">Kegiatan</a>
              </li>
              <li class="nav-item">
-                 <a class="nav-link" href="/barang">Barang</a>
+                 <a class="nav-link" href="barang">Barang</a>
              </li>
              <li class="nav-item dropdown">
                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Lainnya</a>
                  <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="/pejabat">Pejabat</a></li>
-                     <li><a class="dropdown-item" href="/satuan">Satuan</a></li>
-                     <li><a class="dropdown-item" href="/dasarsurat">Dasar Surat</a></li>
+                     <li><a class="dropdown-item" href="pejabat">Pejabat</a></li>
+                     <li><a class="dropdown-item" href="satuan">Satuan</a></li>
+                     <li><a class="dropdown-item" href="dasarsurat">Dasar Surat</a></li>
                      <li>
                          <hr class="dropdown-divider">
                      </li>
-                     <li><a class="dropdown-item" href="/home/logout">Logout
+                     <li><a class="dropdown-item" href="home/logout">Logout
                              <?php
                                 if (logged_in()) {
                                     echo "(" . user()->username . ")";
