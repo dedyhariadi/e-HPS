@@ -1,15 +1,18 @@
  <!-- navbar -->
- <nav id="navbar-example2" class="navbar px-3 bg-primary" data-bs-theme="dark">
+ <nav id="navbar-example2" class="navbar py-0 bg-primary" data-bs-theme="dark">
      <div class="container">
-         <a class="navbar-brand" href="/">
+         <!-- <a class="navbar-brand" href="/">
              <h2>e-SIAP</h2>
-         </a>
+         </a> -->
+
+         <?= anchor('/', 'e-Siap', ['class' => 'navbar-brand fs-1 fw-lighter fst-italic']); ?>
+
          <ul class="nav nav-pills">
              <li class="nav-item">
-                 <a class="nav-link active" href="home">Home</a>
+                 <?= anchor('/', 'Home', ['class' => 'nav-link active']); ?>
              </li>
              <li class="nav-item">
-                 <a class="nav-link" href="kegiatan">Kegiatan</a>
+                 <?= anchor('kegiatan', 'Kegiatan', ['class' => 'nav-link']); ?>
              </li>
              <li class="nav-item">
                  <a class="nav-link" href="barang">Barang</a>
@@ -17,19 +20,25 @@
              <li class="nav-item dropdown">
                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Lainnya</a>
                  <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="pejabat">Pejabat</a></li>
-                     <li><a class="dropdown-item" href="satuan">Satuan</a></li>
-                     <li><a class="dropdown-item" href="dasarsurat">Dasar Surat</a></li>
+                     <li>
+                         <?= anchor('pejabat', 'Pejabat', ['class' => 'dropdown-item']); ?>
+                     </li>
+                     <li>
+                         <?= anchor('satuan', 'Satuan', ['class' => 'dropdown-item']); ?>
+                     </li>
+                     <li>
+                         <?= anchor('dasarsurat', 'Dasar Surat', ['class' => 'dropdown-item']); ?>
+                     </li>
                      <li>
                          <hr class="dropdown-divider">
                      </li>
-                     <li><a class="dropdown-item" href="home/logout">Logout
-                             <?php
-                                if (logged_in()) {
-                                    echo "(" . user()->username . ")";
-                                }
-                                ?>
-                         </a></li>
+                     <li>
+                         <?php
+                            if (logged_in()) {
+                                echo anchor('home/logout', 'Logout (' . user()->username . ')', ['class' => 'dropdown-item']);
+                            }
+                            ?>
+                     </li>
                  </ul>
              </li>
          </ul>

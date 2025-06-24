@@ -10,7 +10,7 @@
         </div>
 
         <div class="row">
-            <form action="/dasarsurat/simpan" method="post" enctype="multipart/form-data">
+            <form action="<?= base_url('dasarsurat/simpan'); ?>" method="post" enctype="multipart/form-data">
 
                 <?= csrf_field(); ?>
 

@@ -32,7 +32,7 @@ class Dasarsurat extends BaseController
                 'dasarSurat' => $dasarsurat
             ];
 
-        return view('/dasarsurat/index', $data);
+        return view('dasarsurat/index', $data);
     }
 
     public function tambah()

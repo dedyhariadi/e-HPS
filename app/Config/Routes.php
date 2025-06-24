@@ -7,34 +7,34 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 
-$routes->get('home', 'Home::index');
+$routes->get('/', 'Home::index');
 
 // kontroller barang
 $routes->match(['GET', 'POST'], 'barang', 'Barang::index');
 $routes->get('barang/create', 'Barang::create');  // route ke create
-$routes->get('/barang/edit/(:segment)', 'Barang::form_update/$1');  // route dari detail ke form_update
-$routes->post('/barang/proses_update/(:num)', 'Barang::proses_update/$1');  // route dari detail ke form_update
+$routes->get('barang/edit/(:segment)', 'Barang::form_update/$1');  // route dari detail ke form_update
+$routes->post('barang/proses_update/(:num)', 'Barang::proses_update/$1');  // route dari detail ke form_update
 
 $routes->post('barang/save', 'Barang::simpan'); //route ke save
-$routes->delete('/barang/(:num)', 'Barang::hapus/$1'); // route ke hapus
+$routes->delete('barang/(:num)', 'Barang::hapus/$1'); // route ke hapus
 
-$routes->get('/barang/(:any)', 'Barang::detail/$1'); //route ke detail
+$routes->get('barang/(:any)', 'Barang::detail/$1'); //route ke detail
 
 
 // kontroller referensi (tidak ada index)
-$routes->get('/referensi/create/(:num)', 'Referensi::create/$1'); // route ke create
-$routes->post('/referensi/save', 'Referensi::save'); // route ke save
+$routes->get('referensi/create/(:num)', 'Referensi::create/$1'); // route ke create
+$routes->post('referensi/save', 'Referensi::save'); // route ke save
 
-$routes->get('/referensi/edit/(:num)', 'Referensi::edit/$1'); // route ke edit
-$routes->post('/referensi/proses_edit', 'Referensi::proses_edit'); // route ke proses edit
+$routes->get('referensi/edit/(:num)', 'Referensi::edit/$1'); // route ke edit
+$routes->post('referensi/proses_edit', 'Referensi::proses_edit'); // route ke proses edit
 
-$routes->delete('/referensi/(:num)', 'Referensi::hapus/$1');  // route ke hapus
+$routes->delete('referensi/(:num)', 'Referensi::hapus/$1');  // route ke hapus
 
 
 //pejabat (lengkap)
 $routes->match(['GET', 'POST'], '/pejabat', 'Pejabat::index'); //route ke index utk list semua daftar pejabat
-$routes->get('/pejabat/tambah', 'Pejabat::tambah'); //route ke tambah
-$routes->post('/pejabat/simpan', 'Pejabat::simpan'); //proses penyimpanan tambah
+$routes->get('pejabat/tambah', 'Pejabat::tambah'); //route ke tambah
+$routes->post('pejabat/simpan', 'Pejabat::simpan'); //proses penyimpanan tambah
 
 // edit
 $routes->get('pejabat/edit/(:num)', 'Pejabat::edit/$1'); //route ke form edit
