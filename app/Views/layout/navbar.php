@@ -15,7 +15,7 @@
                  <?= anchor('kegiatan', 'Kegiatan', ['class' => 'nav-link']); ?>
              </li>
              <li class="nav-item">
-                 <a class="nav-link" href="barang">Barang</a>
+                 <?= anchor('barang', 'Barang', ['class' => 'nav-link']); ?>
              </li>
              <li class="nav-item dropdown">
                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Lainnya</a>

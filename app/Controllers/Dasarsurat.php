@@ -42,7 +42,7 @@ class Dasarsurat extends BaseController
         $data = [
             'judul' => 'tambah dasar satuan'
         ];
-        return view('dasarsurat/tambah', $data);
+        return view('/dasarsurat/tambah', $data);
     }
 
     public function simpan($filePdf = false)

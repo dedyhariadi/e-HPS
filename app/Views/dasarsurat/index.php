@@ -79,7 +79,8 @@
                             <?php
                             if ($b['filePdf'] != 'noFile.pdf') {
                             ?>
-                                <a href="/assets/pdf/<?= $b['filePdf']; ?>" target="_blank" class="btn btn-success"><i class="bi bi-file-arrow-down"></i></a>
+                                <!-- <a href="/assets/pdf/<?= $b['filePdf']; ?>" target="_blank" class="btn btn-success"><i class="bi bi-file-arrow-down"></i></a> -->
+                                <?= anchor_popup('public/assets/pdf/' . $b['filePdf'], '<i class="bi bi-file-arrow-down"></i>', ['class' => 'btn btn-success']); ?>
                             <?php } else { ?>
                                 <a href="#" class="btn btn-secondary disabled"><i class="bi bi-file-arrow-down"></i></a>
                             <?php }

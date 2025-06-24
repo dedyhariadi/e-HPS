@@ -22,7 +22,8 @@
     <!-- My CSS -->
     <link rel="stylesheet" href="<?= base_url('public/assets/css/style.css'); ?>">
 
-    <!-- <link rel="icon" href="/images/aplikasi.ico"> -->
+    <!-- <link rel="icon" href="public/favicon.ico"> -->
+    <?= link_tag('public/favicon.ico', 'icon'); ?>
 </head>
 
 <body>
