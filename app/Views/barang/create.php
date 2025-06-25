@@ -10,7 +10,7 @@
         </div>
 
         <div class="row">
-            <form action="/barang/save" method="post" enctype="multipart/form-data">
+            <form action="<?= base_url('barang/save'); ?>" method="post" enctype="multipart/form-data">
 
                 <?= csrf_field(); ?>
 
@@ -58,7 +58,7 @@
                     <div class="col-4">
                         <?php
                         if (session()->getFlashdata('idKegiatan')) { ?>
-                            <a href="/kegiatan/<?= session()->getFlashdata('idKegiatan'); ?>" class="btn btn-warning me-3">Kembali</a>
+                            <a href="kegiatan/<?= session()->getFlashdata('idKegiatan'); ?>" class="btn btn-warning me-3">Kembali</a>
 
 
                         <?php
@@ -66,7 +66,7 @@
                         } else {
 
                         ?>
-                            <a href="/barang" class="btn btn-warning me-3">Kembali</a>
+                            <a href="barang" class="btn btn-warning me-3">Kembali</a>
                         <?php
                         }
 

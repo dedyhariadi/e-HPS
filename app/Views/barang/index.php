@@ -13,7 +13,7 @@
 
     <div class="row text-start">
         <div class="col">
-            <a href="/barang/create" class="btn btn-primary">Tambah Barang</a>
+            <a href="barang/create" class="btn btn-primary">Tambah Barang</a>
         </div>
         <div class="col">
 
@@ -83,7 +83,7 @@
                             ?>
                         </td>
                         <td class="text-center"><?= date('d M Y H:m:s', strtotime($b['updated_atBarang'])); ?></td>
-                        <td class="text-center"><a type="button" class="btn btn-warning" href="/barang/<?= $b['idBarang']; ?>">Detail</a></td>
+                        <td class="text-center"><a type="button" class="btn btn-warning" href="barang/<?= $b['idBarang']; ?>">Detail</a></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
