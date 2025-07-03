@@ -39,11 +39,7 @@
             border-bottom: 1px solid black;
             /* Ini adalah garis bawah Anda */
             padding-bottom: 5px;
-            /* text-indent: 85px; */
-            /* width: 50%; */
-            /* Ini menggeser garis bawah ke bawah */
-            /* Anda bisa sesuaikan warna, gaya (dashed, dotted), dan ketebalan border */
-            /* border: 1px solid black; */
+
         }
 
         .container-float {
