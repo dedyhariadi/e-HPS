@@ -1,0 +1,11 @@
+# Atur perilaku default, biarkan Git yang menentukan
+* text=auto
+
+# Paksa file konfigurasi server dan skrip untuk selalu menggunakan LF
+.htaccess text eol=lf
+.gitattributes text eol=lf
+*.sh text eol=lf
+
+# Anda bisa menambahkan ekstensi lain yang butuh format LF
+# *.css text eol=lf
+# *.js text eol=lf

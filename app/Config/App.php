@@ -16,12 +16,8 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-<<<<<<< HEAD
     // public string $baseURL = CI_DEBUG ? 'http://localhost:8080/' : 'http://e-hps.test/';
-    public string $baseURL = CI_DEBUG ? 'http://localhost:8080/' : 'http://e-hps.test/';
-=======
-    public string $baseURL = 'http://192.168.0.147/ehps/';
->>>>>>> d3dfe70888d7f7cc74527743b8a8d8b22dd90b75
+    public string $baseURL = 'http://localhost:8080/';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
