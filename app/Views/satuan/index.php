@@ -13,7 +13,7 @@
 
     <div class="row text-start">
         <div class="col">
-            <a href="/satuan/tambah" class="btn btn-primary">Tambah Satuan</a>
+            <a href="satuan/tambah" class="btn btn-primary">Tambah Satuan</a>
         </div>
         <div class="col">
 
@@ -68,12 +68,12 @@
                         <td><?= $p['namaSatuan']; ?></td>
                         <td class="text-center"><?= date('d M Y H:m:s', strtotime($p['updated_at'])); ?></td>
                         <td class="text-center">
-                            <form action="/satuan/<?= $p['idSatuan']; ?>" method="post" class="d-inline">
+                            <form action="satuan/<?= $p['idSatuan']; ?>" method="post" class="d-inline">
                                 <?= csrf_field(); ?>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
                             </form>
-                            <a href="/satuan/edit/<?= $p['idSatuan']; ?>" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
+                            <a href="satuan/edit/<?= $p['idSatuan']; ?>" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
