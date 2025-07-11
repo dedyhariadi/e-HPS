@@ -11,16 +11,15 @@
 
 
     <!-- jquery -->
-    <link rel="stylesheet" href="<?= base_url('public/assets/css/jquery-ui.css'); ?>">
-
+    <?= link_tag('assets/css/jquery-ui.css', 'stylesheet'); ?>
 
 
     <!-- bootstrap icon  -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> -->
-    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap-icons-1.13.1/bootstrap-icons.min.css'); ?>">
+    <?= link_tag('assets/css/bootstrap-icons-1.13.1/bootstrap-icons.min.css', 'stylesheet'); ?>
 
     <!-- My CSS -->
-    <link rel="stylesheet" href="<?= base_url('assets/css/style.css'); ?>">
+    <?= link_tag('assets/css/style.css', 'stylesheet'); ?>
 
     <!-- <link rel="icon" href="public/favicon.ico"> -->
     <?= link_tag('favicon.ico', 'icon'); ?>
@@ -49,8 +48,7 @@
     <!--jquery -->
     <?= script_tag('assets/jss/jquery-3.7.1.min.js'); ?>
     <?= script_tag('assets/jss/jquery-ui.min.js'); ?>
-    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
-    <!-- <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> -->
+
 
     <!-- script js ku -->
     <?= script_tag('assets/jss/myscript.js'); ?>

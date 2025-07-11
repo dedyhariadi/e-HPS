@@ -30,7 +30,7 @@ class Satuan extends BaseController
             'satuan' => $satuan,
         ];
 
-        return view('/satuan/index', $data);
+        return view('satuan/index', $data);
     }
 
     public function tambah()
@@ -40,7 +40,7 @@ class Satuan extends BaseController
             'title' => 'Data Satuan',
         ];
 
-        return view('/satuan/tambah', $data);
+        return view('satuan/tambah', $data);
     }
 
     public function simpan()
@@ -55,11 +55,11 @@ class Satuan extends BaseController
                 'errors' => $errors,
             ];
 
-            return view('/satuan/tambah', $data);
+            return view('satuan/tambah', $data);
         }
 
         session()->setFlashdata('pesan', 'Data satuan berhasil ditambah.');
-        return redirect()->to('/satuan');
+        return redirect()->to('satuan');
     }
 
     public function edit($idSatuan)
@@ -70,12 +70,12 @@ class Satuan extends BaseController
             'satuan' => $this->satuanModel->find($idSatuan)
         ];
 
-        return view('/satuan/edit', $data);
+        return view('satuan/edit', $data);
     }
 
     public function prosesedit()
     {
-        d($this->request->getVar());
+
 
         $idSatuan = 'idSatuan';
         $aturan = 'max_length[19]|is_natural_no_zero';
@@ -92,11 +92,11 @@ class Satuan extends BaseController
                 'errors' => $errors,
             ];
 
-            return view('/satuan/tambah', $data);
+            return view('satuan/tambah', $data);
         }
 
         session()->setFlashdata('pesan', 'Data satuan berhasil ditambah.');
-        return redirect()->to('/satuan');
+        return redirect()->to('satuan');
     }
 
     public function hapus($id)
@@ -114,6 +114,6 @@ class Satuan extends BaseController
             } ///
         }
         // d($e, $id);
-        return redirect()->to('/satuan');
+        return redirect()->to('satuan');
     }
 }

@@ -11,7 +11,6 @@
 
         <div class="row">
 
-
             <?= form_open('satuan/simpan'); ?>
 
             <div class="row mb-3">
@@ -30,7 +29,7 @@
                 <div class="col-2">
                 </div>
                 <div class="col-4">
-                    <a href="satuan" class="btn btn-warning me-3">Kembali</a>
+                    <?= anchor('satuan', 'Kembali', ['class' => 'btn btn-warning me-3']); ?>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>

@@ -26,13 +26,11 @@
 
             </div>
 
-            <input type="hidden" name="idSatuan" value="<?= $satuan['idSatuan']; ?>">
-
+            <?= form_hidden('idSatuan', $satuan['idSatuan']); ?>
             <div class="row">
                 <div class="col-2">
                 </div>
                 <div class="col-4">
-                    <!-- <a href="satuan" class="btn btn-warning me-3">Kembali</a> -->
                     <?= anchor('satuan', 'Kembali', ['class' => 'btn btn-warning me-3']); ?>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>

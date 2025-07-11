@@ -183,7 +183,7 @@ class CreateEhpsTabel extends Migration
             'tglSurat' => ['type' => 'DATETIME', 'null' => true],
             'tentang' => ['type' => 'VARCHAR', 'constraint' => '255'],
             'pejabat' => ['type' => 'VARCHAR', 'constraint' => '255'],
-            'filePdf' => ['type' => 'VARCHAR', 'constraint' => '255'],
+        'filePdf' => ['type' => 'VARCHAR', 'constraint' => '255'],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
 

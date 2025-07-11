@@ -34,7 +34,7 @@ class Pejabat extends BaseController
             'pangkat' => $this->pangkatModel->findAll()
         ];
 
-        return view('/pejabat/index', $data);
+        return view('pejabat/index', $data);
     }
 
     public function tambah()

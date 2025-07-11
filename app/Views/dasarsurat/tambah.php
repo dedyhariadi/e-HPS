@@ -85,7 +85,6 @@
                 <div class="row text-start">
                     <div class="col-8"></div>
                     <div class="col-3 mt-3 ms-5 ">
-                        <!-- <a href="/dasarsurat" class="btn btn-warning me-3">Kembali</a> -->
                         <?= anchor('dasarsurat', 'Kembali', ['class' => 'btn btn-warning me-3']); ?>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>

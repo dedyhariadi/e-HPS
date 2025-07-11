@@ -36,7 +36,7 @@ class PejabatModel extends Model
             ->orLike('pangkat', $keyword)
             ->orLike('NRP', $keyword)
             ->orLike('jabatan', $keyword)
-            ->orderBy('updated_at', 'DESC')
+            ->orderBy('pejabat.updated_at', 'DESC')
             ->findAll();
     }
 }
