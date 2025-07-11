@@ -43,7 +43,7 @@ class Pejabat extends BaseController
             [
                 'pangkat' => $this->pangkatModel->findAll()
             ];
-        return view('/pejabat/tambah', $data);
+        return view('pejabat/tambah', $data);
     }
 
     public function simpan()
@@ -62,11 +62,11 @@ class Pejabat extends BaseController
                 'errors' => $errors,
             ];
 
-            return view('/pejabat/tambah', $data);
+            return view('pejabat/tambah', $data);
         }
 
         session()->setFlashdata('pesan', 'Data pejabat berhasil ditambah.');
-        return redirect()->to('/pejabat');
+        return redirect()->to('pejabat');
     }
 
     public function hapus($id)
@@ -83,7 +83,7 @@ class Pejabat extends BaseController
                 session()->setFlashdata('error', 'Terjadi kesalahan saat menghapus data pejabat.');
             }
         }
-        return redirect()->to('/pejabat/');
+        return redirect()->to('pejabat/');
     }
 
     public function edit($idPejabat, $errors = false)
@@ -126,6 +126,6 @@ class Pejabat extends BaseController
 
         //jika sukses, kembali ke index pejabat
         session()->setFlashdata('pesan', 'Data pejabat berhasil diubah ');
-        return redirect()->to('/pejabat');
+        return redirect()->to('pejabat');
     }
 }
