@@ -61,9 +61,21 @@ use CodeIgniter\I18n\Time;
 
                                 <?= form_open('kegiatan/' . $kegiatan['idKegiatan'], ['class' => 'd-inline'], ['_method' => 'DELETE', 'idKegiatan' => $kegiatan['idKegiatan'], 'tandaHapus' => 'hapusKegiatan']); ?>
 
-                                <?= anchor('kegiatan/edit' . $kegiatan['idKegiatan'], 'Edit', ['class' => 'btn btn-warning']); ?>
+                                <?php
+                                echo anchor('kegiatan/edit/' . $kegiatan['idKegiatan'], 'Edit', ['class' => 'btn btn-warning']);
 
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
+                                $data = [
+                                    'name'    => 'button',
+                                    'class'   => 'btn btn-danger',
+                                    'type'    => 'submit',
+                                    'content' => 'Delete',
+                                    'onclick' => "return confirm('Apakah anda yakin?');"
+                                ];
+                                echo " ";
+                                echo form_button($data);
+
+                                ?>
+
 
                                 <?php
                                 foreach ($trxGiatBarang as $b) :
@@ -82,14 +94,31 @@ use CodeIgniter\I18n\Time;
                                         }
                                     endforeach;
                                 endforeach;
+
+                                $atts = [
+                                    'resizable' => 'yes',
+                                    'screenx' => 80,
+                                    'screeny' => 20,
+                                    'window_name' => '_blank',
+                                    'target' => '_blank',
+                                ];
+
+                                (count($trxGiatBarang) == 0 || $banyakReferensi == 0) ? $atts = ['class' => 'btn btn-secondary disabled'] : $atts = ['class' => 'btn btn-primary'];
+
+                                echo anchor_popup('kegiatan/cetakPdf/' . $kegiatan['idKegiatan'], 'Cetak Pdf', $atts);
                                 ?>
-                                <input type="button" value="Cetak Pdf" onclick="window.open('kegiatan/cetakPdf/<?= $kegiatan['idKegiatan']; ?>', '_blank');" class="btn btn-primary" <?= (count($trxGiatBarang) == 0 || $banyakReferensi == 0) ? "disabled" : ""; ?>>
+
+
+
                                 <?= form_close(); ?>
 
 
 
                                 <p class="mt-3">
-                                    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/kegiatan">Kembali ke daftar kegiatan</a>
+
+                                    <?= anchor('kegiatan', 'Kembali ke daftar kegiatan', ['class' => 'link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover']); ?>
+
+
 
                                 </p>
                             </div>
@@ -289,12 +318,20 @@ use CodeIgniter\I18n\Time;
 
 
                             <td class="text-center">
-                                <form action="/kegiatan/<?= $b['idTrxGiatBarang']; ?>" method="post" class="d-inline">
-                                    <?= csrf_field(); ?>
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="idKegiatan" value="<?= $idKegiatan; ?>">
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
-                                </form>
+                                <?php
+
+                                echo form_open('kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['_method' => 'DELETE', 'idKegiatan' => $idKegiatan]);
+
+                                $data = [
+                                    'name'    => 'button',
+                                    'class'   => 'btn btn-danger',
+                                    'type'    => 'submit',
+                                    'content' => '<i class="bi bi-trash-fill"></i>',
+                                    'onclick' => "return confirm('Apakah anda yakin?');"
+                                ];
+                                echo form_button($data);
+
+                                echo form_close(); ?>
                             </td>
                         </tr>
                     <?php

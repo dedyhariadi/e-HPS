@@ -30,16 +30,30 @@
                             <p class="card-text"><b>Satuan : </b><?= $barang['namaSatuan']; ?></p>
                             <p class="card-text"><small class="text-muted"> <b>Last updated :</b> <?= date('d M Y H:m:s', strtotime($barang['updated_atBarang'])); ?></small></p>
 
-                            <?= anchor('barang/edit/' . $barang['idBarang'], 'Edit', ['class' => 'btn btn-warning']); ?>
+                            <?php
 
-                            <?= form_open('barang/' . $barang['idBarang'], ['class' => 'd-inline'], ['_method' => 'DELETE']); ?>
+                            echo anchor('barang/edit/' . $barang['idBarang'], 'Edit', ['class' => 'btn btn-warning']);
 
-                            <!-- <input type="hidden" name="_method" value="DELETE"> -->
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
-                            <?= form_close(); ?>
+
+                            echo form_open('barang/' . $barang['idBarang'], ['class' => 'd-inline'], ['_method' => 'DELETE']);
+
+                            $data = [
+                                'name'    => 'button',
+                                'class'   => 'btn btn-danger',
+                                'type'    => 'submit',
+                                'content' => 'Delete',
+                                'onclick' => "return confirm('Apakah anda yakin?');"
+                            ];
+
+                            echo form_button($data);
+                            echo form_close();
+
+                            ?>
 
                             <br><br>
-                            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/barang">Kembali ke daftar barang</a>
+
+                            <?= anchor('barang', 'Kembali ke daftar barang', ['class' => 'link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover']); ?>
+
                         </div>
                     </div>
                 </div>
@@ -113,16 +127,26 @@
                         <td class="text-center"><?= date('d M Y H:m:s', strtotime($b['updated_at'])); ?></td>
                         <td class="text-center">
 
-                            <?= anchor('referensi/edit/' . $b['idReferensi'], '<i class="bi bi-pencil"></i>', ['class' => 'btn btn-warning', 'type' => 'button']); ?>
-                            <!-- <a type="button" class="btn btn-warning" href="referensi/edit/<?= $b['idReferensi']; ?>"><i class="bi bi-pencil"></i></a> -->
+                            <?php
 
-                            
-                            <form action="/referensi/<?= $b['idReferensi']; ?>" method="post" class="d-inline">
-                                <?= csrf_field(); ?>
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="idBarang" value="<?= $b['idBarang']; ?>">
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
-                            </form>
+                            echo anchor('referensi/edit/' . $b['idReferensi'], '<i class="bi bi-pencil"></i>', ['class' => 'btn btn-warning', 'type' => 'button']);
+
+
+                            echo form_open('referensi/' . $b['idReferensi'], ['class' => 'd-inline'], ['_method' => 'DELETE', 'idBarang' => $b['idBarang']]);
+
+                            $data = [
+                                'name'    => 'button',
+                                'class'   => 'btn btn-danger',
+                                'type'    => 'submit',
+                                'content' => '<i class="bi bi-trash-fill"></i>',
+                                'onclick' => "return confirm('Apakah anda yakin?');"
+                            ];
+
+                            echo form_button($data);
+                            echo form_close();
+
+                            ?>
+
 
 
                         </td>

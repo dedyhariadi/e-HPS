@@ -46,51 +46,49 @@
             </div>
 
             <div class="row">
-                <form action="/referensi/proses_edit" method="post">
 
-                    <?= csrf_field(); ?>
-                    <input type="hidden" name="barangId" value="<?= $barang['idBarang']; ?>">
-                    <input type="hidden" name="referensiId" value="<?= $referensiSingle['idReferensi']; ?>">
+                <?= form_open('referensi/proses_edit', '', ['barangId' => $barang['idBarang'], 'referensiId' => $referensiSingle['idReferensi']]); ?>
 
-                    <div class="row mb-3">
-                        <label for="sumber" class="col-sm-2 col-form-label">Sumber</label>
-                        <div class="col-sm-4">
 
-                            <select class="form-select" name="sumberId" id="sumber">
+                <div class="row mb-3">
+                    <label for="sumber" class="col-sm-2 col-form-label">Sumber</label>
+                    <div class="col-sm-4">
 
-                                <?php foreach ($sumber as $s) : ?>
-                                    <option value="<?= $s['idSumber']; ?>" <?= ($s['idSumber'] == $referensiSingle['sumberId']) ? 'selected' : ''; ?> <?= set_select('sumberId', $s['idSumber']); ?>>
-                                        <?= $s['namaSumber']; ?>
-                                    </option>
-                                <?php endforeach; ?>
+                        <select class="form-select" name="sumberId" id="sumber">
 
-                            </select>
+                            <?php foreach ($sumber as $s) : ?>
+                                <option value="<?= $s['idSumber']; ?>" <?= ($s['idSumber'] == $referensiSingle['sumberId']) ? 'selected' : ''; ?> <?= set_select('sumberId', $s['idSumber']); ?>>
+                                    <?= $s['namaSumber']; ?>
+                                </option>
+                            <?php endforeach; ?>
 
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Link" class="col-sm-2 col-form-label">Link</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control <?= (isset($errors['link'])) ? 'is-invalid' : ''; ?>" value="<?= set_value('link', $referensiSingle['link']); ?>" name="link" id="link">
+                        <div class="invalid-feedback">
+                            <?= (isset($errors['link'])) ? $errors['link'] : ''; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Harga" class="col-sm-2 col-form-label">Harga</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control <?= (isset($errors['harga'])) ? 'is-invalid' : ''; ?>" value="<?= set_value('harga', $referensiSingle['harga']); ?>" name="harga" id="Harga">
+                        <div class="invalid-feedback">
+                            <?= (isset($errors['harga'])) ? $errors['harga'] : ''; ?>
                         </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <label for="Link" class="col-sm-2 col-form-label">Link</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control <?= (isset($errors['link'])) ? 'is-invalid' : ''; ?>" value="<?= set_value('link', $referensiSingle['link']); ?>" name="link" id="link">
-                            <div class="invalid-feedback">
-                                <?= (isset($errors['link'])) ? $errors['link'] : ''; ?>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <label for="Harga" class="col-sm-2 col-form-label">Harga</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control <?= (isset($errors['harga'])) ? 'is-invalid' : ''; ?>" value="<?= set_value('harga', $referensiSingle['harga']); ?>" name="harga" id="Harga">
-                            <div class="invalid-feedback">
-                                <?= (isset($errors['harga'])) ? $errors['harga'] : ''; ?>
-                            </div>
-                        </div>
-
-                    </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </form>
+                </div>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <?= form_close(); ?>
             </div>
 
         </div>
