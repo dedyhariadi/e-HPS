@@ -21,14 +21,11 @@
                             <p class="card-text"><b>Satuan : </b><?= $barang['namaSatuan']; ?></p>
                             <p class="card-text"><small class="text-muted"> <b>Last updated :</b> <?= date('d M Y H:m:s', strtotime($barang['updated_atBarang'])); ?></small></p>
 
-                            <a href="/barang/edit/<?= $barang['idBarang']; ?>" class="btn btn-warning">Edit</a>
+                            <?= anchor('barang/edit/' . $barang['idBarang'], 'Edit', ['class' => 'btn btn-warning']); ?>
+                            <?= form_open('barang/' . $barang['idBarang'], ['class' => 'd-inline'], ['_method' => 'DELETE']); ?>
 
-
-                            <form action="/barang/<?= $barang['idBarang']; ?>" method="post" class="d-inline">
-                                <?= csrf_field(); ?>
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
-                            </form>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
+                            <?= form_close(); ?>
 
                             <br><br>
                             <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/barang">Kembali ke daftar barang</a>
@@ -94,16 +91,15 @@
                 <div class="col-3">
 
                     <?php
-                    if (session()->getFlashdata('idKegiatan')) { ?>
-                        <a href="/kegiatan/<?= session()->getFlashdata('idKegiatan'); ?>" class="btn btn-warning me-3">Kembali</a>
+                    if (session()->getFlashdata('idKegiatan')) {
 
-                    <?php
+                        echo anchor('kegiatan/' . session()->getFlashdata('idKegiatan'), 'Kembali', ['class' => 'btn btn-warning me-3']);
+
                         session()->setFlashdata('idKegiatan', session()->getFlashdata('idKegiatan'));
                     } else {
 
-                    ?>
-                        <a href="/barang/<?= $barang['idBarang']; ?>" class="btn btn-warning me-3">Kembali</a>
-                    <?php
+
+                        echo anchor('barang/' . $barang['idBarang'], 'Kembali', ['class' => 'btn btn-warning me-3']);
                     }
 
                     ?>
