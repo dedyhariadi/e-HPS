@@ -111,12 +111,12 @@ class Kegiatan extends BaseController
                 'dasar' => $this->dasarModel->findAll(),
                 'errors' => $errors,
             ];
-            return view('/kegiatan/tambah', $data);
+            return view('kegiatan/tambah', $data);
         }
 
         // kembali ke index kegiatan
         session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
-        return redirect()->to('/kegiatan');
+        return redirect()->to('kegiatan');
     }
 
 
@@ -194,7 +194,7 @@ class Kegiatan extends BaseController
             $this->trxGiatBarangModel->delete($id);
             $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
             session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
-            return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
+            return redirect()->to('kegiatan/' . $this->request->getVar('idKegiatan'));
         }
 
         // proses hapus di tabel trxReferensi
@@ -204,7 +204,7 @@ class Kegiatan extends BaseController
             $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->where(['referensiId' => $idReferensi])->where(['indeks' => $indeksKe])->delete();
 
             session()->setFlashdata('pesan', 'Data Referensi Berhasil dihapus.');
-            return redirect()->to('/kegiatan/' . $this->request->getVar('idKegiatan'));
+            return redirect()->to('kegiatan/' . $this->request->getVar('idKegiatan'));
         }
 
 
@@ -228,7 +228,7 @@ class Kegiatan extends BaseController
         $this->kegiatanModel->delete($id); //hapus di tabel Kegiatan
 
         session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
-        return redirect()->to('/kegiatan');
+        return redirect()->to('kegiatan');
     }
 
 
@@ -349,7 +349,7 @@ class Kegiatan extends BaseController
                     'errors'   => $errors,
                     'kegiatan' => $kegiatanLama // Pastikan data kegiatan lama tetap ditampilkan
                 ];
-                return view('/kegiatan/edit', $data);
+                return view('kegiatan/edit', $data);
             }
 
             // Jika validasi file berhasil, pindahkan file
@@ -369,7 +369,7 @@ class Kegiatan extends BaseController
                         'errors'   => $errors,
                         'kegiatan' => $kegiatanLama
                     ];
-                    return view('/kegiatan/edit', $data);
+                    return view('kegiatan/edit', $data);
                 }
             }
 
@@ -393,7 +393,7 @@ class Kegiatan extends BaseController
                     'errors'   => $errors,
                     'kegiatan' => $kegiatanLama
                 ];
-                return view('/kegiatan/edit', $data);
+                return view('kegiatan/edit', $data);
             }
         }
         // Jika tidak ada file baru diunggah ($filePdf->getError() == UPLOAD_ERR_NO_FILE),
@@ -423,11 +423,11 @@ class Kegiatan extends BaseController
                 'errors'   => $errors,
                 'kegiatan' => $kegiatanLama // Pastikan data kegiatan lama tetap dikirim ke view
             ];
-            return view('/kegiatan/edit', $data);
+            return view('kegiatan/edit', $data);
         }
 
         // Jika berhasil
         session()->setFlashdata('pesan', 'Data Berhasil diubah.');
-        return redirect()->to('/kegiatan');
+        return redirect()->to('kegiatan');
     }
 }

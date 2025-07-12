@@ -13,7 +13,7 @@
 
     <div class="row text-start">
         <div class="col">
-            <a href="pejabat/tambah" class="btn btn-primary">Tambah Pejabat</a>
+            <?= anchor('pejabat/tambah', 'Tambah Pejabat', ['class' => 'btn btn-primary']); ?>
         </div>
         <div class="col">
 
@@ -73,15 +73,13 @@
                         <td class="text-center"><?= $p['NRP']; ?></td>
                         <td class="text-center"><?= $p['jabatan']; ?></td>
                         <td class="text-center">
-                            <form action="pejabat/<?= $p['idPejabat']; ?>" method="post" class="d-inline">
-                                <?= csrf_field(); ?>
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="idPejabat" value="<?= $p['idPejabat']; ?>">
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
+
+                            <?= form_open('pejabat/' . $b['idPejabat'], ['class' => 'd-inline'], ['_method' => 'DELETE', 'idPejabat' => $p['idPejabat']]); ?>
+
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
 
                             </form>
-                            <a href="pejabat/edit/<?= $p['idPejabat']; ?>" class="btn btn-warning"><i class="bi bi-pencil"></i></a>
-
+                            <?= anchor('pejabat/edit/' . $p['idPejabat'], '<i class="bi bi-pencil"></i>', ['class' => 'btn btn-warning']); ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

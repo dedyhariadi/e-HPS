@@ -56,43 +56,36 @@ use CodeIgniter\I18n\Time;
                                 </div>
                             </div>
 
-
-
                             <div class="row mt-5 text-end">
                                 <p class="card-text"><small class="text-muted"> <b>Last updated at</b> <?= date('d M Y H:m:s', strtotime($kegiatan['updated_at'])); ?></small></p>
 
+                                <?= form_open('kegiatan/' . $kegiatan['idKegiatan'], ['class' => 'd-inline'], ['_method' => 'DELETE', 'idKegiatan' => $kegiatan['idKegiatan'], 'tandaHapus' => 'hapusKegiatan']); ?>
 
-                                <form action="/kegiatan/<?= $kegiatan['idKegiatan']; ?>" method="post" class="d-inline">
-                                    <?= csrf_field(); ?>
-                                    <a href="/kegiatan/edit/<?= $kegiatan['idKegiatan']; ?>" class="btn btn-warning">Edit</a>
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="idKegiatan" value="<?= $kegiatan['idKegiatan']; ?>">
-                                    <input type="hidden" name="tandaHapus" value="hapusKegiatan">
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
+                                <?= anchor('kegiatan/edit' . $kegiatan['idKegiatan'], 'Edit', ['class' => 'btn btn-warning']); ?>
 
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
 
+                                <?php
+                                foreach ($trxGiatBarang as $b) :
 
+                                    $banyakReferensi = 0;
+                                    foreach ($trxReferensi as $trxR) :
+                                        if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
+                                            $cetakLink[] = $trxR['link'];
+                                            $cetakHarga[] = $trxR['harga'];
 
-                                    <?php
-                                    foreach ($trxGiatBarang as $b) :
-
-                                        $banyakReferensi = 0;
-                                        foreach ($trxReferensi as $trxR) :
-                                            if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
-                                                $cetakLink[] = $trxR['link'];
-                                                $cetakHarga[] = $trxR['harga'];
-
-                                                foreach ($sumber as $s):
-                                                    if ($s['idSumber'] == $trxR['sumberId'])
-                                                        $namaSumber[] = $s['namaSumber'];
-                                                endforeach;
-                                                $banyakReferensi++;
-                                            }
-                                        endforeach;
+                                            foreach ($sumber as $s):
+                                                if ($s['idSumber'] == $trxR['sumberId'])
+                                                    $namaSumber[] = $s['namaSumber'];
+                                            endforeach;
+                                            $banyakReferensi++;
+                                        }
                                     endforeach;
-                                    ?>
-                                    <input type="button" value="Cetak Pdf" onclick="window.open('/kegiatan/cetakPdf/<?= $kegiatan['idKegiatan']; ?>', '_blank');" class="btn btn-primary" <?= (count($trxGiatBarang) == 0 || $banyakReferensi == 0) ? "disabled" : ""; ?>>
-                                </form>
+                                endforeach;
+                                ?>
+                                <input type="button" value="Cetak Pdf" onclick="window.open('kegiatan/cetakPdf/<?= $kegiatan['idKegiatan']; ?>', '_blank');" class="btn btn-primary" <?= (count($trxGiatBarang) == 0 || $banyakReferensi == 0) ? "disabled" : ""; ?>>
+                                <?= form_close(); ?>
+
 
 
                                 <p class="mt-3">
@@ -214,7 +207,7 @@ use CodeIgniter\I18n\Time;
                                         <?= anchor_popup($cetakLink[$indeks], $namaSumber[$indeks], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']); ?>
                                     </span>
                                     <span class="float-end">
-                                        <?= form_open('/kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '1']); ?>
+                                        <?= form_open('kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '1']); ?>
 
                                         <button type="submit" class="btn btn-outline-danger border-0" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square "></i></button>
 
@@ -254,7 +247,7 @@ use CodeIgniter\I18n\Time;
 
                                         ?></span>
                                     <span class="float-end">
-                                        <?= form_open('/kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '2']); ?>
+                                        <?= form_open('kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '2']); ?>
 
                                         <button type="submit" class="btn btn-outline-danger border-0" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square "></i></button>
 

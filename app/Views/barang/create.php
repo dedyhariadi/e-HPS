@@ -57,19 +57,15 @@
                     </div>
                     <div class="col-4">
                         <?php
-                        if (session()->getFlashdata('idKegiatan')) { ?>
-                            <a href="kegiatan/<?= session()->getFlashdata('idKegiatan'); ?>" class="btn btn-warning me-3">Kembali</a>
+                        if (session()->getFlashdata('idKegiatan')) {
 
+                            echo anchor('kegiatan/' . session()->getFlashdata('idKegiatan'), 'Kembali', ['class' => 'btn btn-warning me-3']);
 
-                        <?php
                             session()->setFlashdata('idKegiatan', session()->getFlashdata('idKegiatan'));
                         } else {
 
-                        ?>
-                            <a href="barang" class="btn btn-warning me-3">Kembali</a>
-                        <?php
+                            echo anchor('barang', 'Kembali', ['class' => 'btn btn-warning me-3']);
                         }
-
 
                         ?>
 

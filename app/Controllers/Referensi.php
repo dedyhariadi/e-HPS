@@ -67,7 +67,7 @@ class Referensi extends BaseController
                 'errors' => $errors,
             ];
 
-            return view('/referensi/create', $data);
+            return view('referensi/create', $data);
         }
 
 
@@ -75,9 +75,9 @@ class Referensi extends BaseController
         session()->setFlashdata('pesan', 'Data referensi berhasil ditambahkan');
 
         if (session()->getFlashdata('idKegiatan')) {
-            return redirect()->to('/kegiatan/' . session()->getFlashdata('idKegiatan'));
+            return redirect()->to('kegiatan/' . session()->getFlashdata('idKegiatan'));
         } else {
-            return redirect()->to('/barang/' . $this->request->getVar('barangId'));
+            return redirect()->to('barang/' . $this->request->getVar('barangId'));
         }
     }
 
@@ -85,7 +85,7 @@ class Referensi extends BaseController
     {
         $this->referensiModel->delete($id);
         session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
-        return redirect()->to('/barang/' . $this->request->getVar('idBarang'));
+        return redirect()->to('barang/' . $this->request->getVar('idBarang'));
     }
 
     public function edit($idReferensi)
@@ -138,10 +138,10 @@ class Referensi extends BaseController
                 'errors' => $errors,
             ];
 
-            return view('/referensi/edit', $data);
+            return view('referensi/edit', $data);
         }
 
         session()->setFlashdata('pesan', 'Data referensi berhasil ditambahkan');
-        return redirect()->to('/barang/' . $this->request->getVar('barangId'));
+        return redirect()->to('barang/' . $this->request->getVar('barangId'));
     }
 }

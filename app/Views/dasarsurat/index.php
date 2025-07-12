@@ -13,7 +13,7 @@
 
     <div class="row text-start">
         <div class="col">
-            <a href="dasarsurat/create" class="btn btn-primary">Tambah Surat</a>
+            <?= anchor('dasarsurat/create', 'Tambah Surat', ['class' => 'btn btn-primary']); ?>
         </div>
         <div class="col">
 
@@ -72,14 +72,13 @@
                         <td><?= $b['pejabat']; ?></td>
 
                         <td class="text-center">
-                            <?= form_open('dasarsurat/' . $b['idSurat'], ['class' => 'd-inline']); ?>
+                            <?= form_open('dasarsurat/' . $b['idSurat'], ['class' => 'd-inline'], ['_method' => 'DELETE', 'idSurat' => $b['idSurat']]); ?>
 
 
 
                             <?php
                             if ($b['filePdf'] != 'noFile.pdf') {
                             ?>
-                                <!-- <a href="/assets/pdf/<?= $b['filePdf']; ?>" target="_blank" class="btn btn-success"><i class="bi bi-file-arrow-down"></i></a> -->
                                 <?= anchor_popup('public/assets/pdf/' . $b['filePdf'], '<i class="bi bi-file-arrow-down"></i>', ['class' => 'btn btn-success']); ?>
                             <?php } else { ?>
                                 <a href="#" class="btn btn-secondary disabled"><i class="bi bi-file-arrow-down"></i></a>
@@ -88,8 +87,7 @@
 
 
                             <?= anchor('dasarsurat/edit/' . $b['idSurat'], '<i class="bi bi-pencil"></i>', ['class' => 'btn btn-warning']); ?>
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="idSurat" value="<?= $b['idSurat']; ?>">
+
                             <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
 
 

@@ -13,7 +13,7 @@
 
     <div class="row text-start">
         <div class="col">
-            <a href="barang/create" class="btn btn-primary">Tambah Barang</a>
+            <?= anchor('barang/create', 'Tambah Barang', ['class' => 'btn btn-primary']); ?>
         </div>
         <div class="col">
 

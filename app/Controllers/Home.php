@@ -14,6 +14,6 @@ class Home extends BaseController
         // session()->destroy();
         $auth = service('authentication');
         $auth->logout();
-        return redirect()->to('/login');
+        return redirect()->to('login');
     }
 }

@@ -13,7 +13,7 @@
 
     <div class="row text-start">
         <div class="col">
-            <a href="/kegiatan/tambah" class="btn btn-primary">Tambah Kegiatan</a>
+            <?= anchor('kegiatan/tambah', 'Tambah Kegiatan', ['class' => 'btn btn-primary']); ?>
         </div>
         <div class="col">
 
@@ -77,11 +77,13 @@
                             <?php
                             if ($b['filePdf'] != 'noFile.pdf') {
                             ?>
-                                <a href="/assets/pdf/<?= $b['filePdf']; ?>" target="_blank" class="btn btn-success"><i class="bi bi-file-arrow-down"></i></a>
+                                <?= anchor('assets/pdf/' . $b['filePdf'], '<i class="bi bi-file-arrow-down"></i>', ['class' => 'btn btn-success', 'target' => '_blank']); ?>
+
                             <?php } else { ?>
                                 <a href="#" class="btn btn-secondary disabled"><i class="bi bi-file-arrow-down"></i></a>
                             <?php } ?>
-                            <a type="button" class="btn btn-warning" href="/kegiatan/<?= $b['idKegiatan']; ?>">Detail</a>
+                            <?= anchor('kegiatan/' . $b['idKegiatan'], 'Detail', ['class' => 'btn btn-warning', 'type' => 'button']); ?>
+
                         </td>
                     </tr>
                 <?php endforeach; ?>

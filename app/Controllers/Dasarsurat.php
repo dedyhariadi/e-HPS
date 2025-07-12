@@ -42,7 +42,7 @@ class Dasarsurat extends BaseController
         $data = [
             'judul' => 'tambah dasar satuan'
         ];
-        return view('/dasarsurat/tambah', $data);
+        return view('dasarsurat/tambah', $data);
     }
 
     public function simpan($filePdf = false)
@@ -75,12 +75,12 @@ class Dasarsurat extends BaseController
                 'pejabat' => $this->dasarSuratModel->findAll(),
                 'errors' => $errors,
             ];
-            return view('/dasarsurat/tambah', $data);
+            return view('dasarsurat/tambah', $data);
         }
 
         // kembali ke index kegiatan
         session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
-        return redirect()->to('/dasarsurat');
+        return redirect()->to('dasarsurat');
     }
 
     public function hapus()
@@ -109,7 +109,7 @@ class Dasarsurat extends BaseController
                 session()->setFlashdata('error', 'Gagal menghapus data: ' . $e->getMessage());
             }
         }
-        return redirect()->to('/dasarsurat/');
+        return redirect()->to('dasarsurat/');
     }
 
     public function edit($idSurat, $errors = false)
@@ -170,7 +170,7 @@ class Dasarsurat extends BaseController
                     'errors' => $errors,
                     'surat' => $suratLama // Pastikan data surat lama tetap ditampilkan
                 ];
-                return view('/dasarsurat/edit', $data);
+                return view('dasarsurat/edit', $data);
             }
 
             // Jika validasi file berhasil, pindahkan file
@@ -188,7 +188,7 @@ class Dasarsurat extends BaseController
                         'errors' => $errors,
                         'surat' => $suratLama
                     ];
-                    return view('/dasarsurat/edit', $data);
+                    return view('dasarsurat/edit', $data);
                 }
             }
 
@@ -210,7 +210,7 @@ class Dasarsurat extends BaseController
                     'errors' => $errors,
                     'surat' => $suratLama
                 ];
-                return view('/dasarsurat/edit', $data);
+                return view('dasarsurat/edit', $data);
             }
         }
         // Jika tidak ada file baru diunggah ($filePdf->getError() == UPLOAD_ERR_NO_FILE),
@@ -237,11 +237,11 @@ class Dasarsurat extends BaseController
                 'errors' => $errors,
                 'surat' => $suratLama // Pastikan data surat lama tetap dikirim ke view
             ];
-            return view('/dasarsurat/edit', $data);
+            return view('dasarsurat/edit', $data);
         }
 
         // Jika berhasil
         session()->setFlashdata('pesan', 'Data Dasar Surat berhasil diubah.');
-        return redirect()->to('/dasarsurat');
+        return redirect()->to('dasarsurat');
     }
 }

@@ -72,8 +72,8 @@
                 <div class="col-2">
                 </div>
                 <div class="col-4">
+                    <?= anchor('pejabat', 'Kembali', ['class' => 'btn btn-primary me-3']); ?>
 
-                    <a href="/pejabat" class="btn btn-warning me-3">Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>

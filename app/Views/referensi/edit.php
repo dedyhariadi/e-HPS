@@ -21,13 +21,10 @@
                             <p class="card-text"><b>Satuan : </b><?= $barang['namaSatuan']; ?></p>
                             <p class="card-text"><small class="text-muted"> <b>Last updated :</b> <?= date('d M Y H:m:s', strtotime($barang['updated_atBarang'])); ?></small></p>
 
-                            <a href="/barang/edit/<?= $barang['idBarang']; ?>" class="btn btn-warning">Edit</a>
+                            <?= anchor('barang/edit/' . $barang['idBarang'], 'Edit', ['class' => 'btn btn-warning']); ?>
 
-
-                            <form action="/barang/<?= $barang['idBarang']; ?>" method="post" class="d-inline">
-                                <?= csrf_field(); ?>
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
+                            <?= form_open('barang/' . $barang['idBarang'], ['class' => ['d-inline']], ['_method' => 'DELETE']); ?>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
                             </form>
 
                             <br><br>
@@ -58,7 +55,7 @@
                     <div class="row mb-3">
                         <label for="sumber" class="col-sm-2 col-form-label">Sumber</label>
                         <div class="col-sm-4">
-                           
+
                             <select class="form-select" name="sumberId" id="sumber">
 
                                 <?php foreach ($sumber as $s) : ?>

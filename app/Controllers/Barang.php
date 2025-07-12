@@ -107,7 +107,7 @@ class Barang extends BaseController
                     'errors' => $errors,
                 ];
 
-                return view('/barang/create', $data);
+                return view('barang/create', $data);
             }
         }
 
@@ -130,7 +130,7 @@ class Barang extends BaseController
             ];
 
             d($errors);
-            return view('/barang/create', $data);
+            return view('barang/create', $data);
         }
 
 
@@ -146,16 +146,15 @@ class Barang extends BaseController
         session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
 
         if (session()->getFlashdata('idKegiatan')) {
-            return redirect()->to('/kegiatan/' . session()->getFlashdata('idKegiatan'));
+            return redirect()->to('kegiatan/' . session()->getFlashdata('idKegiatan'));
         } else {
-            return redirect()->to('/barang');
+            return redirect()->to('barang');
         }
     }
 
     public function hapus($id)
     {
 
-        // dd($id);
         $data = $this->barangModel->find($id);
         $namaFile = $data['gambar'];
         if (file_exists('assets/images/' . $namaFile)) {
@@ -173,7 +172,7 @@ class Barang extends BaseController
                 session()->setFlashdata('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
             }
         }
-        return redirect()->to('/barang');
+        return redirect()->to('barang');
     }
 
 
@@ -217,7 +216,7 @@ class Barang extends BaseController
                 'errors' => $errors,
             ];
 
-            return view('/barang/edit', $data);
+            return view('barang/edit', $data);
         }
 
         // jika berhasil simpan data
@@ -239,7 +238,7 @@ class Barang extends BaseController
                     'errors' => $errors,
                 ];
 
-                return view('/barang/edit', $data);
+                return view('barang/edit', $data);
             }
 
             $gambarUpdate = $this->barangModel->find($id); // ambil data barang yang baru saja disimpan
@@ -251,6 +250,6 @@ class Barang extends BaseController
         // // jika berhasil simpan data
 
         session()->setFlashdata('pesan', 'Data Berhasil di UPDATE.');
-        return redirect()->to('/barang');
+        return redirect()->to('barang');
     }
 }
