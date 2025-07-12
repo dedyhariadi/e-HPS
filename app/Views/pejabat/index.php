@@ -74,7 +74,7 @@
                         <td class="text-center"><?= $p['jabatan']; ?></td>
                         <td class="text-center">
 
-                            <?= form_open('pejabat/' . $b['idPejabat'], ['class' => 'd-inline'], ['_method' => 'DELETE', 'idPejabat' => $p['idPejabat']]); ?>
+                            <?= form_open('pejabat/' . $p['idPejabat'], ['class' => 'd-inline'], ['_method' => 'DELETE', 'idPejabat' => $p['idPejabat']]); ?>
 
                             <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');"><i class="bi bi-trash-fill"></i></button>
 
