@@ -103,14 +103,6 @@
 
 <body>
 
-    <!-- <header>
-        Ini adalah Header - Akan muncul di setiap halaman
-    </header> -->
-
-    <!-- <footer>
-        Ini adalah Footer - Halaman <span class="page-number"></span> dari <span class="page-count"></span>
-    </footer> -->
-
     <table border="0" cellpading=0 style="line-height: 1; width:100%;border-collapse:collapse;">
         <tr>
             <td style="width:390px;text-align: center;">
@@ -137,7 +129,7 @@
             </td>
             <td></td>
             <td style="white-space: nowrap;padding-left:0;">
-                <div class="date-location">Jakarta, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></div>
+                <div class="date-location">Batuporon, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></div>
             </td>
             <td></td>
         </tr>
@@ -201,9 +193,9 @@
 
     <div style=" text-indent: 78%;">Kepada
     </div><br>
-    <div style="text-indent: 70%;">Yth. &nbsp;&nbsp;&nbsp; Pejabat Pengadaan</div><br>
+    <div style="text-indent: 70%;">Yth. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pejabat Pengadaan</div><br>
     <div style="text-indent: 78%;">di</div><br>
-    <div style="text-indent: 78%;">Jakarta</div>
+    <div style="text-indent: 78%;">Batuporon</div>
 
     <br><br>
 
@@ -799,8 +791,8 @@
 
 
     <br><br>
-    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Dissenlekal</div>
-    <div style="text-align: center; text-indent: 50%;"> Sekdis</div>
+    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Arsenal</div>
+    <div style="text-align: center; text-indent: 50%;"> Kabag Rendalmat</div>
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>
     <br><br><br><br>
