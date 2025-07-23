@@ -60,7 +60,9 @@
                     <tr>
                         <th scope="row" class="text-center"><?= $i++; ?></th>
                         <td style="width: 600px;">
-                            <a class="link-body-emphasis link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover" href="/kegiatan/<?= $b['idKegiatan']; ?>"><?= $b['namaKegiatan']; ?></a>
+
+
+                            <?= anchor('kegiatan/' . $b['idKegiatan'], $b['namaKegiatan'], ['class' => 'link-body-emphasis link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover']); ?>
 
                         </td>
                         <td><?= $b['noSurat']; ?></td>
