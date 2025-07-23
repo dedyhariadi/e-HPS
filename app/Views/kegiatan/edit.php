@@ -108,7 +108,7 @@
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
-            </form>
+            <?= form_close(); ?>
         </div>
     </div>
 </div>

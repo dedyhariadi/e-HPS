@@ -799,7 +799,7 @@
 
 
     <br><br>
-    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Dissenlekal</div>
+    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Arsenal</div>
     <div style="text-align: center; text-indent: 50%;"> Sekdis</div>
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>

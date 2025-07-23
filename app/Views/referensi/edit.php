@@ -13,7 +13,18 @@
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="/assets/images/<?= $barang['gambar']; ?>" class="img-fluid rounded-start" width="500">
+
+                        <?php
+                        $imageProperties = [
+                            'src'    => 'assets/images/' . $barang['gambar'],
+                            'class'  => 'img-fluid rounded-start',
+                            'width'  => '500',
+                        ];
+
+                        echo img($imageProperties);
+                        ?>
+
+
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -23,7 +34,7 @@
 
                             <?= anchor('barang/edit/' . $barang['idBarang'], 'Edit', ['class' => 'btn btn-warning']); ?>
 
-                            <?= form_open('barang/' . $barang['idBarang'], ['class' => ['d-inline']], ['_method' => 'DELETE']); ?>
+                            <?= form_open('barang/' . $barang['idBarang'], ['class' => 'd-inline'], ['_method' => 'DELETE']); ?>
                             <button type="submit" class="btn btn-danger" onclick="return confirm('apakah anda yakin ?');">Delete</button>
                             </form>
 

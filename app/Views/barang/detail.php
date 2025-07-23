@@ -108,8 +108,9 @@
                         </td>
                         <td width="30%">
 
+
                             <span class="d-inline-block text-truncate" style="max-width: 350px;">
-                                <?= anchor_popup($b['link'],); ?>
+                                <a href="<?= $b['link']; ?>" target="_blank"><?= $b['link']; ?></a>
                             </span>
 
 
