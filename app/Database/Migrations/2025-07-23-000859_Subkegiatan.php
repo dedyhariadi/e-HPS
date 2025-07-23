@@ -21,7 +21,7 @@ class Subkegiatan extends Migration
 
         $this->forge->addKey('idSubKegiatan', true);
         $this->forge->addForeignKey('kegiatanId', 'kegiatan', 'idKegiatan', 'CASCADE', 'RESTRICT');
-        $this->forge->addForeignKey('barangId', 'barang', 'idBarang', 'CASCADE', 'RESTRICT');
+        // $this->forge->addForeignKey('barangId', 'barang', 'idBarang', 'CASCADE', 'RESTRICT');
         $this->forge->createTable('subKegiatan', true);
 
 
@@ -35,7 +35,7 @@ class Subkegiatan extends Migration
 
         ]);
 
-        $this->forge->addKey('idSubKegiatan', true);
+        $this->forge->addKey('idTrxSubKegiatan', true);
         $this->forge->addForeignKey('subKegiatanId', 'subkegiatan', 'idSubKegiatan', 'CASCADE', 'RESTRICT');
         $this->forge->addForeignKey('trxGiatBarangId', 'trxgiatbarang', 'idTrxGiatBarang', 'CASCADE', 'RESTRICT');
         $this->forge->createTable('trxSubKegiatan', true);
