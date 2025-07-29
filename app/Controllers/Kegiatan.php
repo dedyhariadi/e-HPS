@@ -13,6 +13,7 @@ use App\Models\DasarSuratModel;
 use App\Models\PangkatModel;
 use App\Models\TrxGiatBarangModel;
 use App\Models\TrxReferensiModel;
+use App\Models\SubKegiatanModel;
 use App\Models\TrxReferensModel;
 use \Dompdf\Dompdf;
 use \Dompdf\Options;
@@ -31,6 +32,7 @@ class Kegiatan extends BaseController
     protected $pangkatModel;
     protected $trxGiatBarangModel;
     protected $trxReferensiModel;
+    protected $subKegiatanModel;
 
     public function __construct()
     {
@@ -45,6 +47,7 @@ class Kegiatan extends BaseController
         $this->pangkatModel = new PangkatModel();
         $this->trxGiatBarangModel = new TrxGiatBarangModel();
         $this->trxReferensiModel = new TrxReferensiModel();
+        $this->subKegiatanModel = new SubKegiatanModel();
     }
 
     public function index($keyword = false)
@@ -122,6 +125,39 @@ class Kegiatan extends BaseController
 
     public function detail($idKegiatan = false)
     {
+
+        $tandaSubkegiatan = $this->request->getVar('tandaSubKegiatan');
+        if (isset($tandaSubkegiatan)) {
+            echo $this->request->getVar('namaSubKegiatan');
+            d($tandaSubkegiatan);
+
+            $tandaAdd = $this->request->getVar('tandaAdd');
+            $tandaDel = $this->request->getVar('tandaDel');
+
+            // proses menambah subkegiatan
+            if (isset($tandaAdd)) {
+                if ($this->subKegiatanModel->save([
+                    'nama' => $this->request->getVar('namaSubKegiatan'),
+                    'kegiatanId' => $idKegiatan,
+                ]) == false) {
+                    // jika gagal simpan data
+                    $errors = $this->subKegiatanModel->errors();
+                    echo "Gagal menyimpan di subkegiatanmodel";
+                    session()->setFlashdata('pesan', $errors['nama']);
+                } else {
+                    session()->setFlashdata('pesan', 'Sub Kegiatan Berhasil ditambahkan.');
+                }
+            }
+
+            if (isset($tandaDel)) {
+                $idSubKegiatan = $this->request->getVar('idSubKegiatan');
+                $this->subKegiatanModel->delete($idSubKegiatan);
+                session()->setFlashdata('pesan', 'Sub Kegiatan Berhasil dihapus.');
+                // return redirect()->to('kegiatan/' . $idKegiatan);
+            }
+        }
+
+
         $tandaTambah = $this->request->getVar('tandaTambah');
 
         // proses menambah barang ke kegiatan
@@ -174,7 +210,8 @@ class Kegiatan extends BaseController
             'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
             'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
             'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
-            'sumber' => $this->sumberModel->findAll()
+            'sumber' => $this->sumberModel->findAll(),
+            'subKegiatan' => $this->subKegiatanModel->where(['kegiatanId' => $idKegiatan])->findAll(),
         ];
 
         return view('kegiatan/detail', $data);
