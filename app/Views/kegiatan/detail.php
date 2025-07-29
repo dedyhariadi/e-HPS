@@ -420,12 +420,11 @@ use CodeIgniter\I18n\Time;
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <?= form_open('kegiatan/' . $idKegiatan, '', ['tandaSubKegiatan' => 'menambahkan sub kegiatan']); ?>
+                <?= form_open('kegiatan/' . $idKegiatan, '', ['tandaSubKegiatan' => 'menambahkan sub kegiatan', 'tandaAdd' => 'true']); ?>
 
                 <div class="modal-body">
                     <div class="mb-3">
                         <?= form_input('namaSubKegiatan', '', ['id' => 'namaSubKegiatan', 'class' => 'form-control fs-2', 'aria-describedby' => 'subKegiatanHelp'], 'text'); ?>
-                        <!-- <input type="text" class="form-control fs-2" id="namaSubKegiatan" aria-describedby="subKegiatanHelp"> -->
                         <div id="subKegiatanHelp" class="form-text">nama sub kegiatan.</div>
                     </div>
                 </div>
