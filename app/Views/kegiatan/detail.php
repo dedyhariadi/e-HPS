@@ -239,9 +239,14 @@ use CodeIgniter\I18n\Time;
                         <?php
 
                         $i = 1;
+                        d(count($trxSubKegiatan), count($subKegiatan));
+
+                        $banyakBaris = count($trxSubKegiatan) + count($subKegiatan);
+                        for ($x = 0; $x <= $banyakBaris; $x++) {
+                            
+                        }
 
                         foreach ($trxSubKegiatan as $b) :
-                            $namasubkegiatan = $b['nama'];
                         ?>
                             <tr>
                                 <td>
