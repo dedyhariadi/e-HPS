@@ -18,7 +18,6 @@ class SubKegiatanModel extends Model
     ];
 
     protected $validationRules = [
-        'idSubKegiatan'    => 'max_length[19]|is_natural_no_zero',
         'nama' => 'required|is_unique[subkegiatan.nama,idSubKegiatan,{idSubKegiatan}]',
     ];
 

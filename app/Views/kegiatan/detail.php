@@ -498,8 +498,9 @@ use CodeIgniter\I18n\Time;
                 <div class="modal-body fs-3">
                     <form action="" method="post">
                         <?= csrf_field(); ?>
+
                         <div class="row ms-5 mt-3">
-                            <label for="combobox" class="d-inline form-label col-sm-3">Material</label>
+                            <label for="combobox" class="d-inline form-label col-sm-4">Material</label>
                             <div class="col-sm-4 d-inline">
                                 <select class="form-select mb-3 fs-4" id="combobox" name="idBarang">
                                     <?php foreach ($barang as $b) : ?>
@@ -518,9 +519,21 @@ use CodeIgniter\I18n\Time;
                             </div>
                         </div>
 
+                        <div class="row ms-5 mt-3">
+                            <label for="combobox" class="d-inline form-label col-sm-4">Sub Kegiatan</label>
+                            <div class="col-sm-4 d-inline">
+                                <select class="form-select mb-3 fs-4" id="combobox" name="subKegiatan">
+                                    <?php foreach ($subKegiatan as $sk) : ?>
+                                        <option value=<?= $sk['idSubKegiatan']; ?>><?= $sk['nama']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <?php
+                                ?>
+                            </div>
+                        </div>
 
                         <div class="row ms-5 mt-2">
-                            <label for="kebutuhan" class="col-sm-3 col-form-label">Kebutuhan</label>
+                            <label for="kebutuhan" class="col-sm-4 col-form-label">Kebutuhan</label>
                             <div class="col-sm-3">
                                 <input type="text" class="form-control <?= (isset($errors['kebutuhan'])) ? 'is-invalid' : ''; ?> fs-4" name="kebutuhan" value="<?= set_value('kebutuhan'); ?>">
                                 <div class="invalid-feedback">
@@ -528,6 +541,8 @@ use CodeIgniter\I18n\Time;
                                 </div>
                             </div>
                         </div>
+
+
                 </div>
                 <div class="row  text-center my-4">
                     <div class="col">

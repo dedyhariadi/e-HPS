@@ -127,10 +127,8 @@ class Kegiatan extends BaseController
     {
 
         $tandaSubkegiatan = $this->request->getVar('tandaSubKegiatan');
-        // d($this->request->getVar());
 
         if (isset($tandaSubkegiatan)) {
-            // echo $this->request->getVar('namaSubKegiatan');
 
             $tandaAdd = $this->request->getVar('tandaAdd');
             $tandaEdit = $this->request->getVar('tandaEdit');
@@ -143,6 +141,7 @@ class Kegiatan extends BaseController
                 ]) == false) {
                     // jika gagal simpan data
                     $errors = $this->subKegiatanModel->errors();
+                    dd($errors);
                     echo "Gagal menyimpan di subkegiatanmodel";
                     session()->setFlashdata('pesan', $errors['nama']);
                 } else {
@@ -151,6 +150,13 @@ class Kegiatan extends BaseController
             }
 
             if (isset($tandaEdit)) {
+
+                // 'idSubKegiatan'    => 'max_length[19]|is_natural_no_zero',
+
+                $fieldName  = 'idSubKegiatan';
+                $fieldRules = 'max_length[19]|is_natural_no_zero';
+                $this->subKegiatanModel->setValidationRule($fieldName, $fieldRules);
+
                 if ($this->subKegiatanModel->save([
                     'idSubKegiatan' => $this->request->getVar('idSubKegiatan'),
                     'nama' => $this->request->getVar('namaSubKegiatan'),
