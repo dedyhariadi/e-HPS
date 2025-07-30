@@ -155,16 +155,18 @@ use CodeIgniter\I18n\Time;
                                     <td class="text-center">
                                         <?php
 
-                                        echo anchor('', '<i class="bi bi-pencil"></i>', ['class' => 'btn btn-warning', 'type' => 'button']);
+                                        // echo anchor('', '<i class="bi bi-pencil"></i>', ['class' => 'btn btn-warning', 'type' => 'button']);
 
-                                        echo form_open('kegiatan/' . $sk['idSubKegiatan'], ['class' => 'd-inline'], ['_method' => 'DELETE', 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1']);
+                                        echo anchor('', '<i class="bi bi-pencil"></i>', ['class' => 'btn btn-warning', 'type' => 'button', 'data-bs-toggle' => 'modal', 'data-bs-target' => '#editSubKegiatanModal' . $n]);
+
+                                        echo form_open('kegiatan/' . $idKegiatan, ['class' => 'd-inline'], ['_method' => 'DELETE', 'tandaDel' => 'true', 'idSubKegiatan' => $sk['idSubKegiatan']]);
 
                                         $data = [
                                             'name'    => 'button',
                                             'class'   => 'btn btn-danger',
                                             'type'    => 'submit',
                                             'content' => '<i class="bi bi-trash-fill"></i>',
-                                            'onclick' => "return confirm('Apakah anda yakin?');"
+                                            'onclick' => "return confirm('Apakah anda yakin menghapus sub kegiatan?');"
                                         ];
                                         echo form_button($data);
 
@@ -442,6 +444,47 @@ use CodeIgniter\I18n\Time;
     </div>
 
 
+
+    <!-- Modal Form EDIT Sub Kegiatan-->
+
+    <?php
+    $n = 2;
+    foreach ($subKegiatan as $sk) :
+        $idmodal = "editSubKegiatanModal" . $n++;
+    ?>
+
+        <div class="modal fade" id=<?= $idmodal; ?> tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="exampleModalLabel">Edit Sub Kegiatan</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <?= form_open('kegiatan/' . $idKegiatan, '', ['tandaSubKegiatan' => 'menambahkan sub kegiatan', 'idSubKegiatan' => $sk['idSubKegiatan'], 'tandaEdit' => 'true']); ?>
+
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <?= form_input('namaSubKegiatan', $sk['nama'], ['id' => 'namaSubKegiatan', 'class' => 'form-control fs-2', 'aria-describedby' => 'subKegiatanHelp'], 'text'); ?>
+                            <div id="subKegiatanHelp" class="form-text">nama sub kegiatan.</div>
+                        </div>
+                    </div>
+                    <div class="row  text-center my-4">
+                        <div class="col">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </div>
+
+                    <?= form_close(); ?>
+
+                </div>
+            </div>
+        </div>
+    <?php
+    endforeach;
+
+    ?>
 
     <!-- Modal Form Tambah Barang-->
 

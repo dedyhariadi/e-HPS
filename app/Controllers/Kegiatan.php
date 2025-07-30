@@ -127,12 +127,13 @@ class Kegiatan extends BaseController
     {
 
         $tandaSubkegiatan = $this->request->getVar('tandaSubKegiatan');
+        // d($this->request->getVar());
+
         if (isset($tandaSubkegiatan)) {
-            echo $this->request->getVar('namaSubKegiatan');
-            d($tandaSubkegiatan);
+            // echo $this->request->getVar('namaSubKegiatan');
 
             $tandaAdd = $this->request->getVar('tandaAdd');
-            $tandaDel = $this->request->getVar('tandaDel');
+            $tandaEdit = $this->request->getVar('tandaEdit');
 
             // proses menambah subkegiatan
             if (isset($tandaAdd)) {
@@ -149,11 +150,19 @@ class Kegiatan extends BaseController
                 }
             }
 
-            if (isset($tandaDel)) {
-                $idSubKegiatan = $this->request->getVar('idSubKegiatan');
-                $this->subKegiatanModel->delete($idSubKegiatan);
-                session()->setFlashdata('pesan', 'Sub Kegiatan Berhasil dihapus.');
-                // return redirect()->to('kegiatan/' . $idKegiatan);
+            if (isset($tandaEdit)) {
+                if ($this->subKegiatanModel->save([
+                    'idSubKegiatan' => $this->request->getVar('idSubKegiatan'),
+                    'nama' => $this->request->getVar('namaSubKegiatan'),
+                    'kegiatanId' => $idKegiatan,
+                ]) == false) {
+                    // jika gagal simpan data
+                    $errors = $this->subKegiatanModel->errors();
+                    echo "Gagal menyimpan di subkegiatanmodel";
+                    session()->setFlashdata('pesan', $errors['nama']);
+                } else {
+                    session()->setFlashdata('pesan', 'Sub Kegiatan Berhasil dirubah.');
+                }
             }
         }
 
@@ -220,52 +229,57 @@ class Kegiatan extends BaseController
     public function hapus($id)
     {
 
+        // menghapus sub kegiatan
+        $tandaDel = $this->request->getVar('tandaDel');
+        if (isset($tandaDel)) {
+            // d($this->request->getVar());
+            $idSubKegiatan = $this->request->getVar('idSubKegiatan');
+            $this->subKegiatanModel->delete($idSubKegiatan);
+            session()->setFlashdata('pesan', 'Sub Kegiatan Berhasil dihapus.');
+            return redirect()->to('kegiatan/' . $id);
+        } else {
+            // proses hapus data barang
+
+            if (!$this->request->getVar('tandaHapus')) {
+                // Proses hapus di tabel trxGiatBarang
+                $this->trxGiatBarangModel->delete($id);
+                $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
+                session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
+                return redirect()->to('kegiatan/' . $this->request->getVar('idKegiatan'));
+            }
+
+            // proses hapus di tabel trxReferensi
+            if ($this->request->getVar('tandaHapus') == 1) {
+                $idReferensi = $this->request->getVar('idReferensi');
+                $indeksKe = $this->request->getVar('indeksKe');
+                $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->where(['referensiId' => $idReferensi])->where(['indeks' => $indeksKe])->delete();
+
+                session()->setFlashdata('pesan', 'Data Referensi Berhasil dihapus.');
+                return redirect()->to('kegiatan/' . $this->request->getVar('idKegiatan'));
+            }
 
 
 
+            $listBarang = $this->trxGiatBarangModel->where(['kegiatanId' => $id])->findAll();
 
-        // proses hapus data barang
+            // proses hapus di tabel trxReferensi
+            foreach ($listBarang as $list) :
+                $this->trxReferensiModel->where(['trxGiatBarangId' => $list['idTrxGiatBarang']])->delete();
+            endforeach;
 
-        if (!$this->request->getVar('tandaHapus')) {
-            // Proses hapus di tabel trxGiatBarang
-            $this->trxGiatBarangModel->delete($id);
-            $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
+            $targetPath = ROOTPATH . 'public/assets/pdf'; // Path absolut ke direktori tujuan
+            $namaFileUntukDB = $this->kegiatanModel->find($id)['filePdf'] ?? null; // Ambil nama file dari database
+
+            // Jika ada file lama (bukan 'noFile.pdf' atau null), hapus file lama untuk menghemat ruang
+            if ($namaFileUntukDB && $namaFileUntukDB !== 'noFile.pdf' && file_exists($targetPath . '/' . $namaFileUntukDB)) {
+                unlink($targetPath . '/' . $namaFileUntukDB);
+            }
+
+            $this->trxGiatBarangModel->where(['kegiatanId' => $id])->delete(); //hapus di tabel trxGiatBarang
+            $this->kegiatanModel->delete($id); //hapus di tabel Kegiatan
             session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
-            return redirect()->to('kegiatan/' . $this->request->getVar('idKegiatan'));
+            return redirect()->to('kegiatan');
         }
-
-        // proses hapus di tabel trxReferensi
-        if ($this->request->getVar('tandaHapus') == 1) {
-            $idReferensi = $this->request->getVar('idReferensi');
-            $indeksKe = $this->request->getVar('indeksKe');
-            $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->where(['referensiId' => $idReferensi])->where(['indeks' => $indeksKe])->delete();
-
-            session()->setFlashdata('pesan', 'Data Referensi Berhasil dihapus.');
-            return redirect()->to('kegiatan/' . $this->request->getVar('idKegiatan'));
-        }
-
-
-
-        $listBarang = $this->trxGiatBarangModel->where(['kegiatanId' => $id])->findAll();
-
-        // proses hapus di tabel trxReferensi
-        foreach ($listBarang as $list) :
-            $this->trxReferensiModel->where(['trxGiatBarangId' => $list['idTrxGiatBarang']])->delete();
-        endforeach;
-
-        $targetPath = ROOTPATH . 'public/assets/pdf'; // Path absolut ke direktori tujuan
-        $namaFileUntukDB = $this->kegiatanModel->find($id)['filePdf'] ?? null; // Ambil nama file dari database
-
-        // Jika ada file lama (bukan 'noFile.pdf' atau null), hapus file lama untuk menghemat ruang
-        if ($namaFileUntukDB && $namaFileUntukDB !== 'noFile.pdf' && file_exists($targetPath . '/' . $namaFileUntukDB)) {
-            unlink($targetPath . '/' . $namaFileUntukDB);
-        }
-
-        $this->trxGiatBarangModel->where(['kegiatanId' => $id])->delete(); //hapus di tabel trxGiatBarang
-        $this->kegiatanModel->delete($id); //hapus di tabel Kegiatan
-
-        session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
-        return redirect()->to('kegiatan');
     }
 
 
