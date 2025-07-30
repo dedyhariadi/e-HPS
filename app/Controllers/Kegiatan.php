@@ -14,6 +14,7 @@ use App\Models\PangkatModel;
 use App\Models\TrxGiatBarangModel;
 use App\Models\TrxReferensiModel;
 use App\Models\SubKegiatanModel;
+use App\Models\TrxSubKegiatanModel;
 use App\Models\TrxReferensModel;
 use \Dompdf\Dompdf;
 use \Dompdf\Options;
@@ -33,6 +34,7 @@ class Kegiatan extends BaseController
     protected $trxGiatBarangModel;
     protected $trxReferensiModel;
     protected $subKegiatanModel;
+    protected $trxSubKegiatanModel;
 
     public function __construct()
     {
@@ -48,6 +50,7 @@ class Kegiatan extends BaseController
         $this->trxGiatBarangModel = new TrxGiatBarangModel();
         $this->trxReferensiModel = new TrxReferensiModel();
         $this->subKegiatanModel = new SubKegiatanModel();
+        $this->trxSubKegiatanModel = new TrxSubKegiatanModel();
     }
 
     public function index($keyword = false)
@@ -193,6 +196,19 @@ class Kegiatan extends BaseController
                     session()->setFlashdata('pesan', 'Data Barang Berhasil ditambahkan.');
                 }
             }
+
+            if ($this->trxSubKegiatanModel->save([
+                // 'kegiatanId' => $idKegiatan,
+                'subKegiatanId' => $this->request->getVar('idSubKegiatan'),
+                'trxGiatBarangId' => $this->trxGiatBarangModel->getInsertID(), // ambil id trxGiatBarang yang baru saja disimpan
+            ]) == false) {
+                // jika gagal simpan data
+                $errors = $this->trxSubKegiatanModel->errors();
+                echo "Gagal menyimpan di trxSubKegiatanModel";
+                die;
+            } else {
+                session()->setFlashdata('pesan', 'Data Sub Kegiatan Berhasil ditambahkan.');
+            }
         }
 
         // proses menambah referensi ke trxreferensi
@@ -221,12 +237,15 @@ class Kegiatan extends BaseController
             'kegiatan' => $kegiatan,
             'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
             'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
-            'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $idKegiatan])->findAll(),
+            'trxGiatBarang' => $this->trxGiatBarangModel->join('trxsubkegiatan', 'trxsubkegiatan.trxGiatBarangId=trxGiatBarang.idTrxGiatBarang')->where(['kegiatanId' => $idKegiatan])->orderBy('trxsubkegiatan.subKegiatanId')->findAll(),
+
+
             'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
             'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
             'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
             'sumber' => $this->sumberModel->findAll(),
             'subKegiatan' => $this->subKegiatanModel->where(['kegiatanId' => $idKegiatan])->findAll(),
+            'trxSubKegiatan' => $this->trxSubKegiatanModel->join('subkegiatan', 'subkegiatan.idSubKegiatan=trxsubkegiatan.subKegiatanId')->join('trxgiatbarang', 'trxsubkegiatan.trxGiatBarangId=trxgiatbarang.idTrxGiatBarang')->where(['subkegiatan.kegiatanId' => $idKegiatan])->orderBy('subkegiatan.idSubKegiatan')->findAll(),
         ];
 
         return view('kegiatan/detail', $data);

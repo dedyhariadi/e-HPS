@@ -207,7 +207,9 @@ use CodeIgniter\I18n\Time;
                     <?= session()->getFlashdata('pesan'); ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            <?php endif; ?>
+            <?php endif;
+            d($trxSubKegiatan);
+            ?>
 
             <!-- akhir alert -->
 
@@ -235,9 +237,18 @@ use CodeIgniter\I18n\Time;
                     </thead>
                     <tbody class="table-group-divider">
                         <?php
+
                         $i = 1;
 
-                        foreach ($trxGiatBarang as $b) : ?>
+                        foreach ($trxSubKegiatan as $b) :
+                            $namasubkegiatan = $b['nama'];
+                        ?>
+                            <tr>
+                                <td>
+                                    <?= $b['nama']; ?>
+                                </td>
+                            </tr>
+
                             <tr>
                                 <th scope="row" class="text-center"><?= $i++; ?></th>
                                 <td>
@@ -522,7 +533,7 @@ use CodeIgniter\I18n\Time;
                         <div class="row ms-5 mt-3">
                             <label for="combobox" class="d-inline form-label col-sm-4">Sub Kegiatan</label>
                             <div class="col-sm-4 d-inline">
-                                <select class="form-select mb-3 fs-4" id="combobox" name="subKegiatan">
+                                <select class="form-select mb-3 fs-4" id="combobox" name="idSubKegiatan">
                                     <?php foreach ($subKegiatan as $sk) : ?>
                                         <option value=<?= $sk['idSubKegiatan']; ?>><?= $sk['nama']; ?></option>
                                     <?php endforeach; ?>
