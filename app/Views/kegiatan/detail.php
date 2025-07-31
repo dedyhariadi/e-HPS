@@ -239,20 +239,12 @@ use CodeIgniter\I18n\Time;
                         <?php
 
                         $i = 1;
-                        d(count($trxSubKegiatan), count($subKegiatan));
-
-                        $banyakBaris = count($trxSubKegiatan) + count($subKegiatan);
-                        for ($x = 0; $x <= $banyakBaris; $x++) {
-                            
-                        }
-
-                        foreach ($trxSubKegiatan as $b) :
+                        $currentSubKegiatan = null;
+                        dd($trxSubKegiatan);
+                        foreach ($trxSubKegiatan as $b => $kolom) :
+                            $currentSubKegiatan = $b['subKegiatanId'];
                         ?>
-                            <tr>
-                                <td>
-                                    <?= $b['nama']; ?>
-                                </td>
-                            </tr>
+
 
                             <tr>
                                 <th scope="row" class="text-center"><?= $i++; ?></th>
