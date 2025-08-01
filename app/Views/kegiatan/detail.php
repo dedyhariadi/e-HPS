@@ -240,177 +240,184 @@ use CodeIgniter\I18n\Time;
 
                         $i = 1;
                         $currentSubKegiatan = null;
-                        dd($trxSubKegiatan);
-                        foreach ($trxSubKegiatan as $b => $kolom) :
-                            $currentSubKegiatan = $b['subKegiatanId'];
+                        // d($trxSubKegiatan);
+                        foreach ($trxSubKegiatan as $b) :
+                            if ($currentSubKegiatan == $b['nama']) {
                         ?>
 
 
-                            <tr>
-                                <th scope="row" class="text-center"><?= $i++; ?></th>
-                                <td>
+                                <tr>
+                                    <th scope="row" class="text-center"><?= $i++; ?></th>
+                                    <td>
+                                        <?php
+                                        foreach ($barang as $brg) :
+                                            if ($b['barangId'] == $brg['idBarang']) {
+                                                echo $brg['namaBarang'];
+                                            }
+                                        endforeach;
+                                        ?>
+
+                                    </td>
+                                    <td class="ps-5 text-end">
+                                        <?php
+                                        echo number_format($b['kebutuhan'], 0, ",", ".") . " ";
+                                        foreach ($barang as $brg) :
+                                            if ($b['barangId'] == $brg['idBarang']) {
+                                                echo $brg['namaSatuan'];
+                                            }
+                                        endforeach;
+                                        ?>
+
+                                    </td>
+
                                     <?php
-                                    foreach ($barang as $brg) :
-                                        if ($b['barangId'] == $brg['idBarang']) {
-                                            echo $brg['namaBarang'];
+                                    unset($cetakLink);
+                                    unset($cetakHarga);
+                                    unset($namaSumber);
+                                    unset($referensiId);
+                                    unset($indeksKe);
+                                    unset($hargaHitung);
+                                    $Found = false;
+                                    foreach ($trxReferensi as $trxR):
+                                        if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
+                                            $cetakLink[] = $trxR['link'];
+                                            $cetakHarga[] = $trxR['harga'];
+                                            $referensiId[] = $trxR['referensiId'];
+                                            $indeksKe[] = $trxR['indeks'];
+
+                                            foreach ($sumber as $s):
+                                                if ($s['idSumber'] == $trxR['sumberId']) {
+                                                    $namaSumber[] = $s['namaSumber'];
+                                                }
+                                            endforeach;
+                                            $Found = true;
                                         }
                                     endforeach;
                                     ?>
 
-                                </td>
-                                <td class="ps-5 text-end">
-                                    <?php
-                                    echo number_format($b['kebutuhan'], 0, ",", ".") . " ";
-                                    foreach ($barang as $brg) :
-                                        if ($b['barangId'] == $brg['idBarang']) {
-                                            echo $brg['namaSatuan'];
+                                    <td style="max-width: 150px;">
+                                        <?php
+                                        $hargaTampil = '';
+                                        if ($Found && in_array('1', $indeksKe)) {
+                                            $indeks = array_search('1', $indeksKe);
+                                            $hargaTampil = $cetakHarga[$indeks];
+                                        ?>
+                                            <span class="float-start">
+                                                <?= anchor_popup($cetakLink[$indeks], $namaSumber[$indeks], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']); ?>
+                                            </span>
+                                            <span class="float-end">
+                                                <?= form_open('kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '1']); ?>
+
+                                                <button type="submit" class="btn btn-outline-danger border-0" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square "></i></button>
+
+                                                <?= form_close(); ?>
+                                            </span>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <span class="float-end">
+                                                <a href="" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r1'; ?>">add</a>
+                                            </span>
+                                        <?php
                                         }
-                                    endforeach;
-                                    ?>
+                                        ?>
 
-                                </td>
+                                    </td>
+                                    <td class="text-end">
 
-                                <?php
+                                        <?php
+                                        if ($hargaTampil !== '') {
+                                            $hargaHitung[] = $hargaTampil;
+                                        }
+                                        ?>
+                                        <?= ($hargaTampil !== '') ? number_format($hargaTampil, 0, ",", ".") : ""; ?>
+
+                                    </td>
+                                    <td class="text-truncate" style="max-width: 150px;">
+                                        <?php
+                                        $hargaTampil = '';
+                                        if ($Found && in_array('2', $indeksKe)) {
+                                            $indeks = array_search('2', $indeksKe);
+                                            $hargaTampil = $cetakHarga[$indeks];
+                                        ?>
+                                            <span class="float-start">
+                                                <?php
+                                                echo anchor_popup($cetakLink[$indeks], $namaSumber[$indeks], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']);
+
+                                                ?></span>
+                                            <span class="float-end">
+                                                <?= form_open('kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '2']); ?>
+
+                                                <button type="submit" class="btn btn-outline-danger border-0" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square "></i></button>
+
+                                                <?= form_close(); ?>
+                                            </span>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <span class="float-end">
+                                                <a href="" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                                                    data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r2'; ?>">add
+                                                </a>
+                                            </span>
+                                        <?php
+                                        }
+                                        ?>
+                                    </td>
+                                    <td class="text-end">
+                                        <?php
+                                        if ($hargaTampil !== '') {
+                                            $hargaHitung[] = $hargaTampil;
+                                        }
+                                        ?>
+                                        <?= ($hargaTampil !== '') ? number_format($hargaTampil, 0, ",", ".") : ""; ?>
+
+                                    <td class="text-end">
+                                        <?php
+                                        echo "Rp ";
+                                        ?>
+                                    </td>
+                                    <td class="text-end">
+                                        <?php
+                                        if (isset($hargaHitung) && count($hargaHitung) > 0) {
+                                            $cetakAverage = array_sum($hargaHitung) / count($hargaHitung);
+                                            echo number_format($cetakAverage, 0, ",", ".");
+                                        }
+                                        ?>
+                                    </td>
+
+
+                                    <td class="text-center">
+                                        <?php
+
+                                        echo form_open('kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['_method' => 'DELETE', 'idKegiatan' => $idKegiatan,'idTrxGiatBarang' => $b['idTrxGiatBarang']]);
+
+                                        $data = [
+                                            'name'    => 'button',
+                                            'class'   => 'btn btn-danger',
+                                            'type'    => 'submit',
+                                            'content' => '<i class="bi bi-trash-fill"></i>',
+                                            'onclick' => "return confirm('Apakah anda yakin ya?');"
+                                        ];
+                                        echo form_button($data);
+
+                                        echo form_close(); ?>
+                                    </td>
+                                </tr>
+                            <?php
                                 unset($cetakLink);
                                 unset($cetakHarga);
                                 unset($namaSumber);
                                 unset($referensiId);
                                 unset($indeksKe);
                                 unset($hargaHitung);
-                                $Found = false;
-                                foreach ($trxReferensi as $trxR):
-                                    if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
-                                        $cetakLink[] = $trxR['link'];
-                                        $cetakHarga[] = $trxR['harga'];
-                                        $referensiId[] = $trxR['referensiId'];
-                                        $indeksKe[] = $trxR['indeks'];
-
-                                        foreach ($sumber as $s):
-                                            if ($s['idSumber'] == $trxR['sumberId']) {
-                                                $namaSumber[] = $s['namaSumber'];
-                                            }
-                                        endforeach;
-                                        $Found = true;
-                                    }
-                                endforeach;
-                                ?>
-
-                                <td style="max-width: 150px;">
-                                    <?php
-                                    $hargaTampil = '';
-                                    if ($Found && in_array('1', $indeksKe)) {
-                                        $indeks = array_search('1', $indeksKe);
-                                        $hargaTampil = $cetakHarga[$indeks];
-                                    ?>
-                                        <span class="float-start">
-                                            <?= anchor_popup($cetakLink[$indeks], $namaSumber[$indeks], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']); ?>
-                                        </span>
-                                        <span class="float-end">
-                                            <?= form_open('kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '1']); ?>
-
-                                            <button type="submit" class="btn btn-outline-danger border-0" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square "></i></button>
-
-                                            <?= form_close(); ?>
-                                        </span>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <span class="float-end">
-                                            <a href="" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r1'; ?>">add</a>
-                                        </span>
-                                    <?php
-                                    }
-                                    ?>
-
-                                </td>
-                                <td class="text-end">
-
-                                    <?php
-                                    if ($hargaTampil !== '') {
-                                        $hargaHitung[] = $hargaTampil;
-                                    }
-                                    ?>
-                                    <?= ($hargaTampil !== '') ? number_format($hargaTampil, 0, ",", ".") : ""; ?>
-
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">
-                                    <?php
-                                    $hargaTampil = '';
-                                    if ($Found && in_array('2', $indeksKe)) {
-                                        $indeks = array_search('2', $indeksKe);
-                                        $hargaTampil = $cetakHarga[$indeks];
-                                    ?>
-                                        <span class="float-start">
-                                            <?php
-                                            echo anchor_popup($cetakLink[$indeks], $namaSumber[$indeks], ['class' => 'link-body-emphasis link-offset-2 link-underline-opacity-10 link-underline-opacity-100-hover']);
-
-                                            ?></span>
-                                        <span class="float-end">
-                                            <?= form_open('kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['idReferensi' => $referensiId[$indeks], 'idKegiatan' => $idKegiatan, 'tandaHapus' => '1', '_method' => 'DELETE', 'indeksKe' => '2']); ?>
-
-                                            <button type="submit" class="btn btn-outline-danger border-0" onclick="return confirm('apakah anda yakin menghapus?');"><i class="bi bi-x-square "></i></button>
-
-                                            <?= form_close(); ?>
-                                        </span>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <span class="float-end">
-                                            <a href="" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                                                data-bs-toggle="modal" data-bs-target="#modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r2'; ?>">add
-                                            </a>
-                                        </span>
-                                    <?php
-                                    }
-                                    ?>
-                                </td>
-                                <td class="text-end">
-                                    <?php
-                                    if ($hargaTampil !== '') {
-                                        $hargaHitung[] = $hargaTampil;
-                                    }
-                                    ?>
-                                    <?= ($hargaTampil !== '') ? number_format($hargaTampil, 0, ",", ".") : ""; ?>
-
-                                <td class="text-end">
-                                    <?php
-                                    echo "Rp ";
-                                    ?>
-                                </td>
-                                <td class="text-end">
-                                    <?php
-                                    if (isset($hargaHitung) && count($hargaHitung) > 0) {
-                                        $cetakAverage = array_sum($hargaHitung) / count($hargaHitung);
-                                        echo number_format($cetakAverage, 0, ",", ".");
-                                    }
-                                    ?>
-                                </td>
-
-
-                                <td class="text-center">
-                                    <?php
-
-                                    echo form_open('kegiatan/' . $b['idTrxGiatBarang'], ['class' => 'd-inline'], ['_method' => 'DELETE', 'idKegiatan' => $idKegiatan]);
-
-                                    $data = [
-                                        'name'    => 'button',
-                                        'class'   => 'btn btn-danger',
-                                        'type'    => 'submit',
-                                        'content' => '<i class="bi bi-trash-fill"></i>',
-                                        'onclick' => "return confirm('Apakah anda yakin?');"
-                                    ];
-                                    echo form_button($data);
-
-                                    echo form_close(); ?>
-                                </td>
-                            </tr>
+                            } else { ?>
+                                <tr>
+                                    <td colspan="10" class="ps-4 text-uppercase fw-semibold text-primary-emphasis"><?= $b['nama']; ?></td>
+                                </tr>
                         <?php
-                            unset($cetakLink);
-                            unset($cetakHarga);
-                            unset($namaSumber);
-                            unset($referensiId);
-                            unset($indeksKe);
-                            unset($hargaHitung);
+                                $currentSubKegiatan = $b['nama'];
+                            }
                         endforeach;
                         ?>
 

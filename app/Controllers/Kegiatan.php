@@ -265,10 +265,13 @@ class Kegiatan extends BaseController
         } else {
             // proses hapus data barang
 
+
             if (!$this->request->getVar('tandaHapus')) {
+                // dd($this->request->getVar());
                 // Proses hapus di tabel trxGiatBarang
-                $this->trxGiatBarangModel->delete($id);
                 $this->trxReferensiModel->where(['trxGiatBarangId' => $id])->delete();
+                $this->trxSubKegiatanModel->where(['trxGiatBarangId' => $id])->delete();
+                $this->trxGiatBarangModel->delete($id);
                 session()->setFlashdata('pesan', 'Data Berhasil dihapus.');
                 return redirect()->to('kegiatan/' . $this->request->getVar('idKegiatan'));
             }
@@ -350,7 +353,7 @@ class Kegiatan extends BaseController
         $canvas = $dompdf->getCanvas();
         $totalPages = $canvas->get_page_count(); // Mendapatkan jumlah halaman PDF
         $data['jumlahHalaman'] = $totalPages;
-        // dd($data);
+
 
         $dompdf = new Dompdf($options); // Membuat instance baru untuk menghindari error
         $html2 = view('kegiatan/cetakPdf', $data);
