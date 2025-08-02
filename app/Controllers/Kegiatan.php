@@ -239,7 +239,6 @@ class Kegiatan extends BaseController
             'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
             'trxGiatBarang' => $this->trxGiatBarangModel->join('trxsubkegiatan', 'trxsubkegiatan.trxGiatBarangId=trxGiatBarang.idTrxGiatBarang')->where(['kegiatanId' => $idKegiatan])->orderBy('trxsubkegiatan.subKegiatanId')->findAll(),
 
-
             'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
             'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
             'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
@@ -325,9 +324,13 @@ class Kegiatan extends BaseController
             'kegiatan' => $kegiatan,
             'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
             'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
-            'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $kegiatanId])->findAll(),
+            // 'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $kegiatanId])->findAll(),
             'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
             'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
+
+            'trxGiatBarang' => $this->trxGiatBarangModel->join('trxsubkegiatan', 'trxsubkegiatan.trxGiatBarangId=trxGiatBarang.idTrxGiatBarang')->where(['kegiatanId' => $kegiatanId])->orderBy('trxsubkegiatan.subKegiatanId')->findAll(),
+
+            'trxSubKegiatan' => $this->trxSubKegiatanModel->join('subkegiatan', 'subkegiatan.idSubKegiatan=trxsubkegiatan.subKegiatanId')->join('trxgiatbarang', 'trxsubkegiatan.trxGiatBarangId=trxgiatbarang.idTrxGiatBarang')->where(['subkegiatan.kegiatanId' => $kegiatanId])->orderBy('subkegiatan.idSubKegiatan')->findAll(),
 
             'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
             'sumber' => $this->sumberModel->findAll()

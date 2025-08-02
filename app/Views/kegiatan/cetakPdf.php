@@ -212,7 +212,6 @@
             if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
                 $harga[] = $trxR['harga'];
             }
-
         endforeach;
         $hargaRata2 = array_sum($harga) / count($harga);
         $jumlahTiapBarang[] = $b['kebutuhan'] * $hargaRata2;
@@ -402,8 +401,24 @@
         <tbody style="overflow-wrap: break-word;">
             <?php
             $n = 1;
-            foreach ($trxGiatBarang as $b) :
+            $huruf = 'A';
+            $currentSubKegiatan = null;
+            // dd($trxGiatBarang);
+            foreach ($trxSubKegiatan as $b) :
+                if ($currentSubKegiatan !== $b['nama']) {
+
             ?>
+                    <tr>
+                        <td colspan="7" style="text-align: left;padding-left:20px;text-transform: uppercase;font-weight:bold;"><?= $huruf . '.  ' . $b['nama']; ?></td>
+                    </tr>
+                <?php
+                    $currentSubKegiatan = $b['nama'];
+                    $huruf++;
+                }
+
+                ?>
+
+                ?>
                 <tr>
                     <td><?= $n++; ?></td>
                     <td style="text-align: left;">
