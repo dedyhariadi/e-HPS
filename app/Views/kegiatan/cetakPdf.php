@@ -206,7 +206,6 @@
 
     <!-- perhitungan total HPS -->
     <?php
-    dd($trxReferensi);
     foreach ($trxGiatBarang as $b):
         // menghitung rata2
         foreach ($trxReferensi as $trxR) :
