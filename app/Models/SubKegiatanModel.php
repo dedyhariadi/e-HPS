@@ -18,7 +18,7 @@ class SubKegiatanModel extends Model
     ];
 
     protected $validationRules = [
-        'nama' => 'required|is_unique[subkegiatan.nama,idSubKegiatan,{idSubKegiatan}]',
+        // 'nama' => 'required|is_unique[subkegiatan.nama,idSubKegiatan,{idSubKegiatan}]',
     ];
 
     protected $validationMessages = [

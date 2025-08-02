@@ -17,8 +17,19 @@ use CodeIgniter\I18n\Time;
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col">
+                        <div class="card-header fs-5">
+                            <h5 class="card-title">KEGIATAN</h5>
+                        </div>
                         <div class="card-body fs-5">
-                            <h5 class="card-title"><?= $kegiatan['namaKegiatan']; ?></h5>
+                            <div class="row mt-3">
+                                <div class="col-3">
+                                    <p class="card-text"><b>Perihal</b></p>
+                                </div>
+                                <div class="col text-uppercase">:
+                                    <?= $kegiatan['namaKegiatan']; ?>
+                                </div>
+                            </div>
+
                             <div class="row mt-3">
                                 <div class="col-3">
                                     <p class="card-text"><b>Dasar</b></p>
@@ -132,10 +143,10 @@ use CodeIgniter\I18n\Time;
         <div class="col-6">
             <div class="card mb-3">
                 <div class="card-header fs-5">
-                    <h5 class="card-title">Sub Kegiatan</h5>
+                    <h5 class="card-title">SUB KEGIATAN</h5>
                 </div>
                 <div class="card-body fs-5">
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -208,7 +219,6 @@ use CodeIgniter\I18n\Time;
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php endif;
-            d($trxSubKegiatan);
             ?>
 
             <!-- akhir alert -->
