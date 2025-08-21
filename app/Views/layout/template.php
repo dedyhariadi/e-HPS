@@ -15,7 +15,6 @@
 
 
     <!-- bootstrap icon  -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> -->
     <?= link_tag('assets/css/bootstrap-icons-1.13.1/bootstrap-icons.min.css', 'stylesheet'); ?>
 
     <!-- My CSS -->
