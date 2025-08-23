@@ -355,7 +355,35 @@
                                 $char++;
                             };
                             ?>.&nbsp;&nbsp;&nbsp;
-                            Dari referensi website <a href="<?= $c[0]['link']; ?>" style="display: inline-block; max-width: 100%; word-break: break-all; text-align: justify;"><?= $c[0]['link']; ?></a> diketahui
+                            <?php
+                            // Masukkan zero-width-space untuk memperbolehkan pemenggalan URL panjang
+                            $rawLink = $c[0]['link'];
+                            $zws = "\xE2\x80\x8B"; // zero-width space utf-8
+                            // Sisipkan zero-width space setelah separator umum menggunakan str_replace
+                            $separators = ['/', '\\', '-', '.', '_', '?', '&', '='];
+                            $breakable = $rawLink;
+                            foreach ($separators as $sep) {
+                                $breakable = str_replace($sep, $sep . $zws, $breakable);
+                            }
+                            // Sisipkan zero-width-space setiap 40 karakter (menggunakan mb_ untuk unicode)
+                            $max = 40;
+                            $len = mb_strlen($breakable, 'UTF-8');
+                            if ($len > $max) {
+                                $parts = [];
+                                for ($i = 0; $i < $len; $i += $max) {
+                                    $parts[] = mb_substr($breakable, $i, $max, 'UTF-8');
+                                }
+                                $breakLink = implode($zws, $parts);
+                            } else {
+                                $breakLink = $breakable;
+                            }
+                            $linkEsc = htmlspecialchars($breakLink, ENT_QUOTES, 'UTF-8');
+                            $href = htmlspecialchars($rawLink, ENT_QUOTES, 'UTF-8');
+                            ?>
+                            Dari referensi website
+
+                            <a href="<?= $href; ?>" style="display:inline-block; word-break:break-all; overflow-wrap:anywhere; max-width:100%; color:blue; text-decoration:underline;"><?= $linkEsc; ?></a>
+                            diketahui
                             <?php
 
                             foreach ($barang as $brg) :
