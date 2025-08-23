@@ -312,61 +312,40 @@ class Kegiatan extends BaseController
 
     public function cetakPdf($kegiatanId = false)
     {
-        ob_start(); // Mulai output buffering
         $tandaTambah = $this->request->getVar('tandaTambah');
-
-
         $kegiatan = $this->kegiatanModel->getKegiatan($kegiatanId);
-
         $data = [
             'bulan' => $this->bulan,
             'idKegiatan' => $kegiatanId,
             'kegiatan' => $kegiatan,
             'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
             'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
-            // 'trxGiatBarang' => $this->trxGiatBarangModel->where(['kegiatanId' => $kegiatanId])->findAll(),
             'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
             'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
-
             'trxGiatBarang' => $this->trxGiatBarangModel->join('trxsubkegiatan', 'trxsubkegiatan.trxGiatBarangId=trxGiatBarang.idTrxGiatBarang')->where(['kegiatanId' => $kegiatanId])->orderBy('trxsubkegiatan.subKegiatanId')->findAll(),
-
             'trxSubKegiatan' => $this->trxSubKegiatanModel->join('subkegiatan', 'subkegiatan.idSubKegiatan=trxsubkegiatan.subKegiatanId')->join('trxgiatbarang', 'trxsubkegiatan.trxGiatBarangId=trxgiatbarang.idTrxGiatBarang')->where(['subkegiatan.kegiatanId' => $kegiatanId])->orderBy('subkegiatan.idSubKegiatan')->findAll(),
-
             'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
             'sumber' => $this->sumberModel->findAll()
         ];
 
-        ob_end_clean(); //untuk memperbaiki tulisan failed to load PDF document
-
-        $options = new Options();
+        $options = new \Dompdf\Options();
         $options->set('defaultFont', 'DejaVu Sans');
         $options->set('isRemoteEnabled', true);
-        $options->set('ishtml5ParserEnabled', true);
+        $options->set('isHtml5ParserEnabled', true);
         $options->set('isPhpEnabled', true);
 
-
-        $dompdf = new Dompdf($options);
+        $dompdf = new \Dompdf\Dompdf($options);
         $html = view('kegiatan/cetakPdf', $data);
-
         $dompdf->loadHtml($html);
-
         $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render(); //untuk mendapatkan jumlah halaman pdf
+        $dompdf->render();
 
-        $canvas = $dompdf->getCanvas();
-        $totalPages = $canvas->get_page_count(); // Mendapatkan jumlah halaman PDF
-        $data['jumlahHalaman'] = $totalPages;
-
-
-        $dompdf = new Dompdf($options); // Membuat instance baru untuk menghindari error
-        $html2 = view('kegiatan/cetakPdf', $data);
-        $dompdf->loadHtml($html2);
-
-        $dompdf->render(); //render ulang untuk mengirim jumlahHalaman
-        $dompdf->stream('kegiatanku.pdf', array(
-            'Attachment' => 0 // 0 untuk menampilkan di browser, 1 untuk mengunduh
-
-        ));
+        // Bersihkan buffer output sebelum header
+        if (ob_get_length()) ob_end_clean();
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: inline; filename="kegiatanku.pdf"');
+        echo $dompdf->output();
+        exit;
     }
 
     public function edit($idKegiatan = false, $errors = false)

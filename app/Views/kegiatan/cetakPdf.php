@@ -355,7 +355,7 @@
                                 $char++;
                             };
                             ?>.&nbsp;&nbsp;&nbsp;
-                            Dari referensi website <?= $c[0]['link']; ?> diketahui
+                            Dari referensi website <a href="<?= $c[0]['link']; ?>" style="display: inline-block; max-width: 100%; word-break: break-all; text-align: justify;"><?= $c[0]['link']; ?></a> diketahui
                             <?php
 
                             foreach ($barang as $brg) :
