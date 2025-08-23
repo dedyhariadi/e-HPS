@@ -206,6 +206,9 @@
 
     <!-- perhitungan total HPS -->
     <?php
+
+    use Sabberworm\CSS\Property\Charset;
+
     foreach ($trxGiatBarang as $b):
         // menghitung rata2
         foreach ($trxReferensi as $trxR) :
@@ -307,7 +310,7 @@
             <td>Total HPS = Rp <?= number_format($hps, 2, ",", "."); ?></td>
         </tr>
         <tr>
-            <td style="width: 30px;">2. </td>
+            <td style="width: 30px;">2.</td>
             <td>Referensi :</td>
         </tr>
         <tr>
@@ -327,72 +330,35 @@
         foreach ($trxGiatBarang as $b) : //list barang yang dipilih
             foreach ($trxReferensi as $trxR) :
                 if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
-                    $cetak[$a] = [
-                        [
-                            'link' => $trxR['link'],
-                            'harga' => $trxR['harga']
-                        ]
+                    $cetak[] = [
+                        'link' => $trxR['link'],
+                        'harga' => $trxR['harga']
                     ];
-                    $a++;
                 }
             endforeach;
 
-            //pastikan ada referensi yang sudah dipilih
-            if (isset($cetak)) {
-                foreach ($cetak as $c):
+            if (!empty($cetak)) {
+                foreach ($cetak as $c) :
         ?>
                     <tr>
                         <td style="width: 10px;"></td>
-                        <td style="overflow-wrap:anywhere; max-width: 60%;">
-                            <?php
-                            for ($huruf = 1; $huruf <= $banyakHuruf; $huruf++) {
-                                echo $char;
-                            }
-                            if ($char == "z") {
-                                $banyakHuruf++;
-                                $char = "a";
-                            } else {
+                        <td>
+                            <div style="text-align:justify; text-justify:inter-word;">
+                                <?php
+                                // Print the letter (c., d., etc.) before the reference
+                                echo $char . '.&nbsp;&nbsp;&nbsp;';
+                                $rawLink = $c['link'];
+                                $kalimat = 'Dari referensi website ' . $rawLink;
+                                echo $kalimat . ' diketahui ';
+                                foreach ($barang as $brg) :
+                                    if ($b['barangId'] == $brg['idBarang']) {
+                                        echo "1 " . $brg['namaSatuan'] . " " . $brg['namaBarang'];
+                                    }
+                                endforeach;
+                                echo ' tanpa PPN 12% seharga Rp ' . number_format($c['harga'], 0, ",", ".");
                                 $char++;
-                            };
-                            ?>.&nbsp;&nbsp;&nbsp;
-                            <?php
-                            // Masukkan zero-width-space untuk memperbolehkan pemenggalan URL panjang
-                            $rawLink = $c[0]['link'];
-                            $zws = "\xE2\x80\x8B"; // zero-width space utf-8
-                            // Sisipkan zero-width space setelah separator umum menggunakan str_replace
-                            $separators = ['/', '\\', '-', '.', '_', '?', '&', '='];
-                            $breakable = $rawLink;
-                            foreach ($separators as $sep) {
-                                $breakable = str_replace($sep, $sep . $zws, $breakable);
-                            }
-                            // Sisipkan zero-width-space setiap 40 karakter (menggunakan mb_ untuk unicode)
-                            $max = 40;
-                            $len = mb_strlen($breakable, 'UTF-8');
-                            if ($len > $max) {
-                                $parts = [];
-                                for ($i = 0; $i < $len; $i += $max) {
-                                    $parts[] = mb_substr($breakable, $i, $max, 'UTF-8');
-                                }
-                                $breakLink = implode($zws, $parts);
-                            } else {
-                                $breakLink = $breakable;
-                            }
-                            $linkEsc = htmlspecialchars($breakLink, ENT_QUOTES, 'UTF-8');
-                            $href = htmlspecialchars($rawLink, ENT_QUOTES, 'UTF-8');
-                            ?>
-                            Dari referensi website
-
-                            <a href="<?= $href; ?>" style="display:inline-block; word-break:break-all; overflow-wrap:anywhere; max-width:100%; color:blue; text-decoration:underline;"><?= $linkEsc; ?></a>
-                            diketahui
-                            <?php
-
-                            foreach ($barang as $brg) :
-                                if ($b['barangId'] == $brg['idBarang']) {
-                                    echo "1 " . $brg['namaSatuan'] . " " . $brg['namaBarang'];
-                                }
-                            endforeach;
-                            ?>
-                            tanpa PPN 12% seharga Rp <?= number_format($c[0]['harga'], 0, ",", "."); ?>
+                                ?>
+                            </div>
                         </td>
                     </tr>
         <?php
@@ -401,10 +367,8 @@
             }
         endforeach;
         ?>
-
-        <br>
         <tr>
-            <td colspan=" 2">3. &nbsp;&nbsp;&nbsp;&nbsp;Analisa Harga.&nbsp;&nbsp;&nbsp;Dari referensi tersebut diatas dapat diperhitungkan bahwa jumlah anggaran <?= $kegiatan['namaKegiatan']; ?> adalah sebagai berikut : <br><br></td>
+            <td colspan="2">3. &nbsp;&nbsp;&nbsp;&nbsp;Analisa Harga.&nbsp;&nbsp;&nbsp;Dari referensi tersebut diatas dapat diperhitungkan bahwa jumlah anggaran <?= $kegiatan['namaKegiatan']; ?> adalah sebagai berikut : <br><br></td>
         </tr>
         <tr>
             <td style="width: 30px;"></td>
