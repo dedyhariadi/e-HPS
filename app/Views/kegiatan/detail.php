@@ -530,6 +530,7 @@ use CodeIgniter\I18n\Time;
                         <div class="row ms-5 mt-3">
                             <label for="combobox" class="d-inline form-label col-sm-4">Material</label>
                             <div class="col-sm-4 d-inline">
+<<<<<<< HEAD
                                 
                                 <?= form_dropdown('idBarang', array_column($barang, 'namaBarang', 'idBarang'), '', ['class' => 'form-select mb-3 fs-4', 'id' => 'idBarang']); ?>
 
@@ -549,6 +550,11 @@ use CodeIgniter\I18n\Time;
                                 }
                                 </script>
 
+=======
+                                <?php
+                                echo form_dropdown('idBarang', array_column($barang, 'namaBarang', 'idBarang'), '', ['class' => 'form-select mb-3 fs-4', 'id' => 'idBarang']);
+                                ?>
+>>>>>>> ad64c484f44b1275bf9d2be00dab6038283e721b
                             </div>
                             <div class="d-inline col-sm-2">
                                 <?php
