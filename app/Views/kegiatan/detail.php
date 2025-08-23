@@ -530,11 +530,25 @@ use CodeIgniter\I18n\Time;
                         <div class="row ms-5 mt-3">
                             <label for="combobox" class="d-inline form-label col-sm-4">Material</label>
                             <div class="col-sm-4 d-inline">
-                                <select class="form-select mb-3 fs-4" id="barang-search" name="idBarang" style="width:100%">
-                                    <!-- Select2 akan mengisi data secara AJAX -->
-                                </select>
-                                <?php
-                                ?>
+                                
+                                <?= form_dropdown('idBarang', array_column($barang, 'namaBarang', 'idBarang'), '', ['class' => 'form-select mb-3 fs-4', 'id' => 'idBarang']); ?>
+
+                                <input type="text" id="searchBarang" class="form-control mb-2" placeholder="Cari nama barang..." onkeyup="filterBarangDropdown()">
+
+                                <script>
+                                function filterBarangDropdown() {
+                                    var input, filter, select, options, i, txtValue;
+                                    input = document.getElementById('searchBarang');
+                                    filter = input.value.toUpperCase();
+                                    select = document.getElementById('idBarang');
+                                    options = select.getElementsByTagName('option');
+                                    for (i = 0; i < options.length; i++) {
+                                        txtValue = options[i].textContent || options[i].innerText;
+                                        options[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+                                    }
+                                }
+                                </script>
+
                             </div>
                             <div class="d-inline col-sm-2">
                                 <?php
@@ -546,38 +560,7 @@ use CodeIgniter\I18n\Time;
                         </div>
 
                         <div class="row ms-5 mt-3">
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-                            <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-                            <script>
-                                $(document).ready(function() {
-                                    $('#barang-search').select2({
-                                        placeholder: 'Cari barang...',
-                                        allowClear: true,
-                                        ajax: {
-                                            url: '/barang/search',
-                                            dataType: 'json',
-                                            delay: 250,
-                                            data: function(params) {
-                                                return {
-                                                    q: params.term // search term
-                                                };
-                                            },
-                                            processResults: function(data) {
-                                                return {
-                                                    results: $.map(data, function(item) {
-                                                        return {
-                                                            id: item.idBarang,
-                                                            text: item.namaBarang
-                                                        }
-                                                    })
-                                                };
-                                            },
-                                            cache: true
-                                        },
-                                        minimumInputLength: 1
-                                    });
-                                });
-                            </script>
+
                             <label for="combobox" class="d-inline form-label col-sm-4">Sub Kegiatan</label>
                             <div class="col-sm-4 d-inline">
                                 <select class="form-select mb-3 fs-4" id="combobox" name="idSubKegiatan">
@@ -805,4 +788,6 @@ use CodeIgniter\I18n\Time;
 
     <!-- akhir content -->
 
+  
+    
     <?= $this->endSection(); ?>
