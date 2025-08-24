@@ -252,4 +252,20 @@ class Barang extends BaseController
         session()->setFlashdata('pesan', 'Data Berhasil di UPDATE.');
         return redirect()->to('barang');
     }
+
+
+    public function search()
+    {
+        $term = $this->request->getGet('q');
+        $result = [];
+        if ($term) {
+            $result = $this->barangModel
+                ->like('namaBarang', $term)
+                ->findAll();
+        } else {
+            $result = $this->barangModel->findAll();
+        }
+        // Format sesuai kebutuhan select
+        return $this->response->setJSON($result);
+    }
 }
