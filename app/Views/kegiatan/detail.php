@@ -536,7 +536,7 @@ use CodeIgniter\I18n\Time;
                         </label>
                         <div class="col-sm-4">
 
-                            <input type="text" id="searchBarang" class="form-control mb-2" placeholder="Cari nama barang..." onkeyup="cariBarangRealtime()" style="display:none;" onblur="hideSearchBarang()">
+                            <input type="text" id="searchBarang" class="form-control mb-2" placeholder="Cari nama barang..." onkeyup="cariBarangRealtime()" style="display:none;" onblur="hideSearchBarang()" autocomplete="off">
 
                             <span id="dropdownBarangContainer">
                                 <?php
