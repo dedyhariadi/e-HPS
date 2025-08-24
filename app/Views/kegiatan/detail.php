@@ -528,14 +528,25 @@ use CodeIgniter\I18n\Time;
                     <?= form_open(''); ?>
 
                     <div class="row ms-5 mt-3">
-                        <label for="combobox" class="d-inline form-label col-sm-4">Material</label>
+                        <label for="combobox" class="d-inline form-label col-sm-4">Material
+                            <?php
+                            session()->setFlashdata('idKegiatan', $idKegiatan);
+                            echo anchor('barang/create', 'add', ['class' => 'link']);
+                            ?>
+                        </label>
                         <div class="col-sm-4">
-                            <input type="text" id="searchBarang" class="form-control mb-2" placeholder="Cari nama barang...">
+
+                            <input type="text" id="searchBarang" class="form-control mb-2" placeholder="Cari nama barang..." onkeyup="cariBarangRealtime()" style="display:none;" onblur="hideSearchBarang()">
+
                             <span id="dropdownBarangContainer">
                                 <?php
-                                echo form_dropdown('idBarang', array_column($barang, 'namaBarang', 'idBarang'), '', ['class' => 'form-select mb-3 fs-4', 'id' => 'idBarang']);
-                                session()->setFlashdata('idKegiatan', $idKegiatan);
-                                echo anchor('barang/create', 'add', ['class' => 'link']);
+                                echo form_dropdown('idBarang', array_column($barang, 'namaBarang', 'idBarang'), '', [
+                                    'class' => 'form-select mb-3 fs-4',
+                                    'id' => 'idBarang',
+                                    'onfocus' => 'showSearchBarang()',
+                                    'onblur' => 'hideSearchBarang()'
+                                ]);
+
                                 ?>
                             </span>
                         </div>
@@ -765,4 +776,3 @@ use CodeIgniter\I18n\Time;
 
 
     <?= $this->endSection(); ?>
-    

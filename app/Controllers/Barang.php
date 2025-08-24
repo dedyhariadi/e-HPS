@@ -261,9 +261,11 @@ class Barang extends BaseController
         if ($term) {
             $result = $this->barangModel
                 ->like('namaBarang', $term)
-                ->findAll(20); // batasi 20 hasil
+                ->findAll();
+        } else {
+            $result = $this->barangModel->findAll();
         }
-        // Format sesuai kebutuhan select2
+        // Format sesuai kebutuhan select
         return $this->response->setJSON($result);
     }
 }

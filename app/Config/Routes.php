@@ -14,6 +14,7 @@ $routes->match(['GET', 'POST'], 'barang', 'Barang::index');
 $routes->get('barang/create', 'Barang::create');  // route ke create
 $routes->get('barang/edit/(:segment)', 'Barang::form_update/$1');  // route dari detail ke form_update
 $routes->post('barang/proses_update/(:num)', 'Barang::proses_update/$1');  // route dari detail ke form_update
+$routes->get('barang/search', 'Barang::search'); // ajax namabarang di detail kegiatan
 
 $routes->post('barang/save', 'Barang::simpan'); //route ke save
 $routes->delete('barang/(:num)', 'Barang::hapus/$1'); // route ke hapus

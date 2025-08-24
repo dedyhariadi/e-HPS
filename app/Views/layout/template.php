@@ -28,11 +28,9 @@
 
 
 
-
-
     <?= $this->include('layout/navbar'); ?>
-    <?= $this->renderSection('content'); ?>
 
+    <?= $this->renderSection('content'); ?>
 
 
 
@@ -45,12 +43,12 @@
 
 
     <!--jquery -->
-    <?= script_tag('assets/jss/jquery-3.7.1.min.js'); ?>
-    <?= script_tag('assets/jss/jquery-ui.min.js'); ?>
+    <?= script_tag('assets/js/jquery-3.7.1.min.js'); ?>
+    <?= script_tag('assets/js/jquery-ui.min.js'); ?>
 
 
     <!-- script js ku -->
-    <?= script_tag('assets/jss/myscript.js'); ?>
+    <?= script_tag('assets/js/myscript.js'); ?>
 
 </body>
 
