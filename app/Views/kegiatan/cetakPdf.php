@@ -206,6 +206,9 @@
 
     <!-- perhitungan total HPS -->
     <?php
+
+    use Sabberworm\CSS\Property\Charset;
+
     foreach ($trxGiatBarang as $b):
         // menghitung rata2
         foreach ($trxReferensi as $trxR) :
@@ -307,7 +310,7 @@
             <td>Total HPS = Rp <?= number_format($hps, 2, ",", "."); ?></td>
         </tr>
         <tr>
-            <td style="width: 30px;">2. </td>
+            <td style="width: 30px;">2.</td>
             <td>Referensi :</td>
         </tr>
         <tr>
@@ -327,44 +330,35 @@
         foreach ($trxGiatBarang as $b) : //list barang yang dipilih
             foreach ($trxReferensi as $trxR) :
                 if ($trxR['trxGiatBarangId'] == $b['idTrxGiatBarang']) {
-                    $cetak[$a] = [
-                        [
-                            'link' => $trxR['link'],
-                            'harga' => $trxR['harga']
-                        ]
+                    $cetak[] = [
+                        'link' => $trxR['link'],
+                        'harga' => $trxR['harga']
                     ];
-                    $a++;
                 }
             endforeach;
 
-            //pastikan ada referensi yang sudah dipilih
-            if (isset($cetak)) {
-                foreach ($cetak as $c):
+            if (!empty($cetak)) {
+                foreach ($cetak as $c) :
         ?>
                     <tr>
                         <td style="width: 10px;"></td>
-                        <td style="overflow-wrap:anywhere; max-width: 60%;">
-                            <?php
-                            for ($huruf = 1; $huruf <= $banyakHuruf; $huruf++) {
-                                echo $char;
-                            }
-                            if ($char == "z") {
-                                $banyakHuruf++;
-                                $char = "a";
-                            } else {
+                        <td>
+                            <div style="text-align:justify; text-justify:inter-word;">
+                                <?php
+                                // Print the letter (c., d., etc.) before the reference
+                                echo $char . '.&nbsp;&nbsp;&nbsp;';
+                                $rawLink = $c['link'];
+                                $kalimat = 'Dari referensi website ' . $rawLink;
+                                echo $kalimat . ' diketahui ';
+                                foreach ($barang as $brg) :
+                                    if ($b['barangId'] == $brg['idBarang']) {
+                                        echo "1 " . $brg['namaSatuan'] . " " . $brg['namaBarang'];
+                                    }
+                                endforeach;
+                                echo ' tanpa PPN 12% seharga Rp ' . number_format($c['harga'], 0, ",", ".");
                                 $char++;
-                            };
-                            ?>.&nbsp;&nbsp;&nbsp;
-                            Dari referensi website <?= $c[0]['link']; ?> diketahui
-                            <?php
-
-                            foreach ($barang as $brg) :
-                                if ($b['barangId'] == $brg['idBarang']) {
-                                    echo "1 " . $brg['namaSatuan'] . " " . $brg['namaBarang'];
-                                }
-                            endforeach;
-                            ?>
-                            tanpa PPN 12% seharga Rp <?= number_format($c[0]['harga'], 0, ",", "."); ?>
+                                ?>
+                            </div>
                         </td>
                     </tr>
         <?php
@@ -373,10 +367,8 @@
             }
         endforeach;
         ?>
-
-        <br>
         <tr>
-            <td colspan=" 2">3. &nbsp;&nbsp;&nbsp;&nbsp;Analisa Harga.&nbsp;&nbsp;&nbsp;Dari referensi tersebut diatas dapat diperhitungkan bahwa jumlah anggaran <?= $kegiatan['namaKegiatan']; ?> adalah sebagai berikut : <br><br></td>
+            <td colspan="2">3. &nbsp;&nbsp;&nbsp;&nbsp;Analisa Harga.&nbsp;&nbsp;&nbsp;Dari referensi tersebut diatas dapat diperhitungkan bahwa jumlah anggaran <?= $kegiatan['namaKegiatan']; ?> adalah sebagai berikut : <br><br></td>
         </tr>
         <tr>
             <td style="width: 30px;"></td>

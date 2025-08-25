@@ -442,7 +442,7 @@ use CodeIgniter\I18n\Time;
 
     <!-- Modal Form Tambah Sub Kegiatan-->
 
-    <div class="modal fade " id="tambahSubKegiatanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal" id="tambahSubKegiatanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -481,7 +481,7 @@ use CodeIgniter\I18n\Time;
         $idmodal = "editSubKegiatanModal" . $n++;
     ?>
 
-        <div class="modal fade" id=<?= $idmodal; ?> tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal" id=<?= $idmodal; ?> tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -516,7 +516,7 @@ use CodeIgniter\I18n\Time;
 
     <!-- Modal Form Tambah Barang-->
 
-    <div class="modal fade " id="tambahBarangModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal" id="tambahBarangModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -524,69 +524,52 @@ use CodeIgniter\I18n\Time;
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body fs-3">
-                    <form action="" method="post">
-                        <?= csrf_field(); ?>
 
-                        <div class="row ms-5 mt-3">
-                            <label for="searchBarang" class="d-inline form-label col-sm-4">Material</label>
-                            <div class="col-sm-4 d-inline">
-                                <!-- Input pencarian -->
-                                <input type="text" id="searchBarang" class="form-control fs-4 mb-2" placeholder="Cari material..." onkeyup="searchBarang()" autocomplete="off">
-                                
-                                <!-- Dropdown barang dengan ID yang sesuai -->
-                                <?= form_dropdown('idBarang', array_column($barang, 'namaBarang', 'idBarang'), '', ['class' => 'form-control fs-4', 'id' => 'idBarang', 'onchange' => 'this.form.submit();']); ?>
-                                
+                    <?= form_open(''); ?>
 
-                                <!-- <script>
-                                    $(document).ready(function() {
-                                        $('#idBarang').on('input', function() {
-                                            var value = $(this).val();
-                                            $('#idBarang option').each(function() {
-                                                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) == -1)
-                                                    $(this).hide();
-                                                else
-                                                    $(this).show();
-                                            });
-                                        });
-                                    });
-                                </script> -->
+                    <div class="row ms-5 mt-3">
+                        <label for="combobox" class="d-inline form-label col-sm-4">Material
+                            <?php
+                            session()->setFlashdata('idKegiatan', $idKegiatan);
+                            echo anchor('barang/create', 'add', ['class' => 'link']);
+                            ?>
+                        </label>
+                        <div class="col-sm-4">
 
-                               
-                            </div>
-                            <div class="d-inline col-sm-2">
+                            <input type="text" id="searchBarang" class="form-control mb-2" placeholder="Cari nama barang..." onkeyup="cariBarangRealtime()" style="display:none;" onblur="hideSearchBarang()" autocomplete="off">
+
+                            <span id="dropdownBarangContainer">
                                 <?php
-                                session()->setFlashdata('idKegiatan', $idKegiatan);
-                                echo anchor('barang/create', 'add', ['class' => '']);
+                                echo form_dropdown('idBarang', array_column($barang, 'namaBarang', 'idBarang'), '', [
+                                    'class' => 'form-select mb-3 fs-4',
+                                    'id' => 'idBarang',
+                                    'onfocus' => 'showSearchBarang()',
+                                    'onblur' => 'hideSearchBarang()'
+                                ]);
+
                                 ?>
-
-                            </div>
+                            </span>
                         </div>
+                    </div>
 
-                        <div class="row ms-5 mt-3">
-                            <label for="combobox" class="d-inline form-label col-sm-4">Sub Kegiatan</label>
-                            <div class="col-sm-4 d-inline">
-                                <select class="form-select mb-3 fs-4" id="combobox" name="idSubKegiatan">
-                                    <?php foreach ($subKegiatan as $sk) : ?>
-                                        <option value=<?= $sk['idSubKegiatan']; ?>><?= $sk['nama']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <?php
-                                ?>
-                            </div>
+                    <div class="row ms-5 mt-3">
+                        <label for="combobox" class="d-inline form-label col-sm-4">Sub Kegiatan</label>
+                        <div class="col-sm-4">
+                            <?php
+                            echo form_dropdown('idSubKegiatan', array_column($subKegiatan, 'nama', 'idSubKegiatan'), '', ['class' => 'form-select mb-3 fs-4', 'id' => 'idSubKegiatan']);
+                            ?>
+
                         </div>
+                    </div>
 
-                        <div class="row ms-5 mt-2">
-                            <label for="kebutuhan" class="col-sm-4 col-form-label">Kebutuhan</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control <?= (isset($errors['kebutuhan'])) ? 'is-invalid' : ''; ?> fs-4" name="kebutuhan" value="<?= set_value('kebutuhan'); ?>">
-                                <div class="invalid-feedback">
-                                    <?= (isset($errors['kebutuhan'])) ? $errors['kebutuhan'] : ''; ?>
-                                </div>
-                            </div>
+                    <div class="row ms-5 mt-3">
+                        <label for="kebutuhan" class="col-sm-4 col-form-label d-inline">Kebutuhan</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control <?= (isset($errors['kebutuhan'])) ? 'is-invalid' : ''; ?> fs-4" name="kebutuhan" value="<?= set_value('kebutuhan'); ?>">
                         </div>
-
-
+                    </div>
                 </div>
+
                 <div class="row  text-center my-4">
                     <div class="col">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -595,7 +578,7 @@ use CodeIgniter\I18n\Time;
                 </div>
                 <input type="hidden" name="tandaTambah" value="1">
 
-                </form>
+                <?= form_close(); ?>
             </div>
         </div>
     </div>
@@ -606,7 +589,7 @@ use CodeIgniter\I18n\Time;
         <!-- Modal Form Tambah Referensi Tiap Barang-->
 
         <!-- modal tambah referensi 1 -->
-        <div class="modal fade" id="modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r1'; ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal" id="modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r1'; ?>" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -696,7 +679,7 @@ use CodeIgniter\I18n\Time;
         </div>
 
         <!-- modal tambah referensi 2 -->
-        <div class="modal fade" id="modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r2'; ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal" id="modalTambahReferensi<?= $b['idTrxGiatBarang'] . 'r2'; ?>" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -789,62 +772,5 @@ use CodeIgniter\I18n\Time;
     <?php endforeach; ?>
 
     <!-- akhir content -->
-
-<script>
-function searchBarang() {
-    var input, filter, select, options, i, txtValue;
-    input = document.getElementById("searchBarang");
-    filter = input.value.toUpperCase();
-    select = document.getElementById("idBarang");
-    options = select.getElementsByTagName("option");
-
-    // Reset dropdown jika pencarian kosong
-    if (filter === "") {
-        for (i = 0; i < options.length; i++) {
-            options[i].style.display = "";
-        }
-        return;
-    }
-
-    // Filter options berdasarkan teks pencarian
-    for (i = 0; i < options.length; i++) {
-        txtValue = options[i].textContent || options[i].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            options[i].style.display = "";
-        } else {
-            options[i].style.display = "none";
-        }
-    }
-}
-
-// Event listener yang akan dijalankan setelah DOM ready
-document.addEventListener('DOMContentLoaded', function() {
-    // Event listener untuk memilih item dari dropdown berdasarkan pencarian
-    var searchInput = document.getElementById("searchBarang");
-    var selectBarang = document.getElementById("idBarang");
-    
-    if (searchInput && selectBarang) {
-        searchInput.addEventListener("input", function() {
-            var searchValue = this.value.toLowerCase();
-            var options = selectBarang.getElementsByTagName("option");
-            
-            // Jika ada match exact, pilih otomatis
-            for (var i = 0; i < options.length; i++) {
-                var optionText = options[i].textContent || options[i].innerText;
-                if (optionText.toLowerCase() === searchValue) {
-                    selectBarang.selectedIndex = i;
-                    break;
-                }
-            }
-        });
-
-        // Sinkronisasi input search dengan dropdown selection
-        selectBarang.addEventListener("change", function() {
-            var selectedText = this.options[this.selectedIndex].text;
-            searchInput.value = selectedText;
-        });
-    }
-});
-</script>
 
     <?= $this->endSection(); ?>

@@ -15,7 +15,6 @@
 
 
     <!-- bootstrap icon  -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> -->
     <?= link_tag('assets/css/bootstrap-icons-1.13.1/bootstrap-icons.min.css', 'stylesheet'); ?>
 
     <!-- My CSS -->
@@ -29,11 +28,9 @@
 
 
 
-
-
     <?= $this->include('layout/navbar'); ?>
-    <?= $this->renderSection('content'); ?>
 
+    <?= $this->renderSection('content'); ?>
 
 
 
@@ -46,14 +43,19 @@
 
 
     <!--jquery -->
-    <?= script_tag('assets/jss/jquery-3.7.1.min.js'); ?>
-    <?= script_tag('assets/jss/jquery-ui.min.js'); ?>
+    <?= script_tag('assets/js/jquery-3.7.1.min.js'); ?>
+    <?= script_tag('assets/js/jquery-ui.min.js'); ?>
 
 
     <!-- script js ku -->
+<<<<<<< HEAD
     <?= script_tag('assets/jss/myscript.js'); ?>
     
    
+=======
+    <?= script_tag('assets/js/myscript.js'); ?>
+
+>>>>>>> a66bccbe3f321082791b92745f59a2b69cea644e
 </body>
 
 </html>
