@@ -52,7 +52,8 @@
 
     <!-- script js ku -->
     <?= script_tag('assets/jss/myscript.js'); ?>
-
+    
+   
 </body>
 
 </html>

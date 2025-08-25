@@ -528,15 +528,30 @@ use CodeIgniter\I18n\Time;
                         <?= csrf_field(); ?>
 
                         <div class="row ms-5 mt-3">
-                            <label for="combobox" class="d-inline form-label col-sm-4">Material</label>
+                            <label for="searchBarang" class="d-inline form-label col-sm-4">Material</label>
                             <div class="col-sm-4 d-inline">
-                                <select class="form-select mb-3 fs-4" id="combobox" name="idBarang">
-                                    <?php foreach ($barang as $b) : ?>
-                                        <option value=<?= $b['idBarang']; ?>><?= $b['namaBarang']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <?php
-                                ?>
+                                <!-- Input pencarian -->
+                                <input type="text" id="searchBarang" class="form-control fs-4 mb-2" placeholder="Cari material..." onkeyup="searchBarang()" autocomplete="off">
+                                
+                                <!-- Dropdown barang dengan ID yang sesuai -->
+                                <?= form_dropdown('idBarang', array_column($barang, 'namaBarang', 'idBarang'), '', ['class' => 'form-control fs-4', 'id' => 'idBarang', 'onchange' => 'this.form.submit();']); ?>
+                                
+
+                                <!-- <script>
+                                    $(document).ready(function() {
+                                        $('#idBarang').on('input', function() {
+                                            var value = $(this).val();
+                                            $('#idBarang option').each(function() {
+                                                if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) == -1)
+                                                    $(this).hide();
+                                                else
+                                                    $(this).show();
+                                            });
+                                        });
+                                    });
+                                </script> -->
+
+                               
                             </div>
                             <div class="d-inline col-sm-2">
                                 <?php
@@ -774,5 +789,62 @@ use CodeIgniter\I18n\Time;
     <?php endforeach; ?>
 
     <!-- akhir content -->
+
+<script>
+function searchBarang() {
+    var input, filter, select, options, i, txtValue;
+    input = document.getElementById("searchBarang");
+    filter = input.value.toUpperCase();
+    select = document.getElementById("idBarang");
+    options = select.getElementsByTagName("option");
+
+    // Reset dropdown jika pencarian kosong
+    if (filter === "") {
+        for (i = 0; i < options.length; i++) {
+            options[i].style.display = "";
+        }
+        return;
+    }
+
+    // Filter options berdasarkan teks pencarian
+    for (i = 0; i < options.length; i++) {
+        txtValue = options[i].textContent || options[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            options[i].style.display = "";
+        } else {
+            options[i].style.display = "none";
+        }
+    }
+}
+
+// Event listener yang akan dijalankan setelah DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Event listener untuk memilih item dari dropdown berdasarkan pencarian
+    var searchInput = document.getElementById("searchBarang");
+    var selectBarang = document.getElementById("idBarang");
+    
+    if (searchInput && selectBarang) {
+        searchInput.addEventListener("input", function() {
+            var searchValue = this.value.toLowerCase();
+            var options = selectBarang.getElementsByTagName("option");
+            
+            // Jika ada match exact, pilih otomatis
+            for (var i = 0; i < options.length; i++) {
+                var optionText = options[i].textContent || options[i].innerText;
+                if (optionText.toLowerCase() === searchValue) {
+                    selectBarang.selectedIndex = i;
+                    break;
+                }
+            }
+        });
+
+        // Sinkronisasi input search dengan dropdown selection
+        selectBarang.addEventListener("change", function() {
+            var selectedText = this.options[this.selectedIndex].text;
+            searchInput.value = selectedText;
+        });
+    }
+});
+</script>
 
     <?= $this->endSection(); ?>
