@@ -48,14 +48,8 @@
 
 
     <!-- script js ku -->
-<<<<<<< HEAD
-    <?= script_tag('assets/jss/myscript.js'); ?>
-    
-   
-=======
     <?= script_tag('assets/js/myscript.js'); ?>
 
->>>>>>> a66bccbe3f321082791b92745f59a2b69cea644e
 </body>
 
 </html>
