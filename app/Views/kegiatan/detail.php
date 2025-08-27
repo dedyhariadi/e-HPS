@@ -534,13 +534,13 @@ use CodeIgniter\I18n\Time;
                             echo anchor('barang/create', 'add', ['class' => 'link']);
                             ?>
                         </label>
-                        <div class="col-sm-4 position-relative">
+                        <div class="col-sm-5 position-relative">
 
                             <input type="text" id="searchBarang" class="form-control mb-2 fs-5" placeholder="Cari nama barang..." onkeyup="cariBarangRealtime()" onfocus="showDropdown()" onblur="hideDropdown()" autocomplete="off">
 
                             <input type="hidden" name="idBarang" id="idBarangHidden" value="">
 
-                            <div id="customDropdown" class="dropdown-menu show border shadow-sm" style="display: none; max-height: 180px; overflow-y: auto; position: absolute; top: 100%; left: 0; right: 0; z-index: 1000; background-color: white;">
+                            <div id="customDropdown" class="dropdown-menu show border shadow-sm" style="display: none; max-height: 180px; overflow-y: auto; position: absolute; top: 100%; left: 0; width: 300px; z-index: 1000; background-color: white;">
                                 <ul id="optionList" class="list-group list-group-flush">
                                     <?php foreach ($barang as $brg): ?>
                                         <li class="list-group-item list-group-item-action py-2 px-3 fs-5" data-value="<?= $brg['idBarang']; ?>" onclick="selectOption('<?= $brg['idBarang']; ?>', '<?= $brg['namaBarang']; ?>')" style="cursor: pointer; font-size: 14px;">
