@@ -343,19 +343,25 @@
                     <tr>
                         <td style="width: 10px;"></td>
                         <td>
-                            <div style="text-align:justify; text-justify:inter-word;">
+                            <div style="text-align:justify; word-spacing: 0.2em; letter-spacing: 0.05em;">
                                 <?php
+                                $jarakSpasi = 12;
                                 // Print the letter (c., d., etc.) before the reference
-                                echo $char . '.&nbsp;&nbsp;&nbsp;';
+                                $text = $char . '.&nbsp;&nbsp;&nbsp;';
                                 $rawLink = $c['link'];
+                                // Tambahkan spasi setiap 12 karakter untuk link panjang
+                                if (strlen($rawLink) > $jarakSpasi) {
+                                    $rawLink = preg_replace('/(.{12})/', '$1 ', $rawLink);
+                                }
                                 $kalimat = 'Dari referensi website ' . $rawLink;
-                                echo $kalimat . ' diketahui ';
+                                $text .= $kalimat . ' diketahui ';
                                 foreach ($barang as $brg) :
                                     if ($b['barangId'] == $brg['idBarang']) {
-                                        echo "1 " . $brg['namaSatuan'] . " " . $brg['namaBarang'];
+                                        $text .= "1 " . $brg['namaSatuan'] . " " . $brg['namaBarang'];
                                     }
                                 endforeach;
-                                echo ' tanpa PPN 12% seharga Rp ' . number_format($c['harga'], 0, ",", ".");
+                                $text .= ' tanpa PPN 12% seharga Rp ' . number_format($c['harga'], 0, ",", ".");
+                                echo $text;
                                 $char++;
                                 ?>
                             </div>
