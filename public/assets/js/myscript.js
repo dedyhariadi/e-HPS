@@ -2,106 +2,107 @@
 let dropdownHasMouse = false;
 let dropdownIsOpen = false;
 
-function showDropdown() {
-  const dropdown = document.getElementById("customDropdown");
-  dropdown.style.display = "block";
-  dropdownIsOpen = true;
-}
+// Global functions untuk modal switching
+function switchToCreateModal() {
+  console.log("switchToCreateModal called");
 
-function hideDropdown() {
-  setTimeout(function () {
-    const input = document.getElementById("searchBarang");
-    const dropdown = document.getElementById("customDropdown");
-    if (!input.matches(":focus") && !dropdownHasMouse && !dropdownIsOpen) {
-      dropdown.style.display = "none";
-    }
-  }, 200);
-}
-
-function selectOption(value, text) {
-  document.getElementById("idBarangHidden").value = value;
-  document.getElementById("searchBarang").value = text;
-  document.getElementById("customDropdown").style.display = "none";
-  dropdownIsOpen = false;
-}
-
-function cariBarangRealtime() {
-  const searchInput = document.getElementById("searchBarang");
-  const filter = searchInput.value.toUpperCase();
-  const optionList = document.getElementById("optionList");
-  const options = optionList.getElementsByTagName("li");
-
-  for (let i = 0; i < options.length; i++) {
-    const txtValue = options[i].textContent || options[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      options[i].style.display = "";
-    } else {
-      options[i].style.display = "none";
-    }
+  // Check if jQuery is available
+  if (typeof $ === "undefined") {
+    console.error("jQuery is not loaded");
+    return;
   }
 
-  // Tampilkan dropdown jika ada hasil
-  const hasVisible = Array.from(options).some(
-    (li) => li.style.display !== "none"
-  );
-  document.getElementById("customDropdown").style.display = hasVisible
-    ? "block"
-    : "none";
-}
-
-function validateBarangForm() {
   try {
-    const searchInput = document.getElementById("searchBarang");
-    if (!searchInput) {
-      throw new Error("Elemen searchBarang tidak ditemukan.");
-    }
+    // Tutup modal tambah barang
+    $("#tambahBarangModal").modal("hide");
 
-    const selectedText = searchInput.value.trim().toUpperCase();
-    if (selectedText === "") {
-      alert("Silakan pilih barang dari dropdown yang tersedia.");
-      return false;
-    }
-
-    const optionList = document.getElementById("optionList");
-    if (!optionList) {
-      throw new Error("Elemen optionList tidak ditemukan.");
-    }
-
-    const options = optionList.getElementsByTagName("li");
-    let isValid = false;
-    let validValue = "";
-
-    for (let i = 0; i < options.length; i++) {
-      const optionText = options[i].textContent || options[i].innerText;
-      const trimmedOptionText = optionText.trim().toUpperCase();
-
-      if (trimmedOptionText === selectedText) {
-        isValid = true;
-        validValue = options[i].getAttribute("data-value");
-        break;
-      }
-    }
-
-    if (!isValid) {
-      alert("Barang yang dipilih tidak valid. Silakan pilih dari dropdown.");
-      return false;
-    }
-
-    // Set nilai hidden input dengan value yang valid
-    const hiddenInput = document.getElementById("idBarangHidden");
-    if (hiddenInput) {
-      hiddenInput.value = validValue;
-    }
-
-    return true;
+    // Tunggu sebentar lalu buka modal create
+    setTimeout(function () {
+      $("#createBarangModal").modal({
+        backdrop: "static",
+        keyboard: false,
+      });
+      $("#createBarangModal").modal("show");
+    }, 300);
   } catch (error) {
-    console.error("Error in validateBarangForm:", error);
-    alert("Terjadi kesalahan: " + error.message);
-    return false;
+    console.error("Error in switchToCreateModal:", error);
   }
 }
+
+function switchToTambahModal() {
+  console.log("switchToTambahModal called");
+
+  // Check if jQuery is available
+  if (typeof $ === "undefined") {
+    console.error("jQuery is not loaded");
+    return;
+  }
+
+  try {
+    // Gunakan setTimeout untuk memastikan modal tertutup dengan benar
+    $("#createBarangModal").modal("hide");
+
+    setTimeout(function () {
+      console.log("Opening tambahBarangModal");
+      $("#tambahBarangModal").modal({
+        backdrop: "static",
+        keyboard: false,
+      });
+      $("#tambahBarangModal").modal("show");
+    }, 300);
+  } catch (error) {
+    console.error("Error in switchToTambahModal:", error);
+    // Fallback: gunakan location.reload jika ada masalah
+    location.reload();
+  }
+}
+
+// Make function globally available
+window.switchToTambahModal = switchToTambahModal;
 
 $(document).ready(function () {
+  // Event handler untuk tombol kembali (di dalam document.ready untuk memastikan jQuery loaded)
+  $(document).on("click", "#btnKembaliCreate", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("btnKembaliCreate clicked via jQuery");
+
+    // Hapus focus dari tombol untuk menghindari aria-hidden error
+    $(this).blur();
+
+    // Pastikan modal create ada dan visible
+    if ($("#createBarangModal").hasClass("show")) {
+      console.log("Closing createBarangModal");
+
+      // Tandai bahwa modal ditutup oleh tombol kembali
+      $("#createBarangModal").data("closed-by-kembali", true);
+
+      // Tutup modal create secara manual
+      $("#createBarangModal").modal("hide");
+
+      // Tunggu modal create tertutup, lalu buka modal tambah
+      $("#createBarangModal").on("hidden.bs.modal", function () {
+        console.log("createBarangModal closed, opening tambahBarangModal");
+
+        // Pastikan modal tambah ada
+        if ($("#tambahBarangModal").length > 0) {
+          $("#tambahBarangModal").modal({
+            backdrop: "static",
+            keyboard: false,
+          });
+          $("#tambahBarangModal").modal("show");
+        } else {
+          console.error("tambahBarangModal not found");
+        }
+
+        // Hapus event handler setelah digunakan
+        $(this).off("hidden.bs.modal");
+      });
+    } else {
+      console.log("createBarangModal is not visible");
+    }
+  });
+
   // Event untuk custom dropdown
   $("#customDropdown").on("mouseenter", function () {
     dropdownHasMouse = true;
@@ -188,24 +189,41 @@ $(document).ready(function () {
     }
   }
 
-  // function untuk switch modal
-  function switchToCreateModal() {
-    // Tutup modal tambah barang
-    $("#tambahBarangModal").modal("hide");
-    // Buka modal create barang
-    $("#createBarangModal").modal("show");
-  }
-
-  // function untuk kembali ke modal tambah barang dari create modal
-  function switchToTambahModal() {
-    $("#createBarangModal").modal("hide");
-    $("#tambahBarangModal").modal("show");
-  }
+  // function untuk switch modal sudah dipindah ke global scope
 
   // Event listener untuk refresh dropdown setelah create modal ditutup
-  $("#createBarangModal").on("hidden.bs.modal", function () {
-    // Refresh halaman untuk load data barang terbaru
-    location.reload();
+  // Hanya refresh jika modal ditutup oleh close button, bukan oleh tombol kembali
+  $("#createBarangModal").on("hidden.bs.modal", function (e) {
+    // Cek apakah ini bukan dari tombol kembali (yang sudah handle sendiri)
+    if (!$(this).data("closed-by-kembali")) {
+      console.log("createBarangModal closed by other means, refreshing page");
+      // Refresh halaman untuk load data barang terbaru
+      location.reload();
+    } else {
+      // Reset flag
+      $(this).data("closed-by-kembali", false);
+    }
+  });
+
+  // Modal event handlers untuk debugging dan memastikan focus management
+  $("#createBarangModal").on("show.bs.modal", function () {
+    console.log("createBarangModal shown");
+  });
+
+  $("#createBarangModal").on("hide.bs.modal", function () {
+    console.log("createBarangModal hiding");
+    // Pastikan tidak ada focus yang tertinggal
+    $(this).find(":focus").blur();
+  });
+
+  $("#tambahBarangModal").on("show.bs.modal", function () {
+    console.log("tambahBarangModal shown");
+  });
+
+  $("#tambahBarangModal").on("hide.bs.modal", function () {
+    console.log("tambahBarangModal hiding");
+    // Pastikan tidak ada focus yang tertinggal
+    $(this).find(":focus").blur();
   });
 
   //datepicker

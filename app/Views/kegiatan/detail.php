@@ -642,7 +642,7 @@ use CodeIgniter\I18n\Time;
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary me-2" onclick="switchToTambahModal()">Kembali</button>
+                    <button type="button" class="btn btn-secondary me-2" id="btnKembaliCreate">Kembali</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
