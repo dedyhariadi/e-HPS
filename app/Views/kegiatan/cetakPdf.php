@@ -349,9 +349,9 @@
                                 // Print the letter (c., d., etc.) before the reference
                                 $text = $char . '.&nbsp;&nbsp;&nbsp;';
                                 $rawLink = $c['link'];
-                                // Tambahkan spasi setiap 12 karakter untuk link panjang
-                                if (strlen($rawLink) > $jarakSpasi) {
-                                    $rawLink = preg_replace('/(.{12})/', '$1 ', $rawLink);
+                                // Tambahkan spasi setiap 10 karakter untuk link panjang agar justify bekerja
+                                if (strlen($rawLink) > 25) {
+                                    $rawLink = preg_replace('/(.{10})/', '$1 ', $rawLink);
                                 }
                                 $kalimat = 'Dari referensi website ' . $rawLink;
                                 $text .= $kalimat . ' diketahui ';
