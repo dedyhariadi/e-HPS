@@ -2,31 +2,34 @@
 let dropdownHasMouse = false;
 let dropdownIsOpen = false;
 
-function showSearchBarang() {
-  var input = document.getElementById("searchBarang");
-  input.style.display = "";
+function showDropdown() {
+  const dropdown = document.getElementById("customDropdown");
+  dropdown.style.display = "block";
+  dropdownIsOpen = true;
 }
 
-function hideSearchBarang() {
+function hideDropdown() {
   setTimeout(function () {
-    var input = document.getElementById("searchBarang");
-    var dropdown = document.getElementById("idBarang");
-    if (
-      !dropdown.matches(":focus") &&
-      !input.matches(":focus") &&
-      !dropdownHasMouse &&
-      !dropdownIsOpen
-    ) {
-      input.style.display = "none";
+    const input = document.getElementById("searchBarang");
+    const dropdown = document.getElementById("customDropdown");
+    if (!input.matches(":focus") && !dropdownHasMouse && !dropdownIsOpen) {
+      dropdown.style.display = "none";
     }
   }, 200);
+}
+
+function selectOption(value, text) {
+  document.getElementById("idBarangHidden").value = value;
+  document.getElementById("searchBarang").value = text;
+  document.getElementById("customDropdown").style.display = "none";
+  dropdownIsOpen = false;
 }
 
 function cariBarangRealtime() {
   const searchInput = document.getElementById("searchBarang");
   const filter = searchInput.value.toUpperCase();
-  const select = document.getElementById("idBarang");
-  const options = select.getElementsByTagName("option");
+  const optionList = document.getElementById("optionList");
+  const options = optionList.getElementsByTagName("li");
 
   for (let i = 0; i < options.length; i++) {
     const txtValue = options[i].textContent || options[i].innerText;
@@ -36,9 +39,25 @@ function cariBarangRealtime() {
       options[i].style.display = "none";
     }
   }
+
+  // Tampilkan dropdown jika ada hasil
+  const hasVisible = Array.from(options).some(
+    (li) => li.style.display !== "none"
+  );
+  document.getElementById("customDropdown").style.display = hasVisible
+    ? "block"
+    : "none";
 }
 
 $(document).ready(function () {
+  // Event untuk custom dropdown
+  $("#customDropdown").on("mouseenter", function () {
+    dropdownHasMouse = true;
+  });
+  $("#customDropdown").on("mouseleave", function () {
+    dropdownHasMouse = false;
+  });
+
   // preview gambar
   $(document).on("change", ".btn-file :file", function () {
     var input = $(this),

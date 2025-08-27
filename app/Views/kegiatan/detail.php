@@ -516,7 +516,7 @@ use CodeIgniter\I18n\Time;
 
     <!-- Modal Form Tambah Barang-->
 
-    <div class="modal" id="tambahBarangModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal modal-lg" id="tambahBarangModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -534,21 +534,21 @@ use CodeIgniter\I18n\Time;
                             echo anchor('barang/create', 'add', ['class' => 'link']);
                             ?>
                         </label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4 position-relative">
 
-                            <input type="text" id="searchBarang" class="form-control mb-2" placeholder="Cari nama barang..." onkeyup="cariBarangRealtime()" style="display:none;" onblur="hideSearchBarang()" autocomplete="off">
+                            <input type="text" id="searchBarang" class="form-control mb-2" placeholder="Cari nama barang..." onkeyup="cariBarangRealtime()" onfocus="showDropdown()" onblur="hideDropdown()" autocomplete="off">
 
-                            <span id="dropdownBarangContainer">
-                                <?php
-                                echo form_dropdown('idBarang', array_column($barang, 'namaBarang', 'idBarang'), '', [
-                                    'class' => 'form-select mb-3 fs-4',
-                                    'id' => 'idBarang',
-                                    'onfocus' => 'showSearchBarang()',
-                                    'onblur' => 'hideSearchBarang()'
-                                ]);
+                            <input type="hidden" name="idBarang" id="idBarangHidden" value="">
 
-                                ?>
-                            </span>
+                            <div id="customDropdown" class="dropdown-menu show border shadow-sm" style="display: none; max-height: 180px; overflow-y: auto; position: absolute; top: 100%; left: 0; right: 0; z-index: 1000; background-color: white;">
+                                <ul id="optionList" class="list-group list-group-flush">
+                                    <?php foreach ($barang as $brg): ?>
+                                        <li class="list-group-item list-group-item-action py-2 px-3" data-value="<?= $brg['idBarang']; ?>" onclick="selectOption('<?= $brg['idBarang']; ?>', '<?= $brg['namaBarang']; ?>')" style="cursor: pointer; font-size: 14px;">
+                                            <?= $brg['namaBarang']; ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
