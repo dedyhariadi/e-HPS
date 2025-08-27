@@ -767,10 +767,10 @@ use CodeIgniter\I18n\Time;
                 </div>
             </div>
         </div>
+</div>
 
+<?php endforeach; ?>
 
-    <?php endforeach; ?>
+<!-- akhir content -->
 
-    <!-- akhir content -->
-
-    <?= $this->endSection(); ?>
+<?= $this->endSection(); ?>

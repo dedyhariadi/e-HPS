@@ -254,18 +254,37 @@ class Barang extends BaseController
     }
 
 
-    public function search()
+    public function search() //untuk ajax cari nama barang di kegiatan/detail/tambahbarang
     {
-        $term = $this->request->getGet('q');
-        $result = [];
-        if ($term) {
-            $result = $this->barangModel
-                ->like('namaBarang', $term)
-                ->findAll();
-        } else {
-            $result = $this->barangModel->findAll();
+       $term = $this->request->getGet('q');
+    $result = [];
+
+    if ($term) {
+        $result = $this->barangModel
+            ->like('namaBarang', $term)
+            ->findAll();
+
+        if (count($result) === 0) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Barang tidak ditemukan untuk kata kunci: ' . $term
+            ])->setStatusCode(404);
         }
-        // Format sesuai kebutuhan select
-        return $this->response->setJSON($result);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'query' => $term,
+            'data' => $result
+        ])->setStatusCode(200);
     }
+
+    // Jika tidak ada parameter pencarian, tampilkan semua data
+    $result = $this->barangModel->findAll();
+
+    return $this->response->setJSON([
+        'status' => 'success',
+        'data' => $result
+    ])->setStatusCode(200);
+
+}
 }
