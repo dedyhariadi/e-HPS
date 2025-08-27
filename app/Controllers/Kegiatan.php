@@ -243,6 +243,7 @@ class Kegiatan extends BaseController
             'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
             'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
             'sumber' => $this->sumberModel->findAll(),
+            'satuan' => $this->satuanModel->findAll(),
             'subKegiatan' => $this->subKegiatanModel->where(['kegiatanId' => $idKegiatan])->findAll(),
             'trxSubKegiatan' => $this->trxSubKegiatanModel->join('subkegiatan', 'subkegiatan.idSubKegiatan=trxsubkegiatan.subKegiatanId')->join('trxgiatbarang', 'trxsubkegiatan.trxGiatBarangId=trxgiatbarang.idTrxGiatBarang')->where(['subkegiatan.kegiatanId' => $idKegiatan])->orderBy('subkegiatan.idSubKegiatan')->findAll(),
         ];

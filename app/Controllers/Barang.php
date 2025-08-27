@@ -101,6 +101,15 @@ class Barang extends BaseController
                 // jika gagal simpan data
                 $satuan = $this->satuanModel->findAll();
                 $errors = $this->barangModel->errors();
+
+                // Jika dari modal, redirect kembali dengan error
+                $redirectToKegiatan = $this->request->getVar('redirectToKegiatan');
+                if ($redirectToKegiatan) {
+                    session()->setFlashdata('errors', $errors);
+                    session()->setFlashdata('old_input', $this->request->getPost());
+                    return redirect()->to('kegiatan/' . $redirectToKegiatan)->with('error', 'Gagal menambah barang. Silakan coba lagi.');
+                }
+
                 $data = [
                     'title' => 'Tambah Data Barang',
                     'satuan' => $satuan,
@@ -123,13 +132,21 @@ class Barang extends BaseController
             // jika gagal simpan data
             $satuan = $this->satuanModel->findAll();
             $errors = $this->barangModel->errors();
+
+            // Jika dari modal, redirect kembali dengan error
+            $redirectToKegiatan = $this->request->getVar('redirectToKegiatan');
+            if ($redirectToKegiatan) {
+                session()->setFlashdata('errors', $errors);
+                session()->setFlashdata('old_input', $this->request->getPost());
+                return redirect()->to('kegiatan/' . $redirectToKegiatan)->with('error', 'Gagal menambah barang. Silakan coba lagi.');
+            }
+
             $data = [
                 'title' => 'Tambah Data Barang',
                 'satuan' => $satuan,
                 'errors' => $errors,
             ];
 
-            d($errors);
             return view('barang/create', $data);
         }
 
@@ -144,6 +161,12 @@ class Barang extends BaseController
         }
 
         session()->setFlashdata('pesan', 'Data Berhasil ditambah.');
+
+        // Cek apakah ada parameter redirectToKegiatan dari modal
+        $redirectToKegiatan = $this->request->getVar('redirectToKegiatan');
+        if ($redirectToKegiatan) {
+            return redirect()->to('kegiatan/' . $redirectToKegiatan)->with('pesan', 'Data barang berhasil ditambah.');
+        }
 
         if (session()->getFlashdata('idKegiatan')) {
             return redirect()->to('kegiatan/' . session()->getFlashdata('idKegiatan'));
@@ -256,35 +279,34 @@ class Barang extends BaseController
 
     public function search() //untuk ajax cari nama barang di kegiatan/detail/tambahbarang
     {
-       $term = $this->request->getGet('q');
-    $result = [];
+        $term = $this->request->getGet('q');
+        $result = [];
 
-    if ($term) {
-        $result = $this->barangModel
-            ->like('namaBarang', $term)
-            ->findAll();
+        if ($term) {
+            $result = $this->barangModel
+                ->like('namaBarang', $term)
+                ->findAll();
 
-        if (count($result) === 0) {
+            if (count($result) === 0) {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'Barang tidak ditemukan untuk kata kunci: ' . $term
+                ])->setStatusCode(404);
+            }
+
             return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Barang tidak ditemukan untuk kata kunci: ' . $term
-            ])->setStatusCode(404);
+                'status' => 'success',
+                'query' => $term,
+                'data' => $result
+            ])->setStatusCode(200);
         }
+
+        // Jika tidak ada parameter pencarian, tampilkan semua data
+        $result = $this->barangModel->findAll();
 
         return $this->response->setJSON([
             'status' => 'success',
-            'query' => $term,
             'data' => $result
         ])->setStatusCode(200);
     }
-
-    // Jika tidak ada parameter pencarian, tampilkan semua data
-    $result = $this->barangModel->findAll();
-
-    return $this->response->setJSON([
-        'status' => 'success',
-        'data' => $result
-    ])->setStatusCode(200);
-
-}
 }

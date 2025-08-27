@@ -221,6 +221,16 @@ use CodeIgniter\I18n\Time;
             <?php endif;
             ?>
 
+            <!-- alert error -->
+            <?php if (session()->getFlashdata('error')) : ?>
+                <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <?= session()->getFlashdata('error'); ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif;
+            ?>
+
             <!-- akhir alert -->
 
             <!-- daftar barang -->
@@ -525,14 +535,11 @@ use CodeIgniter\I18n\Time;
                 </div>
                 <div class="modal-body fs-3">
 
-                    <?= form_open(''); ?>
+                    <?= form_open('kegiatan/' . $idKegiatan); ?>
 
                     <div class="row ms-5 mt-3">
                         <label for="combobox" class="d-inline form-label col-sm-4">Material
-                            <?php
-                            session()->setFlashdata('idKegiatan', $idKegiatan);
-                            echo anchor('barang/create', 'add', ['class' => 'link']);
-                            ?>
+                            <button type="button" class="btn btn-primary btn-sm" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" data-bs-toggle="modal" data-bs-target="#createBarangModal" onclick="switchToCreateModal()">add</button>
                         </label>
                         <div class="col-sm-5 position-relative">
 
@@ -540,7 +547,7 @@ use CodeIgniter\I18n\Time;
 
                             <input type="hidden" name="idBarang" id="idBarangHidden" value="">
 
-                            <div id="customDropdown" class="dropdown-menu show border shadow-sm" style="display: none; max-height: 180px; overflow-y: auto; position: absolute; top: 100%; left: 0; width: 300px; z-index: 1000; background-color: white;">
+                            <div id="customDropdown" class="dropdown-menu show border shadow-sm" style="display: none; max-height: 180px; overflow-y: auto; position: absolute; top: 100%; left: 0; right: 0; z-index: 1000;width: 450px; background-color: white;">
                                 <ul id="optionList" class="list-group list-group-flush">
                                     <?php foreach ($barang as $brg): ?>
                                         <li class="list-group-item list-group-item-action py-2 px-3 fs-5" data-value="<?= $brg['idBarang']; ?>" onclick="selectOption('<?= $brg['idBarang']; ?>', '<?= $brg['namaBarang']; ?>')" style="cursor: pointer; font-size: 14px;">
@@ -573,10 +580,72 @@ use CodeIgniter\I18n\Time;
                 <div class="row  text-center my-4">
                     <div class="col">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary" onclick="return validateBarangForm()">Simpan</button>
                     </div>
                 </div>
                 <input type="hidden" name="tandaTambah" value="1">
+
+                <?= form_close(); ?>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Form Create Barang-->
+
+    <div class="modal modal-lg" id="createBarangModal" tabindex="-1" aria-labelledby="createBarangModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="createBarangModalLabel">Tambah Data Barang Baru</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <?= form_open_multipart('barang/save', ['id' => 'createBarangForm']); ?>
+
+                    <div class="row mb-3">
+                        <label for="namaBarang" class="col-sm-3 col-form-label">Nama Barang</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control <?= (isset($errors['namaBarang'])) ? 'is-invalid' : ''; ?>" name="namaBarang" autofocus value="<?= set_value('namaBarang'); ?>" autocomplete="off">
+                            <div class="invalid-feedback">
+                                <?= (isset($errors['namaBarang'])) ? $errors['namaBarang'] : ''; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="satuan" class="col-sm-3 col-form-label">Satuan</label>
+                        <div class="col-sm-8">
+                            <select class="form-select" name="idSatuan">
+                                <?php foreach ($satuan as $b) : ?>
+                                    <option value="<?= ($b['idSatuan']); ?>" <?= set_select('idSatuan', $b['idSatuan']); ?>><?= $b['namaSatuan']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="gambar" class="col-sm-3 col-form-label">Gambar</label>
+                        <div class="col-sm-8">
+                            <input class="form-control <?= (isset($errors['gambar'])) ? 'is-invalid' : ''; ?>" type="file" name="gambar" id="gambarCreate" value="<?= set_value('gambar'); ?>">
+                            <div class="invalid-feedback">
+                                <?= (isset($errors['gambar'])) ? $errors['gambar'] : ''; ?>
+                            </div>
+                            <img id='img-upload-create' class="mt-2" style="max-width: 200px; max-height: 200px;" />
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="redirectToKegiatan" value="<?= $idKegiatan; ?>">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary me-2" onclick="switchToTambahModal()">Kembali</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
 
                 <?= form_close(); ?>
             </div>
@@ -772,5 +841,38 @@ use CodeIgniter\I18n\Time;
 <?php endforeach; ?>
 
 <!-- akhir content -->
+
+<script>
+    $(document).ready(function() {
+        // Jika ada error dari create barang, buka modal create barang
+        <?php if (session()->has('errors')): ?>
+            $("#createBarangModal").modal("show");
+
+            // Isi form dengan data lama jika ada
+            <?php if (session()->has('old_input')): ?>
+                var oldInput = <?php echo json_encode(session()->getFlashdata('old_input')); ?>;
+                if (oldInput) {
+                    $("#createBarangForm input[name='namaBarang']").val(oldInput.namaBarang || '');
+                    $("#createBarangForm select[name='idSatuan']").val(oldInput.idSatuan || '');
+                }
+            <?php endif; ?>
+
+            // Tampilkan error messages di modal
+            var errors = <?php echo json_encode(session()->getFlashdata('errors')); ?>;
+            if (errors) {
+                var errorHtml = '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                errorHtml += '<strong>Gagal menyimpan data:</strong><ul>';
+                for (var field in errors) {
+                    errorHtml += '<li>' + errors[field] + '</li>';
+                }
+                errorHtml += '</ul>';
+                errorHtml += '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                errorHtml += '</div>';
+
+                $("#createBarangModal .modal-body").prepend(errorHtml);
+            }
+        <?php endif; ?>
+    });
+</script>
 
 <?= $this->endSection(); ?>
