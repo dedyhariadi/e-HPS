@@ -60,49 +60,148 @@ function switchToTambahModal() {
 // Make function globally available
 window.switchToTambahModal = switchToTambahModal;
 
-$(document).ready(function () {
-  // Event handler untuk tombol kembali (di dalam document.ready untuk memastikan jQuery loaded)
-  $(document).on("click", "#btnKembaliCreate", function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log("btnKembaliCreate clicked via jQuery");
+// Event handler untuk tombol kembali (di luar document.ready untuk menghindari konflik)
+$(document).on("click", "#btnKembaliCreate", function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  console.log("btnKembaliCreate clicked via jQuery");
 
-    // Hapus focus dari tombol untuk menghindari aria-hidden error
-    $(this).blur();
+  // Hapus focus dari tombol untuk menghindari aria-hidden error
+  $(this).blur();
 
-    // Pastikan modal create ada dan visible
-    if ($("#createBarangModal").hasClass("show")) {
-      console.log("Closing createBarangModal");
+  // Pastikan modal create ada dan visible
+  if ($("#createBarangModal").hasClass("show")) {
+    console.log("Closing createBarangModal");
 
-      // Tandai bahwa modal ditutup oleh tombol kembali
-      $("#createBarangModal").data("closed-by-kembali", true);
+    // Tandai bahwa modal ditutup oleh tombol kembali
+    $("#createBarangModal").data("closed-by-kembali", true);
 
-      // Tutup modal create secara manual
-      $("#createBarangModal").modal("hide");
+    // Tutup modal create secara manual
+    $("#createBarangModal").modal("hide");
 
-      // Tunggu modal create tertutup, lalu buka modal tambah
-      $("#createBarangModal").on("hidden.bs.modal", function () {
-        console.log("createBarangModal closed, opening tambahBarangModal");
+    // Tunggu modal create tertutup, lalu buka modal tambah
+    $("#createBarangModal").on("hidden.bs.modal", function () {
+      console.log("createBarangModal closed, opening tambahBarangModal");
 
-        // Pastikan modal tambah ada
-        if ($("#tambahBarangModal").length > 0) {
-          $("#tambahBarangModal").modal({
-            backdrop: "static",
-            keyboard: false,
-          });
-          $("#tambahBarangModal").modal("show");
-        } else {
-          console.error("tambahBarangModal not found");
-        }
+      // Pastikan modal tambah ada
+      if ($("#tambahBarangModal").length > 0) {
+        $("#tambahBarangModal").modal({
+          backdrop: "static",
+          keyboard: false,
+        });
+        $("#tambahBarangModal").modal("show");
+      } else {
+        console.error("tambahBarangModal not found");
+      }
 
-        // Hapus event handler setelah digunakan
-        $(this).off("hidden.bs.modal");
-      });
-    } else {
-      console.log("createBarangModal is not visible");
+      // Hapus event handler setelah digunakan
+      $(this).off("hidden.bs.modal");
+    });
+  } else {
+    console.log("createBarangModal is not visible");
+  }
+});
+
+function showDropdown() {
+  const dropdown = document.getElementById("customDropdown");
+  dropdown.style.display = "block";
+  dropdownIsOpen = true;
+}
+
+function hideDropdown() {
+  setTimeout(function () {
+    const input = document.getElementById("searchBarang");
+    const dropdown = document.getElementById("customDropdown");
+    if (!input.matches(":focus") && !dropdownHasMouse && !dropdownIsOpen) {
+      dropdown.style.display = "none";
     }
-  });
+  }, 200);
+}
 
+function selectOption(value, text) {
+  document.getElementById("idBarangHidden").value = value;
+  document.getElementById("searchBarang").value = text;
+  document.getElementById("customDropdown").style.display = "none";
+  dropdownIsOpen = false;
+}
+
+function cariBarangRealtime() {
+  const searchInput = document.getElementById("searchBarang");
+  const filter = searchInput.value.toUpperCase();
+  const optionList = document.getElementById("optionList");
+  const options = optionList.getElementsByTagName("li");
+
+  for (let i = 0; i < options.length; i++) {
+    const txtValue = options[i].textContent || options[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      options[i].style.display = "";
+    } else {
+      options[i].style.display = "none";
+    }
+  }
+
+  // Tampilkan dropdown jika ada hasil
+  const hasVisible = Array.from(options).some(
+    (li) => li.style.display !== "none"
+  );
+  document.getElementById("customDropdown").style.display = hasVisible
+    ? "block"
+    : "none";
+}
+
+function validateBarangForm() {
+  try {
+    const searchInput = document.getElementById("searchBarang");
+    if (!searchInput) {
+      throw new Error("Elemen searchBarang tidak ditemukan.");
+    }
+
+    const selectedText = searchInput.value.trim().toUpperCase();
+    if (selectedText === "") {
+      alert("Silakan pilih barang dari dropdown yang tersedia.");
+      return false;
+    }
+
+    const optionList = document.getElementById("optionList");
+    if (!optionList) {
+      throw new Error("Elemen optionList tidak ditemukan.");
+    }
+
+    const options = optionList.getElementsByTagName("li");
+    let isValid = false;
+    let validValue = "";
+
+    for (let i = 0; i < options.length; i++) {
+      const optionText = options[i].textContent || options[i].innerText;
+      const trimmedOptionText = optionText.trim().toUpperCase();
+
+      if (trimmedOptionText === selectedText) {
+        isValid = true;
+        validValue = options[i].getAttribute("data-value");
+        break;
+      }
+    }
+
+    if (!isValid) {
+      alert("Barang yang dipilih tidak valid. Silakan pilih dari dropdown.");
+      return false;
+    }
+
+    // Set nilai hidden input dengan value yang valid
+    const hiddenInput = document.getElementById("idBarangHidden");
+    if (hiddenInput) {
+      hiddenInput.value = validValue;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error in validateBarangForm:", error);
+    alert("Terjadi kesalahan: " + error.message);
+    return false;
+  }
+}
+
+$(document).ready(function () {
   // Event untuk custom dropdown
   $("#customDropdown").on("mouseenter", function () {
     dropdownHasMouse = true;
