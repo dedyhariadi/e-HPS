@@ -106,7 +106,7 @@
     <table border="0" cellpading=0 style="line-height: 1; width:100%;border-collapse:collapse;">
         <tr>
             <?php if ($kopSurat == 'arsenal') { ?>
-                <td style="width:390px;text-align: center;">
+                <td style="width:385px;text-align: center;">
                     DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL
                 <?php } else { ?>
                 <td style="width: 335px;text-align: center;">
@@ -120,7 +120,7 @@
         </tr>
         <tr>
             <?php if ($kopSurat == 'arsenal') { ?>
-                <td style="width:390px; text-align: center;">
+                <td style="width:380px; text-align: center;">
                     ARSENAL
                 <?php } else { ?>
                 <td style="width:335px; text-align: center;">
@@ -392,7 +392,7 @@
         </tr>
         <tr>
             <td style="width: 30px;"></td>
-            <td>a. &nbsp;&nbsp;&nbsp; Biaya kebutuhan material:</td>
+            <td>-&nbsp;&nbsp; Biaya kebutuhan material:</td>
         </tr>
     </table>
 
