@@ -60,48 +60,6 @@ function switchToTambahModal() {
 // Make function globally available
 window.switchToTambahModal = switchToTambahModal;
 
-// Event handler untuk tombol kembali (di luar document.ready untuk menghindari konflik)
-$(document).on("click", "#btnKembaliCreate", function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  console.log("btnKembaliCreate clicked via jQuery");
-
-  // Hapus focus dari tombol untuk menghindari aria-hidden error
-  $(this).blur();
-
-  // Pastikan modal create ada dan visible
-  if ($("#createBarangModal").hasClass("show")) {
-    console.log("Closing createBarangModal");
-
-    // Tandai bahwa modal ditutup oleh tombol kembali
-    $("#createBarangModal").data("closed-by-kembali", true);
-
-    // Tutup modal create secara manual
-    $("#createBarangModal").modal("hide");
-
-    // Tunggu modal create tertutup, lalu buka modal tambah
-    $("#createBarangModal").on("hidden.bs.modal", function () {
-      console.log("createBarangModal closed, opening tambahBarangModal");
-
-      // Pastikan modal tambah ada
-      if ($("#tambahBarangModal").length > 0) {
-        $("#tambahBarangModal").modal({
-          backdrop: "static",
-          keyboard: false,
-        });
-        $("#tambahBarangModal").modal("show");
-      } else {
-        console.error("tambahBarangModal not found");
-      }
-
-      // Hapus event handler setelah digunakan
-      $(this).off("hidden.bs.modal");
-    });
-  } else {
-    console.log("createBarangModal is not visible");
-  }
-});
-
 function showDropdown() {
   const dropdown = document.getElementById("customDropdown");
   dropdown.style.display = "block";
@@ -202,6 +160,48 @@ function validateBarangForm() {
 }
 
 $(document).ready(function () {
+  // Event handler untuk tombol kembali (di dalam document.ready untuk memastikan jQuery loaded)
+  $(document).on("click", "#btnKembaliCreate", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("btnKembaliCreate clicked via jQuery");
+
+    // Hapus focus dari tombol untuk menghindari aria-hidden error
+    $(this).blur();
+
+    // Pastikan modal create ada dan visible
+    if ($("#createBarangModal").hasClass("show")) {
+      console.log("Closing createBarangModal");
+
+      // Tandai bahwa modal ditutup oleh tombol kembali
+      $("#createBarangModal").data("closed-by-kembali", true);
+
+      // Tutup modal create secara manual
+      $("#createBarangModal").modal("hide");
+
+      // Tunggu modal create tertutup, lalu buka modal tambah
+      $("#createBarangModal").on("hidden.bs.modal", function () {
+        console.log("createBarangModal closed, opening tambahBarangModal");
+
+        // Pastikan modal tambah ada
+        if ($("#tambahBarangModal").length > 0) {
+          $("#tambahBarangModal").modal({
+            backdrop: "static",
+            keyboard: false,
+          });
+          $("#tambahBarangModal").modal("show");
+        } else {
+          console.error("tambahBarangModal not found");
+        }
+
+        // Hapus event handler setelah digunakan
+        $(this).off("hidden.bs.modal");
+      });
+    } else {
+      console.log("createBarangModal is not visible");
+    }
+  });
+
   // Event untuk custom dropdown
   $("#customDropdown").on("mouseenter", function () {
     dropdownHasMouse = true;
