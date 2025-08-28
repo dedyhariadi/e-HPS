@@ -115,7 +115,6 @@
                 </td>
                 <td style="width:55px;"></td>
                 <td colspan="2">
-
                 </td>
         </tr>
         <tr>
@@ -250,8 +249,10 @@
         3. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Untuk menjadi perhatian dan pelaksanaan.
     </p>
     <br><br>
-    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Arsenal</div>
-    <div style="text-align: center; text-indent: 50%;"> Kabag Rendalmat</div>
+    <div style="text-align: center; text-indent: 50%;">
+        <?= $kopSurat == 'arsenal' ? 'a.n. Kepala Arsenal' : 'a.n. Kepala Dissenlekal'; ?>
+    </div>
+    <div style="text-align: center; text-indent: 50%;"> <?= $kegiatan['jabatan']; ?></div>
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>
     <br><br><br><br>
@@ -269,25 +270,46 @@
 
     <table border="0" cellpading=0 style="line-height: 1; width:100%;">
         <tr>
-            <td style="width:390px;text-align: center;">
-                DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL
+
+            <?= $kopSurat == 'arsenal' ? '<td style="width:385px;text-align: center;">DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL</td>' : '<td style="width: 335px;text-align: center;">MARKAS BESAR ANGKATAN LAUT</td>'; ?>
+
+
             </td>
-            <td style="width:55px;"></td>
+            <?php if ($kopSurat == 'arsenal') { ?>
+                <td style="width:45px;"></td>
+            <?php } else { ?>
+                <td style="width:75px;"></td>
+            <?php } ?>
             <td colspan="2">
-                Lampiran I Surat Kaarsenal
+                <div style="width: 100%">
+                    <span style="text-align: left;">Lampiran &nbsp;I&nbsp; Surat&nbsp;</span>
+                    <span style="float: right;">
+                        <?php if ($kopSurat == 'arsenal') { ?>
+                            Kaarsenal
+                        <?php } else { ?>
+                            Kadissenlekal
+                        <?php } ?>
+                    </span>
+                </div>
             </td>
         </tr>
         <tr>
-            <td style="width:390px; text-align: center;" class="custom-underline">
-                ARSENAL
-            </td>
-            <td></td>
-            <td style="width: 70px;">
-                Nomor R/
-            </td>
-            <td style="text-align: right;">
-                /<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?>
-            </td>
+
+            <?php if ($kopSurat == 'arsenal') { ?>
+                <td style="width:380px; text-align: center;" class="custom-underline">
+                    ARSENAL
+                <?php } else { ?>
+                <td style="width:335px; text-align: center;" class="custom-underline">
+                    DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+                <?php } ?>
+                </td>
+                <td></td>
+                <td>
+                    Nomor R/
+                </td>
+                <td style="text-align: right;">
+                    /<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?>
+                </td>
         </tr>
         <tr>
             <td></td>
@@ -547,17 +569,17 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 30px;"></td>
-            <td colspan="2">b. &nbsp;&nbsp;&nbsp; Total biaya keseluruhan adalah:</td>
+            <td colspan="2">Total biaya keseluruhan adalah:</td>
         </tr>
 
         <tr>
             <td style="width: 30px;"></td>
-            <td style="width: 30px;"></td>
+            <!-- <td style="width: 30px;"></td> -->
             <td>= Rp <?= number_format($total, 2, ",", "."); ?></td>
         </tr>
         <tr>
             <td style="width: 30px;"></td>
-            <td style="width: 30px;"></td>
+            <!-- <td style="width: 30px;"></td> -->
             <td>= Rp
                 <?php
                 $total_bulat = bulatkan_rupiah($total);
@@ -572,8 +594,10 @@
         </tr>
     </table>
 
-    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Arsenal</div>
-    <div style="text-align: center; text-indent: 50%;"> Kabag Rendalmat</div>
+    <div style="text-align: center; text-indent: 50%;">
+        <?= $kopSurat == 'arsenal' ? 'a.n. Kepala Arsenal' : 'a.n. Kepala Dissenlekal'; ?>
+    </div>
+    <div style="text-align: center; text-indent: 50%;"> <?= $kegiatan['jabatan']; ?></div>
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>
     <br><br><br><br>
@@ -591,25 +615,43 @@
 
     <table border="0" cellpading=0 style="line-height: 1; width:100%;">
         <tr>
-            <td style="width:390px;text-align: center;">
-                DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL
+            <?= $kopSurat == 'arsenal' ? '<td style="width:385px;text-align: center;">DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL</td>' : '<td style="width: 335px;text-align: center;">MARKAS BESAR ANGKATAN LAUT</td>'; ?>
+
             </td>
-            <td style="width:50px;"></td>
+            <?php if ($kopSurat == 'arsenal') { ?>
+                <td style="width:45px;"></td>
+            <?php } else { ?>
+                <td style="width:70px;"></td>
+            <?php } ?>
             <td colspan="2">
-                Lampiran II Surat Kaarsenal
+                <div style="width: 100%">
+                    <span style="text-align: left;">Lampiran &nbsp;II&nbsp; Surat&nbsp;</span>
+                    <span style="float: right;">
+                        <?php if ($kopSurat == 'arsenal') { ?>
+                            Kaarsenal
+                        <?php } else { ?>
+                            Kadissenlekal
+                        <?php } ?>
+                    </span>
+                </div>
             </td>
         </tr>
         <tr>
-            <td style="width:390px; text-align: center;" class="custom-underline">
-                ARSENAL
-            </td>
-            <td></td>
-            <td style="width: 70px;">
-                Nomor R/
-            </td>
-            <td style="text-align: right;">
-                /<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?>
-            </td>
+            <?php if ($kopSurat == 'arsenal') { ?>
+                <td style="width:380px; text-align: center;" class="custom-underline">
+                    ARSENAL
+                <?php } else { ?>
+                <td style="width:335px; text-align: center;" class="custom-underline">
+                    DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+                <?php } ?>
+                </td>
+                <td></td>
+                <td>
+                    Nomor R/
+                </td>
+                <td style="text-align: right;">
+                    /<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?>
+                </td>
         </tr>
         <tr>
             <td></td>
@@ -687,8 +729,10 @@
     </table>
 
     <br><br>
-    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Arsenal</div>
-    <div style="text-align: center; text-indent: 50%;"> Kabag Rendalmat</div>
+    <div style="text-align: center; text-indent: 50%;">
+        <?= $kopSurat == 'arsenal' ? 'a.n. Kepala Arsenal' : 'a.n. Kepala Dissenlekal'; ?>
+    </div>
+    <div style="text-align: center; text-indent: 50%;"> <?= $kegiatan['jabatan']; ?></div>
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>
     <br><br><br><br>
@@ -702,25 +746,47 @@
 
     <table border="0" cellpading=0 style="line-height: 1; width:100%;">
         <tr>
-            <td style="width:390px;text-align: center;">
-                DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL
+        <tr>
+
+            <?= $kopSurat == 'arsenal' ? '<td style="width:385px;text-align: center;">DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL</td>' : '<td style="width: 335px;text-align: center;">MARKAS BESAR ANGKATAN LAUT</td>'; ?>
+
+
             </td>
-            <td style="width:45px;"></td>
+            <?php if ($kopSurat == 'arsenal') { ?>
+                <td style="width:45px;"></td>
+            <?php } else { ?>
+                <td style="width:65px;"></td>
+            <?php } ?>
             <td colspan="2">
-                Lampiran III Surat Kaarsenal
+                <div style="width: 100%">
+                    <span style="text-align: left;">Lampiran &nbsp;III&nbsp; Surat&nbsp;</span>
+                    <span style="float: right;">
+                        <?php if ($kopSurat == 'arsenal') { ?>
+                            Kaarsenal
+                        <?php } else { ?>
+                            Kadissenlekal
+                        <?php } ?>
+                    </span>
+                </div>
             </td>
         </tr>
+        </tr>
         <tr>
-            <td style="width:390px; text-align: center;" class="custom-underline">
-                ARSENAL
-            </td>
-            <td></td>
-            <td style="width: 100px;">
-                Nomor R/
-            </td>
-            <td style="text-align: right;">
-                /<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?>
-            </td>
+            <?php if ($kopSurat == 'arsenal') { ?>
+                <td style="width:380px; text-align: center;" class="custom-underline">
+                    ARSENAL
+                <?php } else { ?>
+                <td style="width:335px; text-align: center;" class="custom-underline">
+                    DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+                <?php } ?>
+                </td>
+                <td></td>
+                <td style="width: 100px;">
+                    Nomor R/
+                </td>
+                <td style="text-align: right;">
+                    /<?= number_to_roman(intval(date('m', strtotime($kegiatan['tglSurat'])))); ?>/<?= date('Y', strtotime($kegiatan['tglSurat'])); ?>
+                </td>
         </tr>
         <tr>
             <td></td>
