@@ -15,7 +15,6 @@ use App\Models\TrxGiatBarangModel;
 use App\Models\TrxReferensiModel;
 use App\Models\SubKegiatanModel;
 use App\Models\TrxSubKegiatanModel;
-use App\Models\TrxReferensModel;
 use \Dompdf\Dompdf;
 use \Dompdf\Options;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -182,10 +181,19 @@ class Kegiatan extends BaseController
         if ($tandaTambah == 1) {
             $tambahBarang = $this->request->getVar();
             if ($tambahBarang) {
+                $barangId = $this->request->getVar('idBarang');
+                $kebutuhan = $this->request->getVar('kebutuhan');
+
+                // Validasi input
+                if (empty($barangId) || empty($kebutuhan)) {
+                    session()->setFlashdata('error', 'Barang dan Kebutuhan harus diisi.');
+                    return redirect()->to('kegiatan/' . $idKegiatan);
+                }
+
                 if ($this->trxGiatBarangModel->save([
                     'kegiatanId' => $idKegiatan,
-                    'barangId' => $this->request->getVar('idBarang'),
-                    'kebutuhan' => $this->request->getVar('kebutuhan'),
+                    'barangId' => $barangId,
+                    'kebutuhan' => $kebutuhan,
                     'jenis' => 'utama', // default jenis utama
                 ]) == false) {
                     // jika gagal simpan data
@@ -232,6 +240,27 @@ class Kegiatan extends BaseController
 
         $kegiatan = $this->kegiatanModel->getKegiatan($idKegiatan);
 
+        // Load cache service
+        $cache = \Config\Services::cache();
+
+        // Cache key untuk data yang jarang berubah
+        $cacheKeyBarang = 'barang_with_satuan';
+        $cacheKeySatuan = 'satuan_all';
+
+        // Ambil data barang dengan cache
+        $barang = $cache->get($cacheKeyBarang);
+        if (!$barang) {
+            $barang = $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll();
+            $cache->save($cacheKeyBarang, $barang, 3600); // Cache 1 jam
+        }
+
+        // Ambil data satuan dengan cache
+        $satuan = $cache->get($cacheKeySatuan);
+        if (!$satuan) {
+            $satuan = $this->satuanModel->findAll();
+            $cache->save($cacheKeySatuan, $satuan, 3600); // Cache 1 jam
+        }
+
         $data = [
             'idKegiatan' => $idKegiatan,
             'kegiatan' => $kegiatan,
@@ -239,11 +268,36 @@ class Kegiatan extends BaseController
             'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
             'trxGiatBarang' => $this->trxGiatBarangModel->join('trxsubkegiatan', 'trxsubkegiatan.trxGiatBarangId=trxGiatBarang.idTrxGiatBarang')->where(['kegiatanId' => $idKegiatan])->orderBy('trxsubkegiatan.subKegiatanId')->findAll(),
 
-            'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
-            'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
-            'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
-            'sumber' => $this->sumberModel->findAll(),
-            'satuan' => $this->satuanModel->findAll(),
+            // Optimasi: hanya ambil barang yang terkait dengan trxGiatBarang untuk kegiatan ini
+            'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')
+                ->whereIn('barang.idBarang', function ($builder) use ($idKegiatan) {
+                    return $builder->select('barangId')->from('trxgiatbarang')->where('kegiatanId', $idKegiatan);
+                })->orWhere('barang.idBarang IS NOT NULL', null, false) // fallback untuk semua barang jika tidak ada trx
+                ->findAll(),
+
+            // Optimasi: hanya ambil referensi yang terkait dengan barang di kegiatan ini
+            'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')
+                ->whereIn('referensi.barangId', function ($builder) use ($idKegiatan) {
+                    return $builder->select('barangId')->from('trxgiatbarang')->where('kegiatanId', $idKegiatan);
+                })->findAll(),
+
+            'trxReferensi' => $this->trxGiatBarangModel->select('trxreferensi.*, referensi.link, referensi.harga, referensi.sumberId as sumberId')
+                ->join('trxreferensi', 'trxreferensi.trxGiatBarangId = trxGiatBarang.idTrxGiatBarang')
+                ->join('referensi', 'referensi.idReferensi = trxreferensi.referensiId')
+                ->where(['trxGiatBarang.kegiatanId' => $idKegiatan])
+                ->findAll(),
+
+            // Optimasi: hanya ambil sumber yang digunakan dalam referensi kegiatan ini
+            'sumber' => $this->sumberModel->whereIn('idSumber', function ($builder) use ($idKegiatan) {
+                return $builder->select('sumber.idSumber')
+                    ->from('sumber')
+                    ->join('referensi', 'referensi.sumberId = sumber.idSumber')
+                    ->join('trxreferensi', 'trxreferensi.referensiId = referensi.idReferensi')
+                    ->join('trxgiatbarang', 'trxgiatbarang.idTrxGiatBarang = trxreferensi.trxGiatBarangId')
+                    ->where('trxgiatbarang.kegiatanId', $idKegiatan);
+            })->orWhere('idSumber IS NOT NULL', null, false)->findAll(),
+
+            'satuan' => $satuan,
             'subKegiatan' => $this->subKegiatanModel->where(['kegiatanId' => $idKegiatan])->findAll(),
             'trxSubKegiatan' => $this->trxSubKegiatanModel->join('subkegiatan', 'subkegiatan.idSubKegiatan=trxsubkegiatan.subKegiatanId')->join('trxgiatbarang', 'trxsubkegiatan.trxGiatBarangId=trxgiatbarang.idTrxGiatBarang')->where(['subkegiatan.kegiatanId' => $idKegiatan])->orderBy('subkegiatan.idSubKegiatan')->findAll(),
         ];
@@ -313,20 +367,42 @@ class Kegiatan extends BaseController
 
     public function cetakPdf($kegiatanId = false)
     {
+        // Load cache service
+        $cache = \Config\Services::cache();
+
         $tandaTambah = $this->request->getVar('tandaTambah');
         $kegiatan = $this->kegiatanModel->getKegiatan($kegiatanId);
+
+        // Cache key untuk data yang jarang berubah
+        $cacheKeyBarang = 'barang_with_satuan';
+        $cacheKeySatuan = 'satuan_all';
+
+        // Ambil data barang dengan cache
+        $barang = $cache->get($cacheKeyBarang);
+        if (!$barang) {
+            $barang = $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll();
+            $cache->save($cacheKeyBarang, $barang, 3600); // Cache 1 jam
+        }
+        // Ambil data satuan dengan cache
+        $satuan = $cache->get($cacheKeySatuan);
+        if (!$satuan) {
+            $satuan = $this->satuanModel->findAll();
+            $cache->save($cacheKeySatuan, $satuan, 3600); // Cache 1 jam
+        }
+
         $data = [
             'bulan' => $this->bulan,
             'idKegiatan' => $kegiatanId,
             'kegiatan' => $kegiatan,
             'dasar' => $this->dasarModel->find($kegiatan['dasarId']),
             'pangkat' => $this->pangkatModel->find($kegiatan['pangkatId']),
-            'barang' => $this->barangModel->join('satuan', 'satuan.idSatuan=barang.satuanId')->findAll(),
+            'barang' => $barang,
             'referensi' => $this->referensiModel->join('sumber', 'sumber.idSumber=referensi.sumberId')->findAll(),
             'trxGiatBarang' => $this->trxGiatBarangModel->join('trxsubkegiatan', 'trxsubkegiatan.trxGiatBarangId=trxGiatBarang.idTrxGiatBarang')->where(['kegiatanId' => $kegiatanId])->orderBy('trxsubkegiatan.subKegiatanId')->findAll(),
             'trxSubKegiatan' => $this->trxSubKegiatanModel->join('subkegiatan', 'subkegiatan.idSubKegiatan=trxsubkegiatan.subKegiatanId')->join('trxgiatbarang', 'trxsubkegiatan.trxGiatBarangId=trxgiatbarang.idTrxGiatBarang')->where(['subkegiatan.kegiatanId' => $kegiatanId])->orderBy('subkegiatan.idSubKegiatan')->findAll(),
             'trxReferensi' => $this->referensiModel->join('trxreferensi', 'trxreferensi.referensiId=referensi.idReferensi')->findAll(),
-            'sumber' => $this->sumberModel->findAll()
+            'sumber' => $this->sumberModel->findAll(),
+            'kopSurat' => $this->request->getVar('kopSurat'),
         ];
 
         $options = new \Dompdf\Options();

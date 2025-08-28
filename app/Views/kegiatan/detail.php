@@ -64,7 +64,23 @@ use CodeIgniter\I18n\Time;
                                     <p class="card-text"><b>Pejabat Ttd</b></p>
                                 </div>
                                 <div class="col">:
-                                    <?= $pangkat['pangkat'] . ' ' . $kegiatan['namaPejabat'] . ' NRP ' . $kegiatan['NRP']; ?>
+                                    <?= $pangkat['pangkat'] . ' ' . $kegiatan['namaPejabat'] . '<br>NRP ' . $kegiatan['NRP']; ?>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-3">
+                                    <p class="card-text"><b>Kop Surat</b></p>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="kopSurat" id="inlineRadio1" value="arsenal">
+                                        <label class="form-check-label" for="inlineRadio1">Arsenal</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="kopSurat" id="inlineRadio2" value="dissenlekal">
+                                        <label class="form-check-label" for="inlineRadio2">Dissenlekal</label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -117,7 +133,12 @@ use CodeIgniter\I18n\Time;
 
                                 (count($trxGiatBarang) == 0 || $banyakReferensi == 0) ? $atts = ['class' => 'btn btn-secondary disabled'] : $atts = ['class' => 'btn btn-primary'];
 
-                                echo anchor_popup('kegiatan/cetakPdf/' . $kegiatan['idKegiatan'], 'Cetak Pdf', $atts);
+                                // Gunakan anchor biasa dan handle popup di JavaScript
+                                $atts['onclick'] = 'getKopSuratValue(event, ' . $kegiatan['idKegiatan'] . ')';
+                                $atts['href'] = '#'; // Prevent default link behavior
+
+                                echo anchor('#', 'Cetak Pdf', $atts);
+
                                 ?>
 
 
@@ -843,6 +864,9 @@ use CodeIgniter\I18n\Time;
 <!-- akhir content -->
 
 <script>
+    // Verifikasi bahwa fungsi tersedia
+    console.log("getKopSuratValue function available:", typeof window.getKopSuratValue);
+
     $(document).ready(function() {
         // Jika ada error dari create barang, buka modal create barang
         <?php if (session()->has('errors')): ?>
@@ -872,6 +896,38 @@ use CodeIgniter\I18n\Time;
                 $("#createBarangModal .modal-body").prepend(errorHtml);
             }
         <?php endif; ?>
+
+        // Debug: Cek apakah tombol Cetak PDF memiliki onclick handler
+        console.log("Debug: Checking Cetak PDF button...");
+        var cetakBtn = $('a[href*="cetakPdf"]');
+        if (cetakBtn.length > 0) {
+            console.log("Cetak PDF button found:", cetakBtn);
+            console.log("Onclick handler:", cetakBtn.attr('onclick'));
+            console.log("Button HTML:", cetakBtn.prop('outerHTML'));
+            console.log("Button classes:", cetakBtn.attr('class'));
+            console.log("Button is disabled:", cetakBtn.hasClass('disabled'));
+        } else {
+            console.log("Cetak PDF button not found");
+        }
+
+        // Debug: Cek radio buttons
+        var radioButtons = $('input[name="kopSurat"]');
+        console.log("Radio buttons found:", radioButtons.length);
+        radioButtons.each(function(index) {
+            console.log("Radio button " + index + ":", $(this).val(), $(this).is(':checked'));
+        });
+
+        // Tambahkan event listener manual sebagai backup
+        if (cetakBtn.length > 0) {
+            cetakBtn.on('click', function(e) {
+                console.log("Manual click event listener triggered");
+                e.preventDefault();
+                var kegiatanId = $(this).attr('href').split('/').pop();
+                getKopSuratValue(e, kegiatanId);
+                return false;
+            });
+            console.log("Manual click event listener added to Cetak PDF button");
+        }
     });
 </script>
 

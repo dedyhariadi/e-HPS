@@ -334,3 +334,85 @@ $(document).ready(function () {
     regional: "id",
   });
 });
+
+// Fungsi untuk mendapatkan nilai radio button kopSurat dan redirect ke cetak PDF
+function getKopSuratValue(event, kegiatanId) {
+  console.log("getKopSuratValue called with kegiatanId:", kegiatanId);
+  console.log("Event:", event);
+  console.log("Event type:", event.type);
+  console.log("Event target:", event.target);
+
+  event.preventDefault(); // Mencegah popup window langsung terbuka
+  console.log("event.preventDefault() called");
+
+  // Cari radio button yang dipilih
+  var selectedKopSurat = document.querySelector(
+    'input[name="kopSurat"]:checked'
+  );
+  console.log("Selected kopSurat element:", selectedKopSurat);
+
+  if (!selectedKopSurat) {
+    console.log("No radio button selected");
+    alert("Silakan pilih jenis kop surat terlebih dahulu!");
+    return false;
+  }
+
+  var kopSuratValue = selectedKopSurat.value;
+  console.log("kopSuratValue:", kopSuratValue);
+
+  // Buat URL dengan parameter kopSurat
+  var url =
+    "/kegiatan/cetakPdf/" +
+    kegiatanId +
+    "?kopSurat=" +
+    encodeURIComponent(kopSuratValue);
+  console.log("Generated URL:", url);
+
+  // Buka popup window dengan URL yang sudah include parameter
+  var popup = window.open(
+    url,
+    "_blank",
+    "width=800,height=600,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,directories=no,status=no"
+  );
+
+  if (popup) {
+    popup.focus();
+    console.log("Popup opened successfully");
+  } else {
+    alert(
+      "Popup blocker mungkin aktif. Silakan izinkan popup untuk situs ini."
+    );
+    console.log("Popup blocked");
+  }
+
+  return false;
+}
+
+// Pastikan fungsi terdaftar secara global
+window.getKopSuratValue = getKopSuratValue;
+console.log(
+  "getKopSuratValue function registered globally:",
+  typeof window.getKopSuratValue
+);
+
+// Test function untuk memastikan JavaScript berjalan dengan baik
+function testFunction() {
+  console.log("testFunction called - JavaScript is working!");
+  return "JavaScript OK";
+}
+
+// Daftarkan test function secara global
+window.testFunction = testFunction;
+
+// Jalankan test saat script dimuat
+console.log("myscript.js loaded successfully");
+console.log("Test function result:", testFunction());
+
+// Cek apakah ada error JavaScript
+window.addEventListener("error", function (e) {
+  console.error("JavaScript error detected:", e.error);
+});
+
+window.addEventListener("unhandledrejection", function (e) {
+  console.error("Unhandled promise rejection:", e.reason);
+});

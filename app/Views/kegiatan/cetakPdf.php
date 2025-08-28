@@ -105,29 +105,43 @@
 
     <table border="0" cellpading=0 style="line-height: 1; width:100%;border-collapse:collapse;">
         <tr>
-            <td style="width:390px;text-align: center;">
-                DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL
-            </td>
-            <td style="width:55px;"></td>
-            <td colspan="2">
+            <?php if ($kopSurat == 'arsenal') { ?>
+                <td style="width:390px;text-align: center;">
+                    DINAS MATERIEL SENJATA DAN ELEKTRONIKA TNI AL
+                <?php } else { ?>
+                <td style="width: 335px;text-align: center;">
+                    MARKAS BESAR ANGKATAN LAUT
+                <?php } ?>
+                </td>
+                <td style="width:55px;"></td>
+                <td colspan="2">
 
-            </td>
+                </td>
         </tr>
         <tr>
-            <td style="width:390px; text-align: center;">
-                ARSENAL
-            </td>
-            <td></td>
-            <td style="width: 70px;">
-            </td>
-            <td style="text-align: right;">
-            </td>
+            <?php if ($kopSurat == 'arsenal') { ?>
+                <td style="width:390px; text-align: center;">
+                    ARSENAL
+                <?php } else { ?>
+                <td style="width:335px; text-align: center;">
+                    DINAS MATERIEL SENJATA DAN ELEKTRONIKA
+                <?php } ?>
+                </td>
+                <td></td>
+                <td style="width: 70px;">
+                </td>
+                <td style="text-align: right;">
+                </td>
         </tr>
         <tr>
             <td style="padding: 0;vertical-align:middle;width:100%;">
                 <div style="height:1px;background-color:#888;"></div>
             </td>
-            <td></td>
+            <?php if ($kopSurat == "arsenal") { ?>
+                <td style="width: 50px;"></td>
+            <?php } else { ?>
+                <td style="width: 113px;"></td>
+            <?php } ?>
             <td style="white-space: nowrap;padding-left:0;">
                 <div class="date-location">Batuporon, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $bulan[intval(date('m', strtotime($kegiatan['tglSurat']))) - 1] . " " . date('Y', strtotime($kegiatan['tglSurat'])); ?></div>
             </td>

@@ -47,3 +47,17 @@ Options -Indexes
 # Disable server signature start
 ServerSignature Off
 # Disable server signature end
+
+# ----------------------------------------------------------------------
+# PHP Configuration
+# ----------------------------------------------------------------------
+<IfModule mod_php.c>
+    # Increase execution time limit
+    php_value max_execution_time 300
+    # Increase memory limit
+    php_value memory_limit 256M
+    # Increase post max size
+    php_value post_max_size 50M
+    # Increase upload max filesize
+    php_value upload_max_filesize 50M
+</IfModule>
