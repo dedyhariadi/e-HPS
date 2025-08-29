@@ -56,7 +56,7 @@
                     <!-- input tanggal surat -->
                     <label for="tanggal" class="col-sm-1 pe-0 col-form-label">Tanggal Surat</label>
                     <div class="col-sm-2">
-                        <input type="text" autocomplete="off" class="form-control <?= (isset($errors['tglSurat'])) ? 'is-invalid' : ''; ?>" name="tglSurat" value="<?= set_value('tglSurat'); ?>">
+                        <input type="text" autocomplete="off" class="form-control <?= (isset($errors['tglSurat'])) ? 'is-invalid' : ''; ?>" name="tglSurat" value="<?= set_value('tglSurat'); ?>" id="tanggal">
                         <div class="invalid-feedback">
                             <?= (isset($errors['tglSurat'])) ? $errors['tglSurat'] : ''; ?>
                         </div>

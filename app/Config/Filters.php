@@ -76,11 +76,12 @@ class Filters extends BaseFilters
             // 'honeypot',
             'csrf' => [
                 'except' => [
-                    'barang',
-                    'pejabat',
-                    'kegiatan',
-                    'dasarsurat',
-                    'satuan'
+                    'barang*',
+                    'pejabat*',
+                    'kegiatan*',
+                    'dasarsurat*',
+                    'satuan*',
+                    'referensi*'
                 ]
             ],
             'login' // Filter untuk memastikan pengguna sudah login

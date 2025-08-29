@@ -674,7 +674,7 @@
 
     <div style="text-align: center;">
         SPESIFIKASI TEKNIS<br>
-        <?= $kegiatan['namaKegiatan']; ?>
+        <?= strtoupper($kegiatan['namaKegiatan']); ?>
     </div>
     <br>
 
