@@ -956,58 +956,6 @@ use CodeIgniter\I18n\Time;
 <?php endforeach; ?>
 <!-- akhir content -->
 
-<style>
-    /* Custom highlight untuk baris tabel yang dipilih */
-    tr.table-warning {
-        background: linear-gradient(90deg, #fff3cd 0%, #ffeaa7 100%) !important;
-        border: 3px solid #ffc107 !important;
-        border-left: 6px solid #ff6b35 !important;
-        box-shadow: 0 0 20px rgba(255, 193, 7, 0.8) !important;
-        transform: scale(1.02) !important;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        position: relative !important;
-        z-index: 10 !important;
-        animation: highlightPulse 2s infinite !important;
-    }
-
-    tr.table-warning td {
-        font-weight: bold !important;
-        color: #212529 !important;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    tr.table-warning::before {
-        content: "🎯";
-        position: absolute !important;
-        left: -25px !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        color: #ff6b35 !important;
-        font-size: 18px !important;
-        font-weight: bold !important;
-        background: white !important;
-        border-radius: 50% !important;
-        width: 24px !important;
-        height: 24px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    @keyframes highlightPulse {
-
-        0%,
-        100% {
-            box-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
-        }
-
-        50% {
-            box-shadow: 0 0 30px rgba(255, 193, 7, 1);
-        }
-    }
-</style>
-
 <script>
     // Kirim data PHP ke JavaScript untuk handle error modal
     <?php if (session()->has('errors')): ?>
