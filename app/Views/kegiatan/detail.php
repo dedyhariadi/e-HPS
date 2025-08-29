@@ -295,7 +295,7 @@ use CodeIgniter\I18n\Time;
                             ?>
 
 
-                            <tr>
+                            <tr data-trx-id="<?= $b['idTrxGiatBarang']; ?>">
                                 <th scope="row" class="text-center"><?= $i++; ?></th>
                                 <td>
                                     <?php
@@ -752,16 +752,19 @@ use CodeIgniter\I18n\Time;
                     </div>
                     <div class="modal-footer">
 
-
+                        <!-- Tombol untuk membuka modal tambah referensi -->
                         <div class="d-inline col-sm-3 text-end">
                             <?php
                             session()->setFlashdata('idKegiatan', $idKegiatan);
-                            echo anchor('referensi/create/' . $b['barangId'], 'Tambah Referensi', ['class' => 'btn btn-success']);
+                            // echo anchor('referensi/create/' . $b['barangId'], 'Create Referensi', ['class' => 'btn btn-success']);
                             ?>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createReferensiModal<?= $b['idTrxGiatBarang'] . 'r1'; ?>">
+                                <i class="fas fa-plus"></i> Create Referensi
+                            </button>
 
                         </div>
                         <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <!-- <button type="submit" class="btn btn-primary">Simpan</button> -->
                     </div>
 
                 </div>
@@ -846,12 +849,13 @@ use CodeIgniter\I18n\Time;
                         <div class="d-inline col-sm-3 text-end">
                             <?php
                             session()->setFlashdata('idKegiatan', $idKegiatan);
-                            echo anchor('referensi/create/' . $b['barangId'], 'Tambah Referensi', ['class' => 'btn btn-success']);
                             ?>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createReferensiModal<?= $b['idTrxGiatBarang'] . 'r1'; ?>">
+                                <i class="fas fa-plus"></i> Create Referensi
+                            </button>
 
                         </div>
                         <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
 
                 </div>
@@ -859,76 +863,166 @@ use CodeIgniter\I18n\Time;
         </div>
 </div>
 
-<?php endforeach; ?>
 
+
+
+<!-- Modal Form Create Referensi -->
+<div class="modal" id="createReferensiModal<?= $b['idTrxGiatBarang'] . 'r1'; ?>" tabindex="-1" aria-labelledby="createReferensiModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createReferensiModalLabel">
+                    Create Referensi untuk
+                    <span class="text-uppercase fs-5 fw-bold">
+                        <?php
+                        foreach ($barang as $brg) :
+                            if ($b['barangId'] == $brg['idBarang']) {
+                                $namabarang = $brg['namaBarang'];
+                                echo $namabarang;
+                            }
+                        endforeach;
+                        ?>
+                    </span>
+
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+
+                    <!-- Form Tambah Referensi -->
+                    <div class="row">
+                        <div class="col">
+                            <?= form_open('referensi/save', '', ['barangId' => isset($b['barangId']) ? $b['barangId'] : '']); ?>
+                            <div class="row mb-3">
+                                <label for="sumber" class="col-sm-3 col-form-label">Sumber</label>
+                                <div class="col-sm-9">
+                                    <select class="form-select <?= (isset($errors['sumber'])) ? 'is-invalid' : ''; ?>" name="sumber" id="sumber">
+                                        <option value="">Pilih Sumber</option>
+                                        <?php if (isset($sumber) && $sumber): ?>
+                                            <?php foreach ($sumber as $s) : ?>
+                                                <option value="<?= $s['idSumber']; ?>" <?= set_select('sumber', $s['idSumber']); ?>>
+                                                    <?= $s['namaSumber']; ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        <?= (isset($errors['sumber'])) ? $errors['sumber'] : ''; ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="link" class="col-sm-3 col-form-label">Link</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control <?= (isset($errors['link'])) ? 'is-invalid' : ''; ?>"
+                                        value="<?= set_value('link'); ?>" name="link" id="link"
+                                        placeholder="Masukkan URL referensi">
+                                    <div class="invalid-feedback">
+                                        <?= (isset($errors['link'])) ? $errors['link'] : ''; ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="harga" class="col-sm-3 col-form-label">Harga</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control <?= (isset($errors['harga'])) ? 'is-invalid' : ''; ?>"
+                                        value="<?= set_value('harga'); ?>" name="harga" id="harga"
+                                        placeholder="Masukkan harga">
+                                    <div class="invalid-feedback">
+                                        <?= (isset($errors['harga'])) ? $errors['harga'] : ''; ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 text-end">
+                                    <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </div>
+                            </div>
+
+                            <?= form_close(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>
 <!-- akhir content -->
 
+<style>
+    /* Custom highlight untuk baris tabel yang dipilih */
+    tr.table-warning {
+        background: linear-gradient(90deg, #fff3cd 0%, #ffeaa7 100%) !important;
+        border: 3px solid #ffc107 !important;
+        border-left: 6px solid #ff6b35 !important;
+        box-shadow: 0 0 20px rgba(255, 193, 7, 0.8) !important;
+        transform: scale(1.02) !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        position: relative !important;
+        z-index: 10 !important;
+        animation: highlightPulse 2s infinite !important;
+    }
+
+    tr.table-warning td {
+        font-weight: bold !important;
+        color: #212529 !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    tr.table-warning::before {
+        content: "🎯";
+        position: absolute !important;
+        left: -25px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        color: #ff6b35 !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
+        background: white !important;
+        border-radius: 50% !important;
+        width: 24px !important;
+        height: 24px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    @keyframes highlightPulse {
+
+        0%,
+        100% {
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
+        }
+
+        50% {
+            box-shadow: 0 0 30px rgba(255, 193, 7, 1);
+        }
+    }
+</style>
+
 <script>
-    // Verifikasi bahwa fungsi tersedia
-    console.log("getKopSuratValue function available:", typeof window.getKopSuratValue);
-
-    $(document).ready(function() {
-        // Jika ada error dari create barang, buka modal create barang
-        <?php if (session()->has('errors')): ?>
-            $("#createBarangModal").modal("show");
-
-            // Isi form dengan data lama jika ada
-            <?php if (session()->has('old_input')): ?>
-                var oldInput = <?php echo json_encode(session()->getFlashdata('old_input')); ?>;
-                if (oldInput) {
-                    $("#createBarangForm input[name='namaBarang']").val(oldInput.namaBarang || '');
-                    $("#createBarangForm select[name='idSatuan']").val(oldInput.idSatuan || '');
-                }
-            <?php endif; ?>
-
-            // Tampilkan error messages di modal
-            var errors = <?php echo json_encode(session()->getFlashdata('errors')); ?>;
-            if (errors) {
-                var errorHtml = '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
-                errorHtml += '<strong>Gagal menyimpan data:</strong><ul>';
-                for (var field in errors) {
-                    errorHtml += '<li>' + errors[field] + '</li>';
-                }
-                errorHtml += '</ul>';
-                errorHtml += '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
-                errorHtml += '</div>';
-
-                $("#createBarangModal .modal-body").prepend(errorHtml);
-            }
+    // Kirim data PHP ke JavaScript untuk handle error modal
+    <?php if (session()->has('errors')): ?>
+        window.createBarangErrors = <?php echo json_encode(session()->getFlashdata('errors')); ?>;
+        <?php if (session()->has('old_input')): ?>
+            window.createBarangOldInput = <?php echo json_encode(session()->getFlashdata('old_input')); ?>;
         <?php endif; ?>
+    <?php endif; ?>
 
-        // Debug: Cek apakah tombol Cetak PDF memiliki onclick handler
-        console.log("Debug: Checking Cetak PDF button...");
-        var cetakBtn = $('a[href*="cetakPdf"]');
-        if (cetakBtn.length > 0) {
-            console.log("Cetak PDF button found:", cetakBtn);
-            console.log("Onclick handler:", cetakBtn.attr('onclick'));
-            console.log("Button HTML:", cetakBtn.prop('outerHTML'));
-            console.log("Button classes:", cetakBtn.attr('class'));
-            console.log("Button is disabled:", cetakBtn.hasClass('disabled'));
-        } else {
-            console.log("Cetak PDF button not found");
-        }
-
-        // Debug: Cek radio buttons
-        var radioButtons = $('input[name="kopSurat"]');
-        console.log("Radio buttons found:", radioButtons.length);
-        radioButtons.each(function(index) {
-            console.log("Radio button " + index + ":", $(this).val(), $(this).is(':checked'));
-        });
-
-        // Tambahkan event listener manual sebagai backup
-        if (cetakBtn.length > 0) {
-            cetakBtn.on('click', function(e) {
-                console.log("Manual click event listener triggered");
-                e.preventDefault();
-                var kegiatanId = $(this).attr('href').split('/').pop();
-                getKopSuratValue(e, kegiatanId);
-                return false;
-            });
-            console.log("Manual click event listener added to Cetak PDF button");
-        }
-    });
+    // Panggil fungsi inisialisasi dari myscript.js
+    if (typeof initializeKegiatanDetailPage === 'function') {
+        initializeKegiatanDetailPage();
+    } else {
+        console.error('initializeKegiatanDetailPage function not found in myscript.js');
+    }
 </script>
 
 <?= $this->endSection(); ?>

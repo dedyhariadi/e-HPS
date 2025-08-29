@@ -54,7 +54,7 @@ class Referensi extends BaseController
             'harga' => $this->request->getVar('harga'),
             'barangId' => $idBarang
         ];
-
+        d($data);
         if (!$this->referensiModel->save($data)) {
             $errors = $this->referensiModel->errors();
 

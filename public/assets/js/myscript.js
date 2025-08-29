@@ -252,6 +252,15 @@ $(document).ready(function () {
     // }
   });
 
+  // Reset form ketika modal ditutup
+  $("#tambahReferensiModal").on("hidden.bs.modal", function () {
+    // Reset form jika diperlukan
+    $(this).find("form")[0].reset();
+    // Clear validation errors
+    $(this).find(".is-invalid").removeClass("is-invalid");
+    $(this).find(".invalid-feedback").text("");
+  });
+
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
@@ -415,4 +424,202 @@ window.addEventListener("error", function (e) {
 
 window.addEventListener("unhandledrejection", function (e) {
   console.error("Unhandled promise rejection:", e.reason);
+});
+
+// ===== KEGIATAN DETAIL PAGE FUNCTIONS =====
+
+// Fungsi untuk handle error modal create barang
+function handleCreateBarangModalError() {
+  console.log("handleCreateBarangModalError called");
+
+  // Jika ada error dari create barang, buka modal create barang
+  if (
+    typeof window.createBarangErrors !== "undefined" &&
+    window.createBarangErrors
+  ) {
+    $("#createBarangModal").modal("show");
+
+    // Isi form dengan data lama jika ada
+    if (
+      typeof window.createBarangOldInput !== "undefined" &&
+      window.createBarangOldInput
+    ) {
+      var oldInput = window.createBarangOldInput;
+      $("#createBarangForm input[name='namaBarang']").val(
+        oldInput.namaBarang || ""
+      );
+      $("#createBarangForm select[name='idSatuan']").val(
+        oldInput.idSatuan || ""
+      );
+    }
+
+    // Tampilkan error messages di modal
+    if (
+      typeof window.createBarangErrors !== "undefined" &&
+      window.createBarangErrors
+    ) {
+      var errors = window.createBarangErrors;
+      var errorHtml =
+        '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+      errorHtml += "<strong>Gagal menyimpan data:</strong><ul>";
+      for (var field in errors) {
+        errorHtml += "<li>" + errors[field] + "</li>";
+      }
+      errorHtml += "</ul>";
+      errorHtml +=
+        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+      errorHtml += "</div>";
+
+      $("#createBarangModal .modal-body").prepend(errorHtml);
+    }
+  }
+}
+
+// Fungsi untuk debug Cetak PDF button
+function debugCetakPdfButton() {
+  console.log("Debug: Checking Cetak PDF button...");
+  var cetakBtn = $('a[href*="cetakPdf"]');
+  if (cetakBtn.length > 0) {
+    console.log("Cetak PDF button found:", cetakBtn);
+    console.log("Onclick handler:", cetakBtn.attr("onclick"));
+    console.log("Button HTML:", cetakBtn.prop("outerHTML"));
+    console.log("Button classes:", cetakBtn.attr("class"));
+    console.log("Button is disabled:", cetakBtn.hasClass("disabled"));
+  } else {
+    console.log("Cetak PDF button not found");
+  }
+}
+
+// Fungsi untuk debug radio buttons
+function debugRadioButtons() {
+  var radioButtons = $('input[name="kopSurat"]');
+  console.log("Radio buttons found:", radioButtons.length);
+  radioButtons.each(function (index) {
+    console.log(
+      "Radio button " + index + ":",
+      $(this).val(),
+      $(this).is(":checked")
+    );
+  });
+}
+
+// Fungsi untuk debug tabel dan modal buttons
+function debugTableAndModalButtons() {
+  // Debug: Log semua baris tabel dengan data-trx-id
+  console.log("Available table rows with trx-id:");
+  $("tr[data-trx-id]").each(function () {
+    console.log("Row trx-id:", $(this).attr("data-trx-id"));
+  });
+
+  // Debug: Log semua tombol modal
+  console.log("Available modal buttons:");
+  $(
+    '[data-bs-target*="#modalTambahReferensi"], [data-bs-target*="#createReferensiModal"]'
+  ).each(function () {
+    console.log("Button target:", $(this).attr("data-bs-target"));
+  });
+}
+
+// Fungsi untuk highlight baris tabel ketika modal referensi dibuka
+function initializeTableHighlight() {
+  console.log("=== INITIALIZING TABLE HIGHLIGHT SYSTEM ===");
+
+  // Highlight baris tabel ketika modal referensi dibuka - menggunakan event delegation
+  $(document).on(
+    "click",
+    '[data-bs-target*="#modalTambahReferensi"], [data-bs-target*="#createReferensiModal"]',
+    function (e) {
+      console.log("=== MODAL CLICK DETECTED ===");
+      var targetModal = $(this).attr("data-bs-target");
+      var trxId = "";
+
+      console.log("Modal target clicked:", targetModal);
+
+      // Ekstrak trxId dari target modal dengan regex
+      var modalTambahMatch = targetModal.match(
+        /#modalTambahReferensi(\d+)(r[12])/
+      );
+      var createModalMatch = targetModal.match(
+        /#createReferensiModal(\d+)(r[12])/
+      );
+
+      if (modalTambahMatch) {
+        trxId = modalTambahMatch[1]; // Ambil angka di tengah
+        console.log("Extracted trxId from modalTambahReferensi:", trxId);
+      } else if (createModalMatch) {
+        trxId = createModalMatch[1]; // Ambil angka di tengah
+        console.log("Extracted trxId from createReferensiModal:", trxId);
+      }
+
+      // Hapus highlight dari semua baris
+      $("tr[data-trx-id]").removeClass("table-warning");
+      console.log("Removed highlight from all rows");
+
+      // Tambahkan highlight pada baris yang sesuai
+      if (trxId) {
+        var targetRow = $('tr[data-trx-id="' + trxId + '"]');
+        console.log("Looking for row with trxId:", trxId);
+        console.log("Target row found:", targetRow.length);
+
+        if (targetRow.length > 0) {
+          targetRow.addClass("table-warning");
+          console.log("✅ Highlight ADDED to row with trxId:", trxId);
+
+          // Scroll ke baris yang di-highlight
+          targetRow[0].scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        } else {
+          console.log("❌ No row found with trxId:", trxId);
+        }
+      } else {
+        console.log("❌ No trxId extracted from modal target");
+      }
+    }
+  );
+
+  // Hapus highlight ketika modal ditutup
+  $(document).on("hidden.bs.modal", ".modal", function () {
+    $("tr[data-trx-id]").removeClass("table-warning");
+    console.log("Highlight removed from all rows when modal closed");
+  });
+
+  console.log("=== HIGHLIGHT SYSTEM INITIALIZED ===");
+}
+
+// Fungsi untuk inisialisasi halaman detail kegiatan
+function initializeKegiatanDetailPage() {
+  console.log("=== INITIALIZING KEGIATAN DETAIL PAGE ===");
+
+  // Verifikasi bahwa fungsi tersedia
+  console.log(
+    "getKopSuratValue function available:",
+    typeof window.getKopSuratValue
+  );
+
+  // Handle error modal
+  handleCreateBarangModalError();
+
+  // Debug functions
+  debugCetakPdfButton();
+  debugRadioButtons();
+  debugTableAndModalButtons();
+
+  // Initialize table highlight system
+  initializeTableHighlight();
+
+  console.log("=== KEGIATAN DETAIL PAGE INITIALIZED ===");
+}
+
+// Auto-initialize jika di halaman detail kegiatan
+$(document).ready(function () {
+  // Cek apakah kita di halaman detail kegiatan
+  if (
+    $('input[name="kopSurat"]').length > 0 ||
+    $("tr[data-trx-id]").length > 0
+  ) {
+    console.log("Detected kegiatan detail page, initializing...");
+    initializeKegiatanDetailPage();
+  }
 });
