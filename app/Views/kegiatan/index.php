@@ -13,7 +13,9 @@
 
     <div class="row text-start">
         <div class="col">
-            <?= anchor('kegiatan/tambah', 'Tambah Kegiatan', ['class' => 'btn btn-primary']); ?>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahKegiatanModal">
+                Tambah Kegiatan
+            </button>
         </div>
         <div class="col">
 
@@ -96,6 +98,115 @@
     </div>
 </div>
 
+<!-- Modal Form Tambah Kegiatan -->
+<div class="modal fade" id="tambahKegiatanModal" tabindex="-1" aria-labelledby="tambahKegiatanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="tambahKegiatanModalLabel">Form Tambah Kegiatan</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Error Alert -->
+                <?php if (isset($errors) && !empty($errors)) : ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Gagal menyimpan data:</strong>
+                        <ul class="mb-0 mt-2">
+                            <?php foreach ($errors as $error) : ?>
+                                <li><?= $error; ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
+                <?= form_open_multipart('kegiatan/simpan', ['id' => 'tambahKegiatanForm']); ?>
+                <div class="row mb-3">
+                    <!-- input nama kegiatan -->
+                    <label for="namaKegiatan" class="col-sm-3 col-form-label">Nama Kegiatan</label>
+                    <div class="col-sm-9">
+                        <textarea type="text" class="form-control <?= (isset($errors['namaKegiatan'])) ? 'is-invalid' : ''; ?>" name="namaKegiatan" autofocus><?php echo set_value('namaKegiatan'); ?></textarea>
+                        <div class="invalid-feedback">
+                            <?= (isset($errors['namaKegiatan'])) ? $errors['namaKegiatan'] : ''; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <!-- input pejabat -->
+                    <label for="pejabat" class="col-sm-3 col-form-label">Pejabat</label>
+                    <div class="col-sm-9">
+                        <select class="form-select" name="pejabatId">
+                            <option value="">Pilih Pejabat</option>
+                            <?php foreach ($pejabat as $p) : ?>
+                                <option value="<?= ($p['idPejabat']); ?>" <?= set_select('pejabatId', $p['idPejabat']); ?>><?= $p['namaPejabat']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <!-- input no Surat -->
+                    <label for="noSurat" class="col-sm-3 col-form-label">No Surat</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control <?= (isset($errors['noSurat'])) ? 'is-invalid' : ''; ?>" name="noSurat" value="<?php echo set_value('noSurat'); ?>">
+                        <div class="invalid-feedback">
+                            <?= (isset($errors['noSurat'])) ? $errors['noSurat'] : ''; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <!-- input tanggal surat -->
+                    <label for="tanggal" class="col-sm-3 col-form-label">Tanggal Surat</label>
+                    <div class="col-sm-9">
+                        <input type="text" autocomplete="off" class="form-control tanggal-input <?= (isset($errors['tglSurat'])) ? 'is-invalid' : ''; ?>" name="tglSurat" value="<?php echo tampilTanggal('tglSurat'); ?>">
+                        <div class="invalid-feedback">
+                            <?= (isset($errors['tglSurat'])) ? $errors['tglSurat'] : ''; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <!-- input dasar surat -->
+                    <label for="suratId" class="col-sm-3 col-form-label">Dasar Surat</label>
+                    <div class="col-sm-9">
+                        <select class="form-select" name="suratId">
+                            <option value="">Pilih Dasar Surat</option>
+                            <?php foreach ($dasar as $d) : ?>
+                                <option value="<?= ($d['idSurat']); ?>" <?= set_select('suratId', $d['idSurat']); ?>><?= $d['noSurat']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <!-- input file PDF -->
+                    <label for="filePdf" class="col-sm-3 col-form-label">File PDF</label>
+                    <div class="col-sm-9">
+                        <input class="form-control <?= (isset($errors['filePdf'])) ? 'is-invalid' : ''; ?>" type="file" name="filePdf" id="filePdf">
+                        <div class="invalid-feedback">
+                            <?= (isset($errors['filePdf'])) ? $errors['filePdf'] : ''; ?>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary" form="tambahKegiatanForm">Simpan</button>
+            </div>
+            <?= form_close(); ?>
+        </div>
+    </div>
+</div>
+
 <!-- akhir content -->
+
+<script>
+    // Set status variables for JavaScript
+    window.kegiatanSuccessMessage = <?php echo session()->getFlashdata('pesan') ? 'true' : 'false'; ?>;
+    window.kegiatanHasErrors = <?php echo (isset($errors) && !empty($errors)) ? 'true' : 'false'; ?>;
+</script>
 
 <?= $this->endSection(); ?>

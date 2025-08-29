@@ -68,7 +68,9 @@ class Kegiatan extends BaseController
         $data = [
             'title' => 'Daftar Kegiatan',
             'bulan' => $this->bulan,
-            'kegiatan' => $kegiatan
+            'kegiatan' => $kegiatan,
+            'pejabat' => $this->pejabatModel->findAll(),
+            'dasar' => $this->dasarModel->findAll(),
         ];
 
         return view('kegiatan/index', $data);
@@ -103,20 +105,25 @@ class Kegiatan extends BaseController
         if ($this->kegiatanModel->save([
             'namaKegiatan' => $this->request->getVar('namaKegiatan'),
             'noSurat' => $this->request->getVar('noSurat'),
-            'tglSurat' => date('Y-m-d H:i:s', strtotime($this->request->getVar('tglSurat'))),
+            'tglSurat' => simpanTanggal($this->request->getVar('tglSurat')),
             'pejabatId' => $this->request->getVar('pejabatId'),
             'dasarId' => $this->request->getVar('suratId'),
             'filePdf' => $namaFile
         ]) == false) {
             // jika gagal simpan data
             $errors = $this->kegiatanModel->errors();
+
+            // Kembali ke index dengan error untuk modal
+            $kegiatan = $this->kegiatanModel->getKegiatan();
             $data = [
-                'title' => 'Tambah Data Kegiatan',
+                'title' => 'Daftar Kegiatan',
+                'bulan' => $this->bulan,
+                'kegiatan' => $kegiatan,
                 'pejabat' => $this->pejabatModel->findAll(),
                 'dasar' => $this->dasarModel->findAll(),
                 'errors' => $errors,
             ];
-            return view('kegiatan/tambah', $data);
+            return view('kegiatan/index', $data);
         }
 
         // kembali ke index kegiatan

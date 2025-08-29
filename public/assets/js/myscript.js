@@ -614,6 +614,31 @@ function initializeKegiatanDetailPage() {
 
 // Auto-initialize jika di halaman detail kegiatan
 $(document).ready(function () {
+  $(".tanggal-input").datepicker({
+    showAnim: "slideDown",
+    dateFormat: "DD, dd MM yy",
+    changeMonth: true,
+    changeYear: true,
+    regional: "id",
+    dayNames: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
+    monthNames: [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "Nopember",
+      "Desember",
+    ],
+    dayNamesMin: ["Mg", "Sn", "Sl", "Rb", "Km", "Jm", "Sb"],
+    weekHeader: "Sn",
+  });
+
   // Cek apakah kita di halaman detail kegiatan
   if (
     $('input[name="kopSurat"]').length > 0 ||
@@ -622,4 +647,87 @@ $(document).ready(function () {
     console.log("Detected kegiatan detail page, initializing...");
     initializeKegiatanDetailPage();
   }
+
+  // Cek apakah kita di halaman index kegiatan (ada modal tambah kegiatan)
+  if ($("#tambahKegiatanModal").length > 0) {
+    console.log("Detected kegiatan index page, initializing modal handlers...");
+    initializeKegiatanIndexPage();
+
+    // Handle modal status setelah inisialisasi selesai
+    setTimeout(function () {
+      // Cek apakah ada flash message atau error dari server
+      var hasSuccessMessage =
+        typeof window.kegiatanSuccessMessage !== "undefined" &&
+        window.kegiatanSuccessMessage;
+      var hasErrors =
+        typeof window.kegiatanHasErrors !== "undefined" &&
+        window.kegiatanHasErrors;
+
+      if (hasSuccessMessage || hasErrors) {
+        handleKegiatanModalStatus(hasSuccessMessage, hasErrors);
+      }
+    }, 200);
+  }
 });
+
+// ===== KEGIATAN INDEX PAGE FUNCTIONS =====
+
+// Fungsi untuk inisialisasi halaman index kegiatan
+function initializeKegiatanIndexPage() {
+  console.log("=== INITIALIZING KEGIATAN INDEX PAGE ===");
+
+  // Initialize datepicker when modal is shown
+  $("#tambahKegiatanModal").on("shown.bs.modal", function () {
+    console.log("Modal tambah kegiatan shown, initializing datepicker...");
+
+    // Destroy existing datepicker if exists
+    if ($("#tanggal").hasClass("hasDatepicker")) {
+      $("#tanggal").datepicker("destroy");
+    }
+
+    // Initialize new datepicker
+    $("#tanggal").datepicker({
+      showAnim: "slideDown",
+      dateFormat: "dd MM yy",
+      changeMonth: true,
+      changeYear: true,
+      regional: "id",
+    });
+  });
+
+  // Reset form when modal is hidden
+  $("#tambahKegiatanModal").on("hidden.bs.modal", function () {
+    console.log("Modal tambah kegiatan hidden, resetting form...");
+    $("#tambahKegiatanForm")[0].reset();
+    // Clear validation errors
+    $(this).find(".is-invalid").removeClass("is-invalid");
+    $(this).find(".invalid-feedback").text("");
+  });
+
+  console.log("=== KEGIATAN INDEX PAGE INITIALIZED ===");
+}
+
+// Fungsi untuk handle modal berdasarkan status (dipanggil dari view)
+function handleKegiatanModalStatus(hasSuccessMessage, hasErrors) {
+  console.log("=== HANDLING KEGIATAN MODAL STATUS ===");
+  console.log("Has success message:", hasSuccessMessage);
+  console.log("Has errors:", hasErrors);
+
+  // Pastikan modal handlers sudah diinisialisasi
+  if (typeof initializeKegiatanIndexPage === "function") {
+    // Tunggu sebentar untuk memastikan event handlers sudah terpasang
+    setTimeout(function () {
+      if (hasSuccessMessage) {
+        // Auto-close modal if there's a success message
+        console.log("Closing modal due to success message...");
+        $("#tambahKegiatanModal").modal("hide");
+      }
+
+      if (hasErrors) {
+        // Auto-open modal if there's an error
+        console.log("Opening modal due to validation errors...");
+        $("#tambahKegiatanModal").modal("show");
+      }
+    }, 200);
+  }
+}
