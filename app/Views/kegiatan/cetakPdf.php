@@ -262,7 +262,9 @@
 
     <div>
         <span style="display:block; text-align: center; text-indent: 50%;"><?= $pangkat['pangkat']; ?> <?= str_contains($pangkat['pangkat'], 'Laksamana') ? "" : " NRP " . $kegiatan['NRP']; ?></span><br>
-        <span class="custom-underline" style="text-align: left;">Kaarsenal selaku KPA</span>
+        <span class="custom-underline" style="text-align: left;">
+            <?= $kopSurat == 'arsenal' ? 'Kaarsenal selaku KPA' : 'Kadissenlekal selaku KPA'; ?>
+        </span>
 
     </div>
 
@@ -410,11 +412,11 @@
         endforeach;
         ?>
         <tr>
-            <td colspan="2">3. &nbsp;&nbsp;&nbsp;&nbsp;Analisa Harga.&nbsp;&nbsp;&nbsp;Dari referensi tersebut diatas dapat diperhitungkan bahwa jumlah anggaran <?= $kegiatan['namaKegiatan']; ?> adalah sebagai berikut : <br><br></td>
+            <td colspan="2"><br>3. &nbsp;&nbsp;&nbsp;&nbsp;Analisa Harga.&nbsp;&nbsp;&nbsp;Dari referensi tersebut diatas dapat diperhitungkan bahwa jumlah anggaran <?= $kegiatan['namaKegiatan']; ?> adalah sebagai berikut : <br><br></td>
         </tr>
         <tr>
             <td style="width: 30px;"></td>
-            <td>-&nbsp;&nbsp; Biaya kebutuhan material:</td>
+            <td>Biaya kebutuhan materiel:</td>
         </tr>
     </table>
 
@@ -437,10 +439,8 @@
             $n = 1;
             $huruf = 'A';
             $currentSubKegiatan = null;
-            // dd($trxGiatBarang);
             foreach ($trxSubKegiatan as $b) :
                 if ($currentSubKegiatan !== $b['nama']) {
-
             ?>
                     <tr>
                         <td colspan="7" style="text-align: left;padding-left:20px;text-transform: uppercase;font-weight:bold;"><?= $huruf . '.  ' . $b['nama']; ?></td>
@@ -452,7 +452,6 @@
 
                 ?>
 
-                ?>
                 <tr>
                     <td><?= $n++; ?></td>
                     <td style="text-align: left;">
@@ -688,13 +687,25 @@
         <tbody>
             <tr style="font-weight: bold;">
                 <td style="width: 30px;"></td>
-                <td style="text-align: left;padding-left:20px; ">Kebutuhan materiel</td>
+                <td style="text-align: left;padding-left:20px; ">KEBUTUHAN MATERIEL</td>
                 <td></td>
             </tr>
             <?php
             $n = 1;
-            foreach ($trxGiatBarang as $b) :
+            $currentSubKegiatan = null;
+            $huruf = 'A';
+            foreach ($trxSubKegiatan as $b) :
+                if ($currentSubKegiatan !== $b['nama']) {
             ?>
+                    <tr>
+                        <td colspan="3" style="text-align: left;padding-left:20px;text-transform: uppercase;font-weight:bold;"><?= $huruf . '.  ' . $b['nama']; ?></td>
+                    </tr>
+                <?php
+                    $currentSubKegiatan = $b['nama'];
+                    $huruf++;
+                }
+
+                ?>
                 <tr>
                     <td style="width: 30px;"><?= $n++; ?></td>
                     <td style="text-align: left; padding-left:20px;">
@@ -753,7 +764,7 @@
 
             </td>
             <?php if ($kopSurat == 'arsenal') { ?>
-                <td style="width:45px;"></td>
+                <td style="width:42px;"></td>
             <?php } else { ?>
                 <td style="width:65px;"></td>
             <?php } ?>
@@ -809,10 +820,10 @@
     <br><br>
 
     <div style="text-align: center;">
-        GAMBAR
+        GAMBAR MATERIEL
     </div>
     <br>
-    <p>A. Kebutuhan Materiel</p>
+
 
     <!-- menampilkan data di tabel -->
     <?php
@@ -846,7 +857,7 @@
         <?php
         $itemCount = count($displayItems);
         $currentItemIndex = 0;
-
+        $noUrut = 1;
         while ($currentItemIndex < $itemCount) {
             echo '<tr>';
             for ($i = 0; $i < $columnLimit; $i++) {
@@ -855,7 +866,7 @@
                     // Tambahkan kelas 'has-content' untuk sel yang ada isinya
                     echo '<td class="has-content" style="width: ' . (100 / $columnLimit) . '%; border: 1px solid black; padding: 5px;">';
                     echo '<img src="' . $item['image_src'] . '" width="75" height="75" alt="' . $item['name'] . '"><br>';
-                    echo $item['name'];
+                    echo $noUrut++ . '. ' . $item['name'];
                     echo '</td>';
                     $currentItemIndex++;
                 } else {
@@ -884,8 +895,10 @@
 
 
     <br><br>
-    <div style="text-align: center; text-indent: 50%;"> a.n. Kepala Arsenal</div>
-    <div style="text-align: center; text-indent: 50%;"> Kabag Rendalmat</div>
+    <div style="text-align: center; text-indent: 50%;">
+        <?= $kopSurat == 'arsenal' ? 'a.n. Kepala Arsenal' : 'a.n. Kepala Dissenlekal'; ?>
+    </div>
+    <div style="text-align: center; text-indent: 50%;"> <?= $kegiatan['jabatan']; ?></div>
     <div style="text-align: center; text-indent: 50%;"> Selaku</div>
     <div style="text-align: center; text-indent: 50%;"> PPK,</div>
     <br><br><br><br>

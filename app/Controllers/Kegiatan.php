@@ -412,6 +412,7 @@ class Kegiatan extends BaseController
         $options->set('isPhpEnabled', true);
 
         $dompdf = new \Dompdf\Dompdf($options);
+        // return view('kegiatan/cetakPdf', $data);
         $html = view('kegiatan/cetakPdf', $data);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
